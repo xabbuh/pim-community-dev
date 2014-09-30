@@ -84,9 +84,9 @@ class AttributeType extends AbstractType
      */
     protected function addSubscriber(FormBuilderInterface $builder)
     {
-        $factory = $builder->getFormFactory();
-        $this->subscriber->setFactory($factory);
-        $builder->addEventSubscriber($this->subscriber);
+        // $factory = $builder->getFormFactory();
+        // $this->subscriber->setFactory($factory);
+        // $builder->addEventSubscriber($this->subscriber);
     }
 
     /**
