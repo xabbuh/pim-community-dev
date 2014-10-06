@@ -2,29 +2,29 @@
 
 namespace Pim\Bundle\EnrichBundle\Controller;
 
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
-use Symfony\Component\Routing\RouterInterface;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Validator\ValidatorInterface;
-use Symfony\Component\Translation\TranslatorInterface;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\Form;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
-
-use Pim\Bundle\EnrichBundle\AbstractController\AbstractDoctrineController;
-use Pim\Bundle\CatalogBundle\Model\AbstractAttribute;
-use Pim\Bundle\CatalogBundle\Manager\LocaleManager;
 use Pim\Bundle\CatalogBundle\Manager\AttributeManager;
-use Pim\Bundle\VersioningBundle\Manager\VersionManager;
+use Pim\Bundle\CatalogBundle\Manager\AttributeOptionManager;
+use Pim\Bundle\CatalogBundle\Manager\LocaleManager;
+use Pim\Bundle\CatalogBundle\Model\AbstractAttribute;
+use Pim\Bundle\EnrichBundle\AbstractController\AbstractDoctrineController;
 use Pim\Bundle\EnrichBundle\Exception\DeleteException;
 use Pim\Bundle\EnrichBundle\Form\Handler\AttributeHandler;
+use Pim\Bundle\VersioningBundle\Manager\VersionManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Validator\ValidatorInterface;
 
 /**
  * Attribute controller
@@ -49,6 +49,11 @@ class AttributeController extends AbstractDoctrineController
      * @var AttributeManager
      */
     protected $attributeManager;
+
+    /**
+     * @var AttributeOptionManager
+     */
+    protected $attributeOptionManager;
 
     /**
      * @var LocaleManager
@@ -88,6 +93,7 @@ class AttributeController extends AbstractDoctrineController
      * @param AttributeHandler         $attributeHandler
      * @param Form                     $attributeForm
      * @param AttributeManager         $attributeManager
+     * @param AttributeOptionManager   $attributeOptionManager
      * @param LocaleManager            $localeManager
      * @param VersionManager           $versionManager
      * @param array                    $measuresConfig
@@ -105,6 +111,7 @@ class AttributeController extends AbstractDoctrineController
         AttributeHandler $attributeHandler,
         Form $attributeForm,
         AttributeManager $attributeManager,
+        AttributeOptionManager $attributeOptionManager,
         LocaleManager $localeManager,
         VersionManager $versionManager,
         $measuresConfig
@@ -121,12 +128,13 @@ class AttributeController extends AbstractDoctrineController
             $doctrine
         );
 
-        $this->attributeHandler = $attributeHandler;
-        $this->attributeForm    = $attributeForm;
-        $this->attributeManager = $attributeManager;
-        $this->localeManager    = $localeManager;
-        $this->versionManager   = $versionManager;
-        $this->measuresConfig   = $measuresConfig;
+        $this->attributeHandler       = $attributeHandler;
+        $this->attributeForm          = $attributeForm;
+        $this->attributeManager       = $attributeManager;
+        $this->attributeOptionManager = $attributeOptionManager;
+        $this->localeManager          = $localeManager;
+        $this->versionManager         = $versionManager;
+        $this->measuresConfig         = $measuresConfig;
     }
 
     /**
@@ -254,9 +262,9 @@ class AttributeController extends AbstractDoctrineController
             return $this->redirectToRoute('pim_enrich_attribute_edit', array('id'=> $attribute->getId()));
         }
 
-        $option = $this->attributeManager->createAttributeOption();
+        $option = $this->attributeOptionManager->createAttributeOption();
 
-        $optionValue = $this->attributeManager->createAttributeOptionValue();
+        $optionValue = $this->attributeOptionManager->createAttributeOptionValue();
         $optionValue->setLocale($dataLocale);
         $optionValue->setValue('');
         $option->addOptionValue($optionValue);
@@ -295,7 +303,7 @@ class AttributeController extends AbstractDoctrineController
      *
      * @AclAncestor("pim_enrich_attribute_remove")
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return RedirectResponse|Response
      */
     public function removeAction(Request $request, $id)
     {
@@ -317,7 +325,7 @@ class AttributeController extends AbstractDoctrineController
      * @param integer $id
      *
      * @return AbstractAttribute
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws NotFoundHttpException
      */
     protected function findAttributeOr404($id)
     {
