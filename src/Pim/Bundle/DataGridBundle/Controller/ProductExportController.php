@@ -102,6 +102,7 @@ class ProductExportController extends ExportController
             $offset += $batchSize;
             flush();
             $this->em->clear();
+            gc_collect_cycles();
         }
     }
 }
