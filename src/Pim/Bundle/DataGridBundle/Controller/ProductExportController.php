@@ -2,13 +2,14 @@
 
 namespace Pim\Bundle\DataGridBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Serializer\SerializerInterface;
-use Pim\Bundle\CatalogBundle\Repository\ProductRepositoryInterface;
+use Doctrine\ORM\EntityManager;
+use Pim\Bundle\CatalogBundle\Context\CatalogContext;
 use Pim\Bundle\CatalogBundle\Manager\LocaleManager;
+use Pim\Bundle\CatalogBundle\Repository\ProductRepositoryInterface;
 use Pim\Bundle\DataGridBundle\Extension\MassAction\MassActionDispatcher;
 use Pim\Bundle\DataGridBundle\Extension\MassAction\Util\ProductFieldsBuilder;
-use Pim\Bundle\CatalogBundle\Context\CatalogContext;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * Override ExportController for product exports
@@ -41,6 +42,7 @@ class ProductExportController extends ExportController
      * @param LocaleManager              $localeManager
      * @param CatalogContext             $catalogContext
      * @param ProductFieldsBuilder       $fieldsBuilder
+     * @param EntityManager              $em
      */
     public function __construct(
         Request $request,
@@ -49,7 +51,8 @@ class ProductExportController extends ExportController
         ProductRepositoryInterface $productRepository,
         LocaleManager $localeManager,
         CatalogContext $catalogContext,
-        ProductFieldsBuilder $fieldsBuilder
+        ProductFieldsBuilder $fieldsBuilder,
+        EntityManager $em
     ) {
         parent::__construct(
             $request,
@@ -61,6 +64,7 @@ class ProductExportController extends ExportController
         $this->localeManager     = $localeManager;
         $this->catalogContext    = $catalogContext;
         $this->fieldsBuilder     = $fieldsBuilder;
+        $this->em = $em;
     }
 
     /**
@@ -97,7 +101,7 @@ class ProductExportController extends ExportController
             echo $this->serializer->serialize($results, $this->getFormat(), $context);
             $offset += $batchSize;
             flush();
-            $this->productRepository->getObjectManager()->clear();
+            $this->em->clear();
         }
     }
 }
