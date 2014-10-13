@@ -34,7 +34,6 @@ class PimEnrichExtension extends Extension
         $loader->load('form_types.yml');
         $loader->load('forms.yml');
         $loader->load('handlers.yml');
-        $loader->load('managers.yml');
         $loader->load('mass_actions.yml');
         $loader->load('normalizers.yml');
         $loader->load('providers.yml');
