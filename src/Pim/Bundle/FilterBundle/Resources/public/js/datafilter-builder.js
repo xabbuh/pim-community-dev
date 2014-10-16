@@ -19,6 +19,7 @@ function(_, tools,  mediator, FiltersManager) {
             product_scope:        'product_scope',
             product_completeness: 'product_completeness',
             'ajax-choice':        'ajax-choice',
+            'select2-choice':        'select2-choice',
             price:                'price',
             number:               'number'
         },
