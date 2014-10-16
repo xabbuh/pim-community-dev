@@ -40,7 +40,13 @@ define(
                 $filterChoices.find('option[value="scope"]').remove();
                 $filterChoices.multiselect('refresh');
 
-                this.selectWidget.multiselect('refresh');
+                if (this.selectWidget) {
+                    try {
+                        this.selectWidget.multiselect('refresh');
+                    } catch (e) {
+                        console.debug(e);
+                    }
+                }
             },
 
             /**
