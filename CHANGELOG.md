@@ -1,5 +1,8 @@
 # 1.4.x
 
+## Features
+- PIM-2575: Add a popover to display a long textarea in product datagrid
+
 ## Bug fixes
 - PIM-3771: Create version when modifying variant group attribute
 
