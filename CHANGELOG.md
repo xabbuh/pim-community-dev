@@ -43,13 +43,58 @@
 # 1.2.x
 
 ## Bug fixes
+
+# 1.2.10 (2014-10-24)
+
+## Bug fixes
+- PIM-3221: Fix the possibility to update attributes on variant groups during import
+- PIM-3283: Fix issue on the password reset
+- PIM-3209: Fix issue on the extension validation during import
+- PIM-3234: Fix performance issue on category filter
+
+# 1.2.9 (2014-10-17)
+
+## Bug fixes
+- PIM-3254: Fix issue with inactive locales in exports
+- PIM-3217: Fix missing filter groups in grid filter selector when two attribute groups have the same sort orders
+- PIM-3281: Fix mass edit issue on localizable values, it uses user locale instead of selected locale
+- PIM-3248: Fix completeness not being correctly calculated after removing a required attribute from a family
+- PIM-3279: Fix performance issue with big group sets
+- PIM-3266: Fix the flush of skipped items during an import that uses the `Pim\Bundle\BaseConnectorBundle\Processor\TransformerProcessor`. All your custom processors that uses the `TransformmerProcessor` should now inject the `Pim\Bundle\CatalogBundle\Doctrine\SmartManagerRegistry` to fix this issue too.
+- PIM-3282: Fix the grid filters that can be set as json in the request
+
+## BC breaks
+- Two new arguments have been added to Pim\Bundle\FilterBundle\Filter\Product\GroupsFilter: `userContext` and `groupClass`
+
+# 1.2.8 (2014-10-10)
+
+## Bug fixes
+- Fix memory leak in CSV quick export
+- Fix memory leak when product with medias are exported in CSV
+- Cannot display correctly all variant groups on grid
+
+## Improvements
+- avoid hydrating duplicate categories when applying category filter in product grid
+
+# 1.2.7 (2014-10-01)
+
+## Bug fixes
+- Fix no warning message when leaving a product form after a submit with errors
+- Stabilize composer.json (minimum-stability: stable) and fix monolog version issue
+
+# 1.2.6 (2014-09-26)
+
+## Bug fixes
 - Fix installer fail on requirements when you change the archive and uploads folder
 - Fix display of multi-byte characters in long form labels that are truncated
 - Incorrect date display between export/import widget and job execution page and job history
 - Fix archiver bug with yml imports
+- Fix missing product versioning data when a category, attribute or attribute option linked to a product is removed
 
 ## BC breaks
 - Added supports method in Pim\Bundle\BaseConnectorBundle\Archiver\ArchiverInterface
+- Two new methods have been added to Pim\Bundle\CatalogBundle\Repository\ProductRepositoryInterface: `findAllWithAttribute` and `findAllWithAttributeOption`
+- Constructor of Pim\Bundle\VersioningBundle\UpdateGuesser\AttributeOptionUpdateGuesser has been changed
 
 ## Improvements
 - Add images in icecat_demo_dev installer fixtures

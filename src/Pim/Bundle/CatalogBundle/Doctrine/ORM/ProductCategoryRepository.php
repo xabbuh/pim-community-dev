@@ -107,8 +107,8 @@ class ProductCategoryRepository implements ProductCategoryRepositoryInterface
         QueryBuilder $categoryQb = null
     ) {
         $qb = $this->em->createQueryBuilder();
-        $qb->select('p.id');
-        $qb->from($this->entityName, 'p');
+        $qb->select('DISTINCT p.id');
+        $qb->from($this->entityName, 'p', 'p.id');
         $qb->join('p.categories', 'node');
 
         if (null === $categoryQb) {
@@ -121,13 +121,7 @@ class ProductCategoryRepository implements ProductCategoryRepositoryInterface
 
         $products = $qb->getQuery()->execute(array(), AbstractQuery::HYDRATE_ARRAY);
 
-        $productIds = array();
-        foreach ($products as $product) {
-            $productIds[] = $product['id'];
-        }
-        $productIds = array_unique($productIds);
-
-        return $productIds;
+        return array_keys($products);
     }
 
     /**
@@ -160,12 +154,21 @@ class ProductCategoryRepository implements ProductCategoryRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function applyFilterByCategoryIds($qb, array $categoryIds)
+    public function applyFilterByCategoryIds($qb, array $categoryIds, $include = true)
     {
         $rootAlias = $qb->getRootAlias();
         $alias = 'filterCategory'.md5(microtime());
         $qb->leftJoin($rootAlias.'.categories', $alias);
-        $qb->andWhere($qb->expr()->in($alias.'.id', ':filterCatIds'));
+        if ($include) {
+            $qb->andWhere($qb->expr()->in($alias.'.id', ':filterCatIds'));
+        } else {
+            $qb->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->notIn($alias.'.id', ':filterCatIds'),
+                    $qb->expr()->isNull($alias.'.id')
+                )
+            );
+        }
         $qb->setParameter('filterCatIds', $categoryIds);
     }
 
