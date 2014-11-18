@@ -1,48 +1,18 @@
-# 1.3.x
-
-## Features
-- Export a product as PDF
-- Add a widget in the navigation bar to display notifications when import/export jobs finish
-- Add the sequential edit for a selected list of products
-- Add comments on a product
-- Load dashboard widgets asynchronously and allow to refresh the data
-
-## Improvements
- - Remove the fixed mysql socket location
- - Switch to stability stable
- - Base template has been moved from `app/Resources/views` to `PimEnrichBundle/Resources/views`
- - Remove deprecated attribute property *Usable as a grid column*
- - Make classes of `Pim\Bundle\CatalogBundle\Model` consistent with the interfaces
- - Refactor of the attribute option screen to manage more than 100 options
-
-## BC breaks
-- Rename `Pim\Bundle\CatalogBundle\DependencyInjection\Compiler\ResolveDoctrineOrmTargetEntitiesPass` to `Pim\Bundle\CatalogBundle\DependencyInjection\Compiler\ResolveDoctrineTargetModelsPass`
-- Rename `Pim\Bundle\CatalogBundle\DependencyInjection\Compiler\AbstractResolveDoctrineOrmTargetEntitiesPass` to `Pim\Bundle\CatalogBundle\DependencyInjection\Compiler\AbstractResolveDoctrineTargetModelsPass`
-- Rename `Pim\Bundle\UIBundle\Form\Transformer\IntegerTransformer` to `Pim\Bundle\UIBundle\Form\Transformer\NumberTransformer`
-- Remove useless applySorterByAttribute, applySorterByField from Pim\Bundle\CatalogBundle\Doctrine\ORM\ProductRepository
-- Change visibility of ProductQueryBuilder::addAttributeFilter, ProductQueryBuilder::addFieldFilter from public to protected, add a addFilter method in ProductQueryBuilderInterface
-- Change visibility of ProductQueryBuilder::addAttributeSorter, ProductQueryBuilder::addFieldSorter from public to protected, add a addSorter method in ProductQueryBuilderInterface
-- Remove ProductManager from ProductFilterUtility::__construct argument
-- Remove ProductFilterUtility::getAttribute()
-- Two new methods have been added to `Pim\Bundle\DashboardBundle\Widget\WidgetInterface`: `getAlias` and `getData`
-- Constructor of `Pim\Bundle\DashboardBundle\Controller\WidgetController` has been changed (most dependencies have been removed)
-- Method `Pim\Bundle\DashboardBundle\Controller\WidgetController::showAction()` has been removed in favor of `listAction` to render all widgets and `dataAction` to provide widget data
-- Constructors of `Pim\Bundle\DashboardBundle\Widget\CompletenessWidget` and `Pim\Bundle\DashboardBundle\Widget\LastOperationsWidget` have been changed
-- `Pim\Bundle\DashboardBundle\Widget\Registry:add()` now accepts the widget (`WidgetInterface`) as the first argument and position as the second
-- Remove CatalogContext argument from ProductQueryBuilder::__construct
-- Remove ProductRepository from Datagrid Sorters __construct
-- Remove deprecated ProductRepositoryInterface::getProductQueryBuilder
-- Replace setProductQueryBuilder by setProductQueryFactory in ProductRepositoryInterface
-- Add a ProductQueryFactoryInterface argument in ProductDatasource::__construct
-- Add a $productOrmAdapterClass argument in DatasourceAdapterResolver::__construct
-- Remove is_default, translatable from attributeOption mapping
-- Remove $optionClass and $optionValueClass arguments from the AttributeManager::__construct
-- Remove createAttributeOption, createAttributeOptionValue, getAttributeOptionClass from the attributeManager (now in the attributeOptionManager)
-- Add a $attributeOptionManager argument in AttributeController::__construct
-
-# 1.2.x
+# 1.2.12 (2014-11-13)
 
 ## Bug fixes
+- PIM-3298: Fix issue with locale specific property of an attribute when edit and mass edit
+- PIM-3229: Fix values for simple and multi select attributes with missing translations not being displayed in the grid
+- PIM-3309: Fix check on product value uniqueness
+- PIM-3288: Fix memory leak on product import (avoid to hydrate all products of a category when we add a category to a product)
+- PIM-3354: Fix parameter alias in ORM ProductCategoryRepository
+
+# 1.2.11 (2014-10-31)
+
+## Bug fixes
+- PIM-3308: Fix regression on unclassified filter
+- PIM-3311: Fix creation of products with missing identifier during imports
+- PIM-3312: Fix CSV import of product values with invalid channel, locale or currency
 
 # 1.2.10 (2014-10-24)
 

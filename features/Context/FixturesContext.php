@@ -1106,6 +1106,7 @@ class FixturesContext extends RawMinkContext
         $product = $this->getProduct($identifier);
 
         foreach ($table->getRowsHash() as $rawCode => $value) {
+            //TODO: does not work for  scopable, non-localizable fields
             list($code, $locale, $scope) = array_replace([null, null, null], explode('-', $rawCode));
             $productValue = $product->getValue($code, $locale, $scope);
 
