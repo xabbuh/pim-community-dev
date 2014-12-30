@@ -173,7 +173,6 @@ define(
              */
             initializeFilters: function(data) {
                 var self = this;
-                this.filters = {};
                 this.filtersLoaded = true;
                 _.each(data, function (options) {
                     if (_.has(options, 'name') && _.has(options, 'type')) {
@@ -186,8 +185,7 @@ define(
                 this.selectWidget.multiselect("refresh");
                 this._setDropdownWidth();
                 this._updateDropdownPosition();
-            },
-
+            }
         });
     }
 );
