@@ -9,6 +9,8 @@ function(_, tools,  mediator, FiltersManager) {
         filterModuleName = 'oro/datafilter/{{type}}-filter',
         filterTypes = {
             date:                 'date',
+            text:                  'text',
+            datetime:              'datetime',
             string:               'choice',
             choice:               'select',
             selectrow:            'select-row',
