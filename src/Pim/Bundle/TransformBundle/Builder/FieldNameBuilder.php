@@ -14,6 +14,12 @@ use Pim\Bundle\CatalogBundle\Model\AbstractAttribute;
  */
 class FieldNameBuilder
 {
+    /** @var static string */
+    const CHANNEL_CLASS = 'Pim\Bundle\CatalogBundle\Entity\Channel';
+
+    /** @var static string */
+    const LOCALE_CLASS  = 'Pim\Bundle\CatalogBundle\Entity\Locale';
+
     /** @var ManagerRegistry */
     protected $managerRegistry;
 
@@ -23,16 +29,31 @@ class FieldNameBuilder
     /** @var string */
     protected $attributeClass;
 
+    /** @var string */
+    protected $channelClass;
+
+    /** @var string */
+    protected $localeClass;
+
     /**
      * @param ManagerRegistry $managerRegistry
      * @param string          $assocTypeClass
      * @param string          $attributeClass
+     * @param string          $channelClass
+     * @param string          $localeClass
      */
-    public function __construct(ManagerRegistry $managerRegistry, $assocTypeClass, $attributeClass)
-    {
+    public function __construct(
+        ManagerRegistry $managerRegistry,
+        $assocTypeClass,
+        $attributeClass,
+        $channelClass = self::CHANNEL_CLASS,
+        $localeClass = self::LOCALE_CLASS
+    ) {
         $this->managerRegistry = $managerRegistry;
         $this->assocTypeClass  = $assocTypeClass;
         $this->attributeClass  = $attributeClass;
+        $this->channelClass    = $channelClass;
+        $this->localeClass     = $localeClass;
     }
 
     /**
@@ -45,15 +66,15 @@ class FieldNameBuilder
         $fieldNames = [];
         $assocTypes = $this->getRepository($this->assocTypeClass)->findAll();
         foreach ($assocTypes as $assocType) {
-            $fieldNames[] = $assocType->getCode() .'-groups';
-            $fieldNames[] = $assocType->getCode() .'-products';
+            $fieldNames[] = $assocType->getCode().'-groups';
+            $fieldNames[] = $assocType->getCode().'-products';
         }
 
         return $fieldNames;
     }
 
     /**
-     * Extract attribute field name informations with attribute code, locale code, scope code
+     * Extract attribute field name information with attribute code, locale code, scope code
      * and optionally price currency
      *
      * Returned array like:
@@ -74,18 +95,21 @@ class FieldNameBuilder
     {
         $explodedFieldName = explode("-", $fieldName);
         $attributeCode = $explodedFieldName[0];
-
         $attribute = $this->getRepository($this->attributeClass)->findByReference($attributeCode);
 
         if (null !== $attribute) {
-            return $this->extractAttributeInfos($attribute, $explodedFieldName);
+            $this->checkFieldNameTokens($attribute, $fieldName, $explodedFieldName);
+            $attributeInfos = $this->extractAttributeInfos($attribute, $explodedFieldName);
+            $this->checkFieldNameLocaleByChannel($attribute, $fieldName, $attributeInfos);
+
+            return $attributeInfos;
         }
 
         return null;
     }
 
     /**
-     * Extract informations from an attribute and exploded field name
+     * Extract information from an attribute and exploded field name
      * This method is used from extractAttributeFieldNameInfos and can be redefine to add new rules
      *
      * @param AbstractAttribute $attribute
@@ -123,7 +147,7 @@ class FieldNameBuilder
     }
 
     /**
-     * Extract field name informations from a potential association field name
+     * Extract field name information from a potential association field name
      *
      * Returned array like:
      * [
@@ -145,6 +169,108 @@ class FieldNameBuilder
     }
 
     /**
+     * Check the consistency of the field with the attribute and it properties locale, scope, currency
+     *
+     * @param AbstractAttribute $attribute
+     * @param string            $fieldName
+     * @param array             $explodedFieldName
+     *
+     * @throws \InvalidArgumentException
+     */
+    protected function checkFieldNameTokens(AbstractAttribute $attribute, $fieldName, array $explodedFieldName)
+    {
+        // the expected number of tokens in a field may vary,
+        //  - with the current price import, the currency can be optionally present in the header,
+        //  - with the current metric import, a "-unit" field can be added in the header,
+        //
+        // To avoid BC break, we keep the support in this fix, a next minor version could contain only the
+        // support of currency code in the header and metric in a single field
+        $isLocalizable = $attribute->isLocalizable();
+        $isScopable = $attribute->isScopable();
+        $isPrice = 'prices' === $attribute->getBackendType();
+        $isMetric = 'metric' === $attribute->getBackendType();
+        if ($isLocalizable && $isScopable && $isPrice) {
+            $expectedSize = [3, 4];
+        } elseif ($isLocalizable && $isScopable && $isMetric) {
+            $expectedSize = [3, 4];
+        } elseif ($isLocalizable && $isScopable) {
+            $expectedSize = [3];
+        } elseif ($isLocalizable && $isPrice) {
+            $expectedSize = [2, 3];
+        } elseif ($isScopable && $isPrice) {
+            $expectedSize = [2, 3];
+        } elseif ($isLocalizable && $isMetric) {
+            $expectedSize = [2, 3];
+        } elseif ($isScopable && $isMetric) {
+            $expectedSize = [2, 3];
+        } elseif ($isLocalizable) {
+            $expectedSize = [2];
+        } elseif ($isScopable) {
+            $expectedSize = [2];
+        } elseif ($isPrice) {
+            $expectedSize = [1, 2];
+        } elseif ($isMetric) {
+            $expectedSize = [1, 2];
+        } else {
+            $expectedSize = [1];
+        }
+
+        $nbTokens = count($explodedFieldName);
+        if (!in_array($nbTokens, $expectedSize)) {
+            $expected = [
+                $isLocalizable ? 'a locale' : 'no locale',
+                $isScopable ? 'a scope' : 'no scope',
+                $isPrice ? 'an optional currency' : 'no currency',
+            ];
+            $expected = implode($expected, ', ');
+
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'The field "%s" is not well-formatted, attribute "%s" expects %s',
+                    $fieldName,
+                    $attribute->getCode(),
+                    $expected
+                )
+            );
+        }
+        if ($isLocalizable) {
+            $this->checkForLocaleSpecificValue($attribute, $explodedFieldName);
+        }
+    }
+
+    /**
+     * Check the consistency of the field with channel associated
+     *
+     * @param AbstractAttribute $attribute
+     * @param string            $fieldName
+     * @param array             $attributeInfos
+     *
+     * @throws \InvalidArgumentException
+     */
+    protected function checkFieldNameLocaleByChannel(AbstractAttribute $attribute, $fieldName, array $attributeInfos)
+    {
+        if ($attribute->isScopable() &&
+            $attribute->isLocalizable() &&
+            isset($attributeInfos['scope_code']) &&
+            isset($attributeInfos['locale_code'])
+        ) {
+            $channel = $this->getRepository($this->channelClass)->findByReference($attributeInfos['scope_code']);
+            $locale = $this->getRepository($this->localeClass)->findByReference($attributeInfos['locale_code']);
+
+            if ($channel !== null && $locale !== null && !$channel->hasLocale($locale)) {
+                throw new \InvalidArgumentException(
+                    sprintf(
+                        'The locale "%s" of the field "%s" is not available in scope "%s"',
+                        $attributeInfos['locale_code'],
+                        $fieldName,
+                        $attributeInfos['scope_code']
+                    )
+                );
+            }
+        }
+    }
+
+    /**
      * @param string $entityClass
      *
      * @return \Doctrine\Common\Persistence\ObjectRepository
@@ -152,5 +278,32 @@ class FieldNameBuilder
     protected function getRepository($entityClass)
     {
         return $this->managerRegistry->getRepository($entityClass);
+    }
+
+    /**
+     * Check if provided locales for an locale specific attribute exist
+     *
+     * @param AbstractAttribute $attribute
+     * @param array             $explodedFieldNames
+     */
+    protected function checkForLocaleSpecificValue(AbstractAttribute $attribute, array $explodedFieldNames)
+    {
+        if ($attribute->isLocaleSpecific()) {
+            $attributeInfo = $this->extractAttributeInfos($attribute, $explodedFieldNames);
+            $availableLocales = [];
+            // TODO: use the getAvailableLocaleCodes instead of this for 1.3
+            foreach ($attribute->getAvailableLocales() as $locale) {
+                $availableLocales[] = $locale->getCode();
+            }
+            if (!in_array($explodedFieldNames[1], $availableLocales)) {
+                throw new \LogicException(
+                    sprintf(
+                        'The provided specific locale "%s" does not exist for "%s" attribute ',
+                        $attributeInfo['locale_code'],
+                        $attribute->getCode()
+                    )
+                );
+            }
+        }
     }
 }

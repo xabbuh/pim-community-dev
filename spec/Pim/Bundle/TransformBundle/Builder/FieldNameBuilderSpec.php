@@ -6,17 +6,23 @@ use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CatalogBundle\Doctrine\SmartManagerRegistry;
 use Pim\Bundle\CatalogBundle\Entity\AssociationType;
 use Pim\Bundle\CatalogBundle\Entity\Attribute;
+use Pim\Bundle\CatalogBundle\Entity\Channel;
+use Pim\Bundle\CatalogBundle\Entity\Locale;
 use Pim\Bundle\CatalogBundle\Entity\Repository\AssociationTypeRepository;
 use Pim\Bundle\CatalogBundle\Entity\Repository\AttributeRepository;
+use Pim\Bundle\CatalogBundle\Repository\ReferableEntityRepositoryInterface;
+use Pim\Bundle\CatalogBundle\Model\AbstractAttribute;
 
 class FieldNameBuilderSpec extends ObjectBehavior
 {
     const ASSOC_TYPE_CLASS = 'Pim\Bundle\CatalogBundle\Entity\AssociationType';
     const ATTRIBUTE_CLASS  = 'Pim\Bundle\CatalogBundle\Entity\Attribute';
+    const CHANNEL_CLASS  = 'Pim\Bundle\CatalogBundle\Entity\Channel';
+    const LOCALE_CLASS  = 'Pim\Bundle\CatalogBundle\Entity\Locale';
 
     function let(SmartManagerRegistry $managerRegistry)
     {
-        $this->beConstructedWith($managerRegistry, self::ASSOC_TYPE_CLASS, self::ATTRIBUTE_CLASS);
+        $this->beConstructedWith($managerRegistry, self::ASSOC_TYPE_CLASS, self::ATTRIBUTE_CLASS, self::CHANNEL_CLASS, self::LOCALE_CLASS);
     }
 
     function it_returns_association_type_field_names(
@@ -73,15 +79,29 @@ class FieldNameBuilderSpec extends ObjectBehavior
 
     function it_returns_attribute_informations_from_field_name_with_localizable_attribute(
         $managerRegistry,
-        AttributeRepository $repository,
-        Attribute $attribute
+        AttributeRepository $attributeRepository,
+        ReferableEntityRepositoryInterface $channelRepository,
+        ReferableEntityRepositoryInterface $localeRepository,
+        AbstractAttribute $attribute,
+        Locale $locale,
+        Channel $channel
     ) {
         $attribute->getCode()->willReturn('foo');
         $attribute->isLocalizable()->willReturn(true);
         $attribute->isScopable()->willReturn(false);
         $attribute->getBackendType()->willReturn('bar');
-        $repository->findByReference('foo')->willReturn($attribute);
-        $managerRegistry->getRepository(self::ATTRIBUTE_CLASS)->willReturn($repository);
+        $attribute->isLocaleSpecific()->willReturn(false);
+
+        $managerRegistry->getRepository(self::CHANNEL_CLASS)->shouldBeCalled()->willReturn($channelRepository);
+        $channelRepository->findByReference('ecommerce')->shouldBeCalled()->willReturn($channel);
+
+        $managerRegistry->getRepository(self::LOCALE_CLASS)->shouldBeCalled()->willReturn($localeRepository);
+        $localeRepository->findByReference('en_US')->shouldBeCalled()->willReturn($locale);
+
+        $attributeRepository->findByReference('foo')->willReturn($attribute);
+        $managerRegistry->getRepository(self::ATTRIBUTE_CLASS)->willReturn($attributeRepository);
+
+        $channel->hasLocale($locale)->shouldBeCalled()->willReturn(true);
 
         // Test only localizable attribute
         $this->extractAttributeFieldNameInfos('foo-en_US')->shouldReturn(
@@ -201,5 +221,81 @@ class FieldNameBuilderSpec extends ObjectBehavior
         $this
             ->extractAssociationFieldNameInfos('bar')
             ->shouldBe(null);
+    }
+
+    function it_throws_exception_when_the_field_name_is_not_consistent_with_the_attribute_property(
+        $managerRegistry,
+        AttributeRepository $repository,
+        Attribute $attribute
+    ) {
+        // global with extra locale
+        $attribute->getCode()->willReturn('sku');
+        $attribute->isLocalizable()->willReturn(false);
+        $attribute->isScopable()->willReturn(false);
+        $attribute->getBackendType()->willReturn('text');
+        $repository->findByReference('sku')->willReturn($attribute);
+        $managerRegistry->getRepository(self::ATTRIBUTE_CLASS)->willReturn($repository);
+
+        $this->shouldThrow(new \InvalidArgumentException('The field "sku-fr_FR" is not well-formatted, attribute "sku" expects no locale, no scope, no currency'))
+            ->duringExtractAttributeFieldNameInfos('sku-fr_FR');
+
+        // localizable without any locale
+        $attribute->getCode()->willReturn('name');
+        $attribute->isLocalizable()->willReturn(true);
+        $attribute->isScopable()->willReturn(false);
+        $attribute->getBackendType()->willReturn('text');
+        $repository->findByReference('name')->willReturn($attribute);
+
+        $this->shouldThrow(new \InvalidArgumentException('The field "name" is not well-formatted, attribute "name" expects a locale, no scope, no currency'))
+            ->duringExtractAttributeFieldNameInfos('name');
+
+        // localizable, scopable and price without any currency
+        $attribute->getCode()->willReturn('cost');
+        $attribute->isLocalizable()->willReturn(true);
+        $attribute->isScopable()->willReturn(true);
+        $attribute->getBackendType()->willReturn('prices');
+        $repository->findByReference('cost')->willReturn($attribute);
+
+        $this->shouldThrow(new \InvalidArgumentException('The field "cost" is not well-formatted, attribute "cost" expects a locale, a scope, an optional currency'))
+            ->duringExtractAttributeFieldNameInfos('cost');
+    }
+
+    function it_throws_exception_when_the_field_name_is_not_consistent_with_the_channel_locale(
+        $managerRegistry,
+        ReferableEntityRepositoryInterface $repository,
+        AbstractAttribute $attribute,
+        ReferableEntityRepositoryInterface $channelRepository,
+        ReferableEntityRepositoryInterface $localeRepository,
+        Locale $locale,
+        Channel $channel
+    ) {
+        // localizable without the associated locale not in the channel
+        $attribute->getCode()->willReturn('description');
+        $attribute->isLocalizable()->willReturn(true);
+        $attribute->isScopable()->willReturn(true);
+        $attribute->getBackendType()->willReturn('text');
+        $attribute->isLocaleSpecific()->willReturn(false);
+
+        $attributeInfos =
+            [
+                'attribute'   => $attribute,
+                'locale_code' => 'de_DE',
+                'scope_code'  => 'mobile'
+            ];
+
+        $managerRegistry->getRepository(self::ATTRIBUTE_CLASS)->willReturn($repository);
+        $repository->findByReference('description')->willReturn($attribute);
+
+        $managerRegistry->getRepository(self::CHANNEL_CLASS)->shouldBeCalled()->willReturn($channelRepository);
+        $channelRepository->findByReference($attributeInfos['scope_code'])->shouldBeCalled()->willReturn($channel);
+
+        $managerRegistry->getRepository(self::LOCALE_CLASS)->shouldBeCalled()->willReturn($localeRepository);
+        $localeRepository->findByReference($attributeInfos['locale_code'])->shouldBeCalled()->willReturn($locale);
+
+        $channel->hasLocale($locale)->shouldBeCalled()->willReturn(false);
+
+        $this->shouldThrow(new \InvalidArgumentException('The locale "de_DE" of the field "description-de_DE-mobile" is not available in scope "mobile"'))
+            ->duringExtractAttributeFieldNameInfos('description-de_DE-mobile');
+
     }
 }

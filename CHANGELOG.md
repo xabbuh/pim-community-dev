@@ -1,3 +1,69 @@
+# 1.2.x
+
+## Bug fixes
+- PIM-3556: Fix memory leak on versionning
+
+# 1.2.18 (2014-12-23)
+
+## Bug fixes
+- PIM-3533: Fix wrong keys being generated for empty price attributes in normalized product snapshots
+- PIM-3558: Fix order of options for multiselect attribute in product versionning and csv product export
+
+## BC breaks
+- PIM-3558: in the exported product csv file, we apply the sort order defined by the user to sort the options of a multiselect
+
+# 1.2.17 (2014-12-19)
+- PIM-3550: force the version of "doctrine/annotations" to "v1.2.1" to avoid the BC Break introduced with v1.2.2
+
+# 1.2.16 (2014-12-17)
+
+## Bug fixes
+- PIM-3447: Enforce max database length limit on identifier, text and textarea attribute values
+- PIM-3471: Add an error log when the max number of indexes is reached for the mongo product collection (MongoResultException is raised since Mongo 2.6.*)
+- PIM-3369: Check on import if the couple channel/local exist
+- PIM-3368: Add association type check on association import
+- PIM-3377: Add a check if the specific locale exists on imports, and skip unused attribute column for locale specific on exports
+- PIM-3458: When creating an attribute group, automatically set the sort order to the last one
+- PIM-3420: Remove update guessers on attributes and attributes option to fix the versionning memory leak
+
+## BC breaks
+- PIM-3368: Add AssociationType class argument to the `Pim\Bundle\TransformBundle\Transformer\AssociationTransformer` constructor
+
+## Improvements
+- PIM-3448: Add the method `getAttributeGroupsFromAttributeCodes` in the `Pim\Bundle\CatalogBundle\Entity\Repository\AttributeGroupRepository`
+
+# 1.2.15 (2014-12-10)
+
+## Bug fixes
+- PIM-3473: Fix date picker year range selection over next year
+- PIM-3475: Fix attribute options sort order in import/export
+
+## BC breaks
+- Export of attribute options in CSV now include a sort_order column
+
+# 1.2.14 (2014-12-03)
+
+## Bug fixes
+- PIM-3443: Fix prices not exported in quick export
+- PIM-3446: Fix import export history with large amount of errors
+
+# 1.2.13 (2014-11-26)
+
+## Bug fixes
+- PIM-3406: Fix boolean filter on Mongo implementation
+- PIM-3430: Fix doctrine issue on prices when skip an item during the product import
+- PIM-3358: Fix sprintf issue in an exception which prevents doctrine writer to deal with anything else than an object
+- PIM-3326: Fix mongo filters with multiples values and empty on MongoDB
+- PIM-3426: Fix common attributes edition on multi selects
+- PIM-3434: Fix bug in product media manager when file does not exist on the filesystem
+- PIM-3436: Fix WYSIWYG field on product edit form (load them asynchronously)
+- PIM-3372: Add an error message when the locale is disabled during product import
+- PIM-3370: Add an error message when the channel doesnt exist during product import
+- PIM-3374: Add an error message when a channel is provided for a global attribute
+- PIM-3375: Add an error message when a locale is provided for a global attribute
+- PIM-3376: Add an error message when a channel and a locale are provided for a global attribute
+- PIM-3393: Don't show the update view button for non-owners
+
 # 1.2.12 (2014-11-13)
 
 ## Bug fixes
@@ -785,4 +851,3 @@ that made the entity too smart for its own good and created performances problem
 - Fix price format different between import and enrich
 - Fix channel datagrid result count
 - Fix end date which is updated for all jobs
-

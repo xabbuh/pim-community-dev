@@ -4,7 +4,6 @@ namespace Pim\Bundle\VersioningBundle\UpdateGuesser;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Pim\Bundle\CatalogBundle\Model\AbstractAttribute;
 
 /**
  * Attribute update guesser
@@ -44,19 +43,7 @@ class AttributeUpdateGuesser implements UpdateGuesserInterface
      */
     public function guessUpdates(EntityManager $em, $entity, $action)
     {
-        $pendings = array();
-        if ($entity instanceof AbstractAttribute) {
-            set_time_limit(0);
-            $products = $this
-                ->registry
-                ->getRepository($this->productClass)
-                ->findAllWithAttribute($entity);
-
-            foreach ($products as $product) {
-                $pendings[] = $product;
-            }
-        }
-
-        return $pendings;
+        //TODO: remove on 1.3
+        return [];
     }
 }

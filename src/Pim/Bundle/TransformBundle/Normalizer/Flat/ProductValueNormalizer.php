@@ -2,6 +2,9 @@
 
 namespace Pim\Bundle\TransformBundle\Normalizer\Flat;
 
+use Doctrine\Common\Collections\Collection;
+use Pim\Bundle\CatalogBundle\Model\AbstractAttribute;
+use Pim\Bundle\CatalogBundle\Model\AbstractProductValue;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerAwareInterface;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -23,7 +26,7 @@ class ProductValueNormalizer implements NormalizerInterface, SerializerAwareInte
     /**
      * @var string[] $supportedFormats
      */
-    protected $supportedFormats = array('csv', 'flat');
+    protected $supportedFormats = ['csv', 'flat'];
 
     /** @var integer */
     protected $precision;
@@ -51,6 +54,10 @@ class ProductValueNormalizer implements NormalizerInterface, SerializerAwareInte
     {
         $data = $entity->getData();
         $fieldName = $this->getFieldValue($entity);
+        if ($this->filterLocaleSpecific($entity)) {
+            return [];
+        }
+
         $result = null;
 
         if (is_array($data)) {
@@ -68,8 +75,20 @@ class ProductValueNormalizer implements NormalizerInterface, SerializerAwareInte
         } elseif (is_bool($data)) {
             $result = [$fieldName => (string) (int) $data];
         } elseif (is_object($data)) {
-            $context['field_name'] = $fieldName;
-            $result = $this->serializer->normalize($data, $format, $context);
+            // TODO: Find a way to have proper currency-suffixed keys for normalized price data
+            // even when an empty collection is passed
+            $backendType = $entity->getAttribute()->getBackendType();
+            if ('prices' === $backendType && $data instanceof Collection && $data->isEmpty()) {
+                $result = [];
+            } elseif ('options' === $backendType && $data instanceof Collection && $data->isEmpty() === false) {
+                $data = $this->sortOptions($data);
+                $context['field_name'] = $fieldName;
+                $result = $this->serializer->normalize($data, $format, $context);
+
+            } else {
+                $context['field_name'] = $fieldName;
+                $result = $this->serializer->normalize($data, $format, $context);
+            }
         }
 
         if (null === $result) {
@@ -112,5 +131,53 @@ class ProductValueNormalizer implements NormalizerInterface, SerializerAwareInte
         }
 
         return $value->getAttribute()->getCode() . $suffix;
+    }
+
+    /**
+     * Check if the attribute is locale specific and check if the given local exist in available locales
+     *
+     * @param AbstractProductValue $entity
+     *
+     * @return bool
+     */
+    protected function filterLocaleSpecific(AbstractProductValue $entity)
+    {
+        $actualLocale = $entity->getLocale();
+
+        /** @var AbstractAttribute $attribute */
+        $attribute = $entity->getAttribute();
+        if ($attribute->isLocaleSpecific()) {
+            $availableLocales = [];
+            foreach ($attribute->getAvailableLocales() as $locale) {
+                $availableLocales[] = $locale->getCode();
+            }
+
+            if (!in_array($actualLocale, $availableLocales)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Sort the collection of options by their defined sort order in the attribute
+     *
+     * @param Collection $optionsCollection
+     *
+     * @return Collection
+     */
+    protected function sortOptions(Collection $optionsCollection)
+    {
+        $options = $optionsCollection->toArray();
+        usort(
+            $options,
+            function ($first, $second) {
+                return $first->getSortOrder() > $second->getSortOrder();
+            }
+        );
+        $sortedCollection = new ArrayCollection($options);
+
+        return $sortedCollection;
     }
 }
