@@ -201,6 +201,12 @@ pim_enrich:
             edit: Edit a group
             remove: Remove a group
             history: View group history
+        variant_group:
+            index: List variant groups
+            create: Create a variant group
+            edit: Edit a variant group
+            remove: Remove a variant group
+            history: View group variant history
         group_type:
             index: List group types
             create: Create a group type
@@ -221,6 +227,7 @@ pim_enrich:
         currency: Currencies
         family: Families
         group: Groups
+        variant_group: Variant groups
         group_type: Group types
         locale: Locales
         product: Products
