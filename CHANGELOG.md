@@ -1,7 +1,33 @@
-# 1.2.x
+# 1.2.24 (2015-01-28)
+
+## Bug fixes
+- PIM-3712: Fix installation issue related to the tag of gedmo/doctrine-extensions v2.3.11, we freeze to v2.3.10
+
+# 1.2.23 (2015-01-23)
+
+## Bug fixes
+- PIM-3664: Fix product media stacktrace regression on missing media on filesystem during an export
+- PIM-3677: Fix `Pim\Bundle\CatalogBundle\Doctrine\ReferencedCollection` saving problem
+
+# 1.2.22 (2015-01-21)
+- Crowdin Updated translations
+
+# 1.2.21 (2015-01-16)
+
+## Bug fixes
+- PIM-3615: Context of the grid not applied in product form for an attribute type Date
+- PIM-3638: Fix doctrine/cache 1.3.1 to fix Oro FilesystemCache issue
+
+# 1.2.20 (2015-01-14)
+
+## Bug fixes
+- PIM-3603 Trigger saving wysiwyg editor contents when submitting product form manually
+
+# 1.2.19 (2015-01-09)
 
 ## Bug fixes
 - PIM-3556: Fix memory leak on versionning
+- PIM-3548: Do not rely on the absolute file path of a media 
 
 # 1.2.18 (2014-12-23)
 

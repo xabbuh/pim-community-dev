@@ -67,7 +67,7 @@ class CsvProductWriter extends CsvWriter
         } else {
             $this->stepExecution->addWarning(
                 $this->getName(),
-                sprintf('Copy of "%s" failed.', $media['filePath']),
+                'The media has not been found or is not currently available',
                 [],
                 $media
             );
@@ -75,7 +75,7 @@ class CsvProductWriter extends CsvWriter
     }
 
     /**
-     * @deprecated argument type will be changed in 1.3
+     * @deprecated argument type will be removed in 1.3 as it's not used anywhere
      *
      * @param AbstractProductMedia $media
      *
