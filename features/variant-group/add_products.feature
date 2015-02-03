@@ -47,6 +47,7 @@ Feature: Add products to a variant group
     And I press the "Save" button
     Then I edit the "sandal-white-37" product
     And I visit the "History" tab
+    When the history of the product "sandal-white-37" has been built
     And I should see history:
       | version | author                                                            | property | value           |
       | 2       | Julia Stark - Julia@example.com (Comes from variant group SANDAL) | groups   | SANDAL          |
@@ -63,7 +64,8 @@ Feature: Add products to a variant group
     And I confirm the deletion
     Then I edit the "sandal-white-37" product
     And I visit the "History" tab
-    And I should see history:
+    When the history of the product "sandal-white-37" has been built
+    Then I should see history:
       | version | author                                                            | property | value           |
       | 3       | Julia Stark - Julia@example.com                                   | groups   |                 |
       | 2       | Julia Stark - Julia@example.com (Comes from variant group SANDAL) | groups   | SANDAL          |
