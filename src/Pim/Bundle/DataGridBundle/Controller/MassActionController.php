@@ -42,6 +42,7 @@ class MassActionController
      */
     public function massActionAction()
     {
+        $this->request->query->set('_get_all_filters', true);
         $response = $this->massActionDispatcher->dispatch($this->request);
 
         $data = [
