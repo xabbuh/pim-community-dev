@@ -1,3 +1,18 @@
+# 1.2.27 (2015-02-13)
+
+## Bug fixes
+- PIM-3779: Fix multiple WYSIWYG on same textarea element
+
+# 1.2.26 (2015-02-12)
+
+## Bug fixes
+- PIM-3761: Fix WYSIWYG onClick behaviour, event correctly bind
+
+# 1.2.25 (2015-02-04)
+
+## Bug fixes
+- PIM-3718: load tinymce only on textarea click
+
 # 1.2.24 (2015-01-28)
 
 ## Bug fixes
@@ -27,7 +42,7 @@
 
 ## Bug fixes
 - PIM-3556: Fix memory leak on versionning
-- PIM-3548: Do not rely on the absolute file path of a media 
+- PIM-3548: Do not rely on the absolute file path of a media
 
 # 1.2.18 (2014-12-23)
 
