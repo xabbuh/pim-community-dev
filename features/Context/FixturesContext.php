@@ -48,20 +48,20 @@ class FixturesContext extends RawMinkContext
     ];
 
     protected $entities = [
-        'Attribute'       => 'PimCatalogBundle:Attribute',
-        'AttributeGroup'  => 'PimCatalogBundle:AttributeGroup',
-        'AttributeOption' => 'PimCatalogBundle:AttributeOption',
-        'Channel'         => 'PimCatalogBundle:Channel',
-        'Currency'        => 'PimCatalogBundle:Currency',
-        'Family'          => 'PimCatalogBundle:Family',
-        'Category'        => 'PimCatalogBundle:Category',
-        'AssociationType' => 'PimCatalogBundle:AssociationType',
+        'Attribute'       => 'Pim\Bundle\CatalogBundle\Model\Attribute',
+        'AttributeGroup'  => 'Pim\Bundle\CatalogBundle\Model\AttributeGroup',
+        'AttributeOption' => 'Pim\Bundle\CatalogBundle\Model\AttributeOption',
+        'Channel'         => 'Pim\Bundle\CatalogBundle\Model\Channel',
+        'Currency'        => 'Pim\Bundle\CatalogBundle\Model\Currency',
+        'Family'          => 'Pim\Bundle\CatalogBundle\Model\Family',
+        'Category'        => 'Pim\Bundle\CatalogBundle\Model\Category',
+        'AssociationType' => 'Pim\Bundle\CatalogBundle\Model\AssociationType',
         'JobInstance'     => 'AkeneoBatchBundle:JobInstance',
         'User'            => 'OroUserBundle:User',
         'Role'            => 'OroUserBundle:Role',
         'UserGroup'       => 'OroUserBundle:Group',
-        'Locale'          => 'PimCatalogBundle:Locale',
-        'GroupType'       => 'PimCatalogBundle:GroupType',
+        'Locale'          => 'Pim\Bundle\CatalogBundle\Model\Locale',
+        'GroupType'       => 'Pim\Bundle\CatalogBundle\Model\GroupType',
         'Product'         => 'Pim\Bundle\CatalogBundle\Model\Product',
         'ProductGroup'    => 'Pim\Bundle\CatalogBundle\Model\Group',
     ];
@@ -1537,7 +1537,7 @@ class FixturesContext extends RawMinkContext
     protected function getAttributeRequirement($attributeCode, $familyCode, $channelCode)
     {
         $em = $this->getEntityManager();
-        $repo = $em->getRepository('PimCatalogBundle:AttributeRequirement');
+        $repo = $em->getRepository('Pim\Bundle\CatalogBundle\Model\AttributeRequirement');
 
         $attribute = $this->getAttribute($attributeCode);
         $family = $this->getFamily($familyCode);
