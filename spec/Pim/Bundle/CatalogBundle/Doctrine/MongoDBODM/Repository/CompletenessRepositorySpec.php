@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Pim\Bundle\CatalogBundle\Doctrine\MongoDBODM;
+namespace spec\Pim\Bundle\CatalogBundle\Doctrine\MongoDBODM\Repository;
 
 use Doctrine\MongoDB\Cursor;
 use Doctrine\MongoDB\Query\Query;
