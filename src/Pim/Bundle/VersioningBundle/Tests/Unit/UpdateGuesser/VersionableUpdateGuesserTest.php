@@ -2,8 +2,8 @@
 
 namespace Pim\Bundle\VersioningBundle\Tests\Unit\UpdateGuesser;
 
-use Pim\Bundle\CatalogBundle\Entity\Attribute;
-use Pim\Bundle\CatalogBundle\Entity\Family;
+use Pim\Bundle\CatalogBundle\Model\Attribute;
+use Pim\Bundle\CatalogBundle\Model\Family;
 use Pim\Bundle\VersioningBundle\UpdateGuesser\UpdateGuesserInterface;
 use Pim\Bundle\VersioningBundle\UpdateGuesser\VersionableUpdateGuesser;
 
@@ -22,8 +22,8 @@ class VersionableUpdateGuesserTest extends AbstractUpdateGuesserTest
     public function testGuessUpdates()
     {
         $versionables = array(
-            'Pim\Bundle\CatalogBundle\Entity\Attribute',
-            'Pim\Bundle\CatalogBundle\Entity\Family'
+            'Pim\Bundle\CatalogBundle\Model\Attribute',
+            'Pim\Bundle\CatalogBundle\Model\Family'
         );
         $attribute = new Attribute();
         $attribute->setCode('my code');

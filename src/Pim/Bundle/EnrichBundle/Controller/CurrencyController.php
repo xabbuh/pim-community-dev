@@ -5,7 +5,7 @@ namespace Pim\Bundle\EnrichBundle\Controller;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
 use Akeneo\Component\StorageUtils\Saver\SaverInterface;
-use Pim\Bundle\CatalogBundle\Entity\Currency;
+use Pim\Bundle\CatalogBundle\Model\Currency;
 use Pim\Bundle\EnrichBundle\AbstractController\AbstractDoctrineController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;

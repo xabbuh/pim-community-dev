@@ -35,7 +35,7 @@ class ImmutableValidator extends ConstraintValidator
     /**
      * Validate the property
      *
-     * @param \Pim\Bundle\CatalogBundle\Entity\Locale $entity
+     * @param \Pim\Bundle\CatalogBundle\Model\Locale $entity
      * @param Constraint                              $constraint
      */
     public function validate($entity, Constraint $constraint)

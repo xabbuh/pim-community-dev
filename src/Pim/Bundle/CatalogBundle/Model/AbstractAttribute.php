@@ -959,7 +959,7 @@ abstract class AbstractAttribute implements AttributeInterface
      */
     public function getTranslationFQCN()
     {
-        return 'Pim\Bundle\CatalogBundle\Entity\AttributeTranslation';
+        return 'Pim\Bundle\CatalogBundle\Model\AttributeTranslation';
     }
 
     /**

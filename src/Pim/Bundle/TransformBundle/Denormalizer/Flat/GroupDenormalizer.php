@@ -3,7 +3,7 @@
 namespace Pim\Bundle\TransformBundle\Denormalizer\Flat;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Pim\Bundle\CatalogBundle\Entity\GroupType;
+use Pim\Bundle\CatalogBundle\Model\GroupType;
 use Pim\Bundle\CatalogBundle\Model\GroupInterface;
 use Pim\Bundle\CatalogBundle\Repository\AttributeRepositoryInterface;
 use Pim\Bundle\CatalogBundle\Repository\GroupTypeRepositoryInterface;

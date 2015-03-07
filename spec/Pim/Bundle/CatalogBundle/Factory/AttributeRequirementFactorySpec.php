@@ -13,7 +13,7 @@ class AttributeRequirementFactorySpec extends ObjectBehavior
         ChannelInterface $channel
     ) {
         $attributeRequirement = $this->createAttributeRequirement($attribute, $channel, true);
-        $attributeRequirement->shouldBeAnInstanceOf('Pim\Bundle\CatalogBundle\Entity\AttributeRequirement');
+        $attributeRequirement->shouldBeAnInstanceOf('Pim\Bundle\CatalogBundle\Model\AttributeRequirement');
         $attributeRequirement->getAttribute()->shouldBeEqualTo($attribute);
         $attributeRequirement->getChannel()->shouldBeEqualTo($channel);
         $attributeRequirement->isRequired()->shouldReturn(true);
@@ -24,7 +24,7 @@ class AttributeRequirementFactorySpec extends ObjectBehavior
         ChannelInterface $channel
     ) {
         $attributeRequirement = $this->createAttributeRequirement($attribute, $channel, false);
-        $attributeRequirement->shouldBeAnInstanceOf('Pim\Bundle\CatalogBundle\Entity\AttributeRequirement');
+        $attributeRequirement->shouldBeAnInstanceOf('Pim\Bundle\CatalogBundle\Model\AttributeRequirement');
         $attributeRequirement->getAttribute()->shouldBeEqualTo($attribute);
         $attributeRequirement->getChannel()->shouldBeEqualTo($channel);
         $attributeRequirement->isRequired()->shouldReturn(false);

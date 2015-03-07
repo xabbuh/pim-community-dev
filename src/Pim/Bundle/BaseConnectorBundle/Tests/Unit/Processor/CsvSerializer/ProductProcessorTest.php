@@ -3,7 +3,7 @@
 namespace Pim\Bundle\BaseConnectorBundle\Tests\Unit\Processor\CsvSerializer;
 
 use Pim\Bundle\BaseConnectorBundle\Processor\CsvSerializer\ProductProcessor;
-use Pim\Bundle\CatalogBundle\Entity\Channel;
+use Pim\Bundle\CatalogBundle\Model\Channel;
 
 /**
  * Test related class

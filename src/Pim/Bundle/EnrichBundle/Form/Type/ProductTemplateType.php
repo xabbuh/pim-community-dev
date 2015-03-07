@@ -3,7 +3,7 @@
 namespace Pim\Bundle\EnrichBundle\Form\Type;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Pim\Bundle\CatalogBundle\Entity\AttributeGroup;
+use Pim\Bundle\CatalogBundle\Model\AttributeGroup;
 use Pim\Bundle\CatalogBundle\Manager\ChannelManager;
 use Pim\Bundle\EnrichBundle\Form\Subscriber\TransformProductTemplateValuesSubscriber;
 use Pim\Bundle\EnrichBundle\Form\View\ProductFormViewInterface;

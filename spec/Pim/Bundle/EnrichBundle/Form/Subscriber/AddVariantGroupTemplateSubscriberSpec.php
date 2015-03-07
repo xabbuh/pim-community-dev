@@ -3,8 +3,8 @@
 namespace spec\Pim\Bundle\EnrichBundle\Form\Subscriber;
 
 use PhpSpec\ObjectBehavior;
-use Pim\Bundle\CatalogBundle\Entity\Group;
-use Pim\Bundle\CatalogBundle\Entity\GroupType;
+use Pim\Bundle\CatalogBundle\Model\Group;
+use Pim\Bundle\CatalogBundle\Model\GroupType;
 use Pim\Bundle\UserBundle\Context\UserContext;
 use Prophecy\Argument;
 use Symfony\Component\Form\FormEvent;

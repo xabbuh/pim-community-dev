@@ -32,7 +32,7 @@ class FamilyTransformerTest extends EntityTransformerTestCase
             ->will(
                 $this->returnCallback(
                     function ($class, $data) {
-                        $this->assertEquals('Pim\Bundle\CatalogBundle\Entity\AttributeRequirement', $class);
+                        $this->assertEquals('Pim\Bundle\CatalogBundle\Model\AttributeRequirement', $class);
                         $option = $this->getMock($class);
                         foreach ($data as $key => $value) {
                             $option->expects($this->any())
@@ -52,12 +52,12 @@ class FamilyTransformerTest extends EntityTransformerTestCase
             $this->columnInfoTransformer,
             $this->transformerRegistry,
             $this->familyFactory,
-            'Pim\Bundle\CatalogBundle\Entity\AttributeRequirement'
+            'Pim\Bundle\CatalogBundle\Model\AttributeRequirement'
         );
         $this->addColumn('code');
         $this->setupRepositories();
 
-        $this->family = $this->getMock('Pim\Bundle\CatalogBundle\Entity\Family');
+        $this->family = $this->getMock('Pim\Bundle\CatalogBundle\Model\Family');
         $this->familyFactory
             ->expects($this->any())
             ->method('createFamily')
@@ -73,7 +73,7 @@ class FamilyTransformerTest extends EntityTransformerTestCase
         $this->doctrine
             ->expects($this->any())
             ->method('getRepository')
-            ->with($this->equalTo('Pim\Bundle\CatalogBundle\Entity\AttributeRequirement'))
+            ->with($this->equalTo('Pim\Bundle\CatalogBundle\Model\AttributeRequirement'))
             ->will($this->returnValue($this->repository));
     }
 
@@ -107,11 +107,11 @@ class FamilyTransformerTest extends EntityTransformerTestCase
         }
         $this->transformerRegistry->expects($this->any())
             ->method('getErrors')
-            ->with($this->equalTo('Pim\Bundle\CatalogBundle\Entity\AttributeRequirement'))
+            ->with($this->equalTo('Pim\Bundle\CatalogBundle\Model\AttributeRequirement'))
             ->will($this->returnValue($errors));
 
         $object = $this->transformer->transform(
-            'Pim\Bundle\CatalogBundle\Entity\AttributeRequirement',
+            'Pim\Bundle\CatalogBundle\Model\AttributeRequirement',
             array(
                 'code' => 'code',
                 'type' => 'type',
@@ -131,7 +131,7 @@ class FamilyTransformerTest extends EntityTransformerTestCase
             )
         );
 
-        $this->assertInstanceOf('Pim\Bundle\CatalogBundle\Entity\Family', $object);
+        $this->assertInstanceOf('Pim\Bundle\CatalogBundle\Model\Family', $object);
         if ($nestedErrors) {
             $this->assertEquals(
                 array(
@@ -143,10 +143,10 @@ class FamilyTransformerTest extends EntityTransformerTestCase
                         array('error'),
                     )
                 ),
-                $this->transformer->getErrors('Pim\Bundle\CatalogBundle\Entity\AttributeRequirement')
+                $this->transformer->getErrors('Pim\Bundle\CatalogBundle\Model\AttributeRequirement')
             );
         } else {
-            $this->assertEmpty($this->transformer->getErrors('Pim\Bundle\CatalogBundle\Entity\AttributeRequirement'));
+            $this->assertEmpty($this->transformer->getErrors('Pim\Bundle\CatalogBundle\Model\AttributeRequirement'));
         }
         $this->assertEquals('code_path-code', $object->code_path);
         $this->assertEquals('col1_path-val1', $object->col1_path);

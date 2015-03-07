@@ -108,12 +108,13 @@ class GroupType extends AbstractType
      */
     protected function addTypeField(FormBuilderInterface $builder)
     {
+        // TODO: inject FQCN
         $builder
             ->add(
                 'type',
                 'entity',
                 [
-                    'class' => 'PimCatalogBundle:GroupType',
+                    'class' => 'Pim\Bundle\CatalogBundle\Model\GroupType',
                     'query_builder' => function (EntityRepository $repository) {
                         return $repository->getAllGroupsExceptVariantQB();
                     },

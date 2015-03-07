@@ -1,4 +1,4 @@
-Pim\Bundle\CatalogBundle\Entity\Channel:
+Pim\Bundle\CatalogBundle\Model\Channel:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: code
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:

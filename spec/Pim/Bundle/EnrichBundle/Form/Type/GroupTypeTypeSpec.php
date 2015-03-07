@@ -17,7 +17,7 @@ class GroupTypeTypeSpec extends ObjectBehavior
     function let()
     {
         $this->beConstructedWith(
-            'Pim\Bundle\CatalogBundle\Entity\GroupType'
+            'Pim\Bundle\CatalogBundle\Model\GroupType'
         );
     }
 
@@ -37,7 +37,7 @@ class GroupTypeTypeSpec extends ObjectBehavior
 
         $resolver->setDefaults(
             [
-                'data_class' => 'Pim\Bundle\CatalogBundle\Entity\GroupType',
+                'data_class' => 'Pim\Bundle\CatalogBundle\Model\GroupType',
             ]
         )->shouldHaveBeenCalled();
     }

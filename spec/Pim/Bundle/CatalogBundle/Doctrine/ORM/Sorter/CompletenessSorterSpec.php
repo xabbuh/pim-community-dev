@@ -44,7 +44,7 @@ class CompletenessSorterSpec extends ObjectBehavior
         $qb->getEntityManager()->willReturn($em);
         $qb
             ->leftJoin(
-                'PimCatalogBundle:Locale',
+                'Pim\Bundle\CatalogBundle\Model\Locale',
                 'sorterCompletenessLocale',
                 'WITH',
                 'sorterCompletenessLocale.code = :cLocaleCode'
@@ -54,7 +54,7 @@ class CompletenessSorterSpec extends ObjectBehavior
         ;
         $qb
             ->leftJoin(
-                'PimCatalogBundle:Channel',
+                'Pim\Bundle\CatalogBundle\Model\Channel',
                 'sorterCompletenessChannel',
                 'WITH',
                 'sorterCompletenessChannel.code = :cScopeCode'

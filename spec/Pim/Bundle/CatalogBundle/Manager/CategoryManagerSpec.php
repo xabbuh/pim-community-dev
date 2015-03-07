@@ -13,7 +13,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class CategoryManagerSpec extends ObjectBehavior
 {
-    const CATEGORY_CLASS = 'Pim\Bundle\CatalogBundle\Entity\Category';
+    const CATEGORY_CLASS = 'Pim\Bundle\CatalogBundle\Model\Category';
 
     function let(
         ObjectManager $objectManager,

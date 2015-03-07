@@ -72,7 +72,7 @@ class AttributeCacheTest extends \PHPUnit_Framework_TestCase
      */
     public function addAttribute($code, $attributeType = 'default')
     {
-        $attribute = $this->getMock('Pim\Bundle\CatalogBundle\Entity\Attribute');
+        $attribute = $this->getMock('Pim\Bundle\CatalogBundle\Model\Attribute');
 
         $attribute->expects($this->any())
             ->method('getCode')
@@ -211,7 +211,7 @@ class AttributeCacheTest extends \PHPUnit_Framework_TestCase
 
         if (null !== $familyCode) {
             if (!isset($this->families[$familyCode])) {
-                $this->families[$familyCode] = $this->getMock('Pim\Bundle\CatalogBundle\Entity\Family');
+                $this->families[$familyCode] = $this->getMock('Pim\Bundle\CatalogBundle\Model\Family');
                 $this->addAttributeCollection($this->families[$familyCode], $familyCode, $familyAttributeCodes);
             }
             $product
@@ -223,7 +223,7 @@ class AttributeCacheTest extends \PHPUnit_Framework_TestCase
         $groups = array();
         foreach ($categories as $groupCode => $groupAttributeCodes) {
             if (!isset($this->groups[$groupCode])) {
-                $this->groups[$groupCode] = $this->getMock('Pim\Bundle\CatalogBundle\Entity\Group');
+                $this->groups[$groupCode] = $this->getMock('Pim\Bundle\CatalogBundle\Model\Group');
                 $this->addAttributeCollection($this->groups[$groupCode], $groupCode, $groupAttributeCodes);
             }
             $groups[] = $this->groups[$groupCode];

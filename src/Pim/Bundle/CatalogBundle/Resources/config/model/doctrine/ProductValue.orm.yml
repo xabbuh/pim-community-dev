@@ -69,7 +69,7 @@ Pim\Bundle\CatalogBundle\Model\ProductValue:
                     onDelete: CASCADE
                     nullable: false
         option:
-            targetEntity: Pim\Bundle\CatalogBundle\Entity\AttributeOption
+            targetEntity: Pim\Bundle\CatalogBundle\Model\AttributeOption
             cascade:
                 - persist
                 - refresh
@@ -86,7 +86,7 @@ Pim\Bundle\CatalogBundle\Model\ProductValue:
                     onDelete: CASCADE
     manyToMany:
         options:
-            targetEntity: Pim\Bundle\CatalogBundle\Entity\AttributeOption
+            targetEntity: Pim\Bundle\CatalogBundle\Model\AttributeOption
             cascade:
                 - refresh
             joinTable:

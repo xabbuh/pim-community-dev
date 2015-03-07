@@ -145,7 +145,7 @@ abstract class AbstractDoctrineController extends AbstractController
     /**
      * Find an entity or throw a 404
      *
-     * @param string  $className Example: 'PimCatalogBundle:Category'
+     * @param string  $className Example: 'Pim\Bundle\CatalogBundle\Model\Category'
      * @param integer $id        The id of the entity
      *
      * @throws NotFoundHttpException

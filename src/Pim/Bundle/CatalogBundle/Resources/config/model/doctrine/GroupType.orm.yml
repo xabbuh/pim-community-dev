@@ -1,0 +1,26 @@
+Pim\Bundle\CatalogBundle\Model\GroupType:
+    type: entity
+    table: pim_catalog_group_type
+    repositoryClass: Pim\Bundle\CatalogBundle\Model\Repository\GroupTypeRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        code:
+            type: string
+            length: 100
+            unique: true
+        variant:
+            type: boolean
+            column: is_variant
+    oneToMany:
+        groups:
+            targetEntity: Pim\Bundle\CatalogBundle\Model\Group
+            mappedBy: type
+        translations:
+            targetEntity: Pim\Bundle\CatalogBundle\Model\GroupTypeTranslation
+            mappedBy: foreignKey
+            cascade:
+                - persist

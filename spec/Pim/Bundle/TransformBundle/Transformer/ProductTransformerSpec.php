@@ -190,7 +190,7 @@ class ProductTransformerSpec extends ObjectBehavior
                 [
                     $relationFamily,
                     [
-                        'class' => 'Pim\Bundle\CatalogBundle\Entity\Family',
+                        'class' => 'Pim\Bundle\CatalogBundle\Model\Family',
                         'multiple' => false
                     ]
                 ]
@@ -200,7 +200,7 @@ class ProductTransformerSpec extends ObjectBehavior
                 [
                     $relationGroups,
                     [
-                        'class' => 'Pim\Bundle\CatalogBundle\Entity\Group',
+                        'class' => 'Pim\Bundle\CatalogBundle\Model\Group',
                         'multiple' => true
                     ]
                 ]
@@ -210,7 +210,7 @@ class ProductTransformerSpec extends ObjectBehavior
                 [
                     $relationCategories,
                     [
-                        'class' => 'Pim\Bundle\CatalogBundle\Entity\Category',
+                        'class' => 'Pim\Bundle\CatalogBundle\Model\Category',
                         'multiple' => true
                     ]
                 ]

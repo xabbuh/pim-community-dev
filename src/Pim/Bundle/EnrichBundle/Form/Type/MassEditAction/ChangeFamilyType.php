@@ -31,11 +31,12 @@ class ChangeFamilyType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // TODO: inject FQCN
         $builder->add(
             'family',
             'entity',
             [
-                'class'       => 'PimCatalogBundle:Family',
+                'class'       => 'Pim\Bundle\CatalogBundle\Model\Family',
                 'empty_value' => 'None',
                 'required'    => false,
                 'select2'     => true

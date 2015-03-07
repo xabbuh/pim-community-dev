@@ -2,7 +2,7 @@
 
 namespace Pim\Bundle\CatalogBundle\Command;
 
-use Pim\Bundle\CatalogBundle\Entity\Group;
+use Pim\Bundle\CatalogBundle\Model\Group;
 use Pim\Bundle\CatalogBundle\Model\ProductInterface;
 use Pim\Bundle\CatalogBundle\Model\ProductTemplateInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

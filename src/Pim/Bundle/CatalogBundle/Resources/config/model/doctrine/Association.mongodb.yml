@@ -5,11 +5,11 @@ Pim\Bundle\CatalogBundle\Model\Association:
             id: true
         associationType:
             type: entity
-            targetEntity: Pim\Bundle\CatalogBundle\Entity\AssociationType
+            targetEntity: Pim\Bundle\CatalogBundle\Model\AssociationType
         groups:
             notSaved: true
             type: entities
-            targetEntity: Pim\Bundle\CatalogBundle\Entity\Group
+            targetEntity: Pim\Bundle\CatalogBundle\Model\Group
             idsField: groupIds
         groupIds:
             type: collection

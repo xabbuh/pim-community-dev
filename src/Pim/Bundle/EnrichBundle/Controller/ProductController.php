@@ -256,7 +256,7 @@ class ProductController extends AbstractDoctrineController
 
         $this->dispatch(ProductEvents::POST_EDIT, new GenericEvent($product));
 
-        $channels = $this->getRepository('PimCatalogBundle:Channel')->findAll();
+        $channels = $this->getRepository('Pim\Bundle\CatalogBundle\Model\Channel')->findAll();
         $trees    = $this->getProductCountByTree($product);
 
         return $this->getProductEditTemplateParams($form, $product, $channels, $trees);
@@ -338,7 +338,7 @@ class ProductController extends AbstractDoctrineController
             $this->addFlash('error', 'flash.product.invalid');
         }
 
-        $channels = $this->getRepository('PimCatalogBundle:Channel')->findAll();
+        $channels = $this->getRepository('Pim\Bundle\CatalogBundle\Model\Channel')->findAll();
         $trees    = $this->productCatManager->getProductCountByTree($product);
 
         return $this->getProductEditTemplateParams($form, $product, $channels, $trees);
@@ -514,7 +514,7 @@ class ProductController extends AbstractDoctrineController
      *
      * @throws \Exception
      *
-     * @return \Pim\Bundle\CatalogBundle\Entity\Locale
+     * @return \Pim\Bundle\CatalogBundle\Model\Locale
      */
     protected function getDataLocale()
     {

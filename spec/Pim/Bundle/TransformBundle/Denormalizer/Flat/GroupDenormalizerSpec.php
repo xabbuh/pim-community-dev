@@ -4,9 +4,9 @@ namespace spec\Pim\Bundle\TransformBundle\Denormalizer\Flat;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use PhpSpec\ObjectBehavior;
-use Pim\Bundle\CatalogBundle\Entity\Group;
-use Pim\Bundle\CatalogBundle\Entity\GroupTranslation;
-use Pim\Bundle\CatalogBundle\Entity\GroupType;
+use Pim\Bundle\CatalogBundle\Model\Group;
+use Pim\Bundle\CatalogBundle\Model\GroupTranslation;
+use Pim\Bundle\CatalogBundle\Model\GroupType;
 use Pim\Bundle\CatalogBundle\Repository\GroupRepositoryInterface;
 use Pim\Bundle\CatalogBundle\Repository\AttributeRepositoryInterface;
 use Pim\Bundle\CatalogBundle\Repository\GroupTypeRepositoryInterface;
@@ -15,7 +15,7 @@ use Prophecy\Argument;
 
 class GroupDenormalizerSpec extends ObjectBehavior
 {
-    const ENTITY_CLASS = 'Pim\Bundle\CatalogBundle\Entity\Group';
+    const ENTITY_CLASS = 'Pim\Bundle\CatalogBundle\Model\Group';
     const FORMAT_CSV   = 'csv';
 
     function let(

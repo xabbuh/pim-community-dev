@@ -68,7 +68,8 @@ class AssociationController
 
         $this->productManager->ensureAllAssociationTypes($product);
 
-        $associationTypes = $this->doctrine->getRepository('PimCatalogBundle:AssociationType')->findAll();
+        // TODO: inject FQCN
+        $associationTypes = $this->doctrine->getRepository('Pim\Bundle\CatalogBundle\Model\AssociationType')->findAll();
 
         return $this->templating->renderResponse(
             'PimEnrichBundle:Association:_associations.html.twig',

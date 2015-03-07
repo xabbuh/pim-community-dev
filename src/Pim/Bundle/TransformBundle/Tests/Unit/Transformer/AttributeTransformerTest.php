@@ -23,7 +23,7 @@ class AttributeTransformerTest extends EntityTransformerTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->attribute = $this->getMock('Pim\Bundle\CatalogBundle\Entity\Attribute');
+        $this->attribute = $this->getMock('Pim\Bundle\CatalogBundle\Model\Attribute');
         $this->attributeManager = $this
             ->getMockBuilder('Pim\Bundle\CatalogBundle\Manager\AttributeManager')
             ->disableOriginalConstructor()
@@ -34,10 +34,10 @@ class AttributeTransformerTest extends EntityTransformerTestCase
             ->getMock();
         $this->attributeManager->expects($this->any())
             ->method('getAttributeClass')
-            ->will($this->returnValue('Pim\Bundle\CatalogBundle\Entity\Attribute'));
+            ->will($this->returnValue('Pim\Bundle\CatalogBundle\Model\Attribute'));
         $this->attributeOptionManager->expects($this->any())
             ->method('getAttributeOptionClass')
-            ->will($this->returnValue('Pim\Bundle\CatalogBundle\Entity\AttributeOption'));
+            ->will($this->returnValue('Pim\Bundle\CatalogBundle\Model\AttributeOption'));
         $this->doctrineCache = $this->getMockBuilder('Pim\Bundle\TransformBundle\Cache\DoctrineCache')
             ->disableOriginalConstructor()
             ->getMock();
@@ -64,7 +64,7 @@ class AttributeTransformerTest extends EntityTransformerTestCase
             ->will(
                 $this->returnCallback(
                     function ($class, $data) {
-                        $this->assertEquals('Pim\Bundle\CatalogBundle\Entity\AttributeOption', $class);
+                        $this->assertEquals('Pim\Bundle\CatalogBundle\Model\AttributeOption', $class);
                         $option = $this->getMock($class);
                         foreach ($data as $key => $value) {
                             $option->expects($this->any())
@@ -88,7 +88,7 @@ class AttributeTransformerTest extends EntityTransformerTestCase
         $this->doctrine
             ->expects($this->any())
             ->method('getRepository')
-            ->with($this->equalTo('Pim\Bundle\CatalogBundle\Entity\Attribute'))
+            ->with($this->equalTo('Pim\Bundle\CatalogBundle\Model\Attribute'))
             ->will($this->returnValue($this->repository));
     }
 
@@ -122,11 +122,11 @@ class AttributeTransformerTest extends EntityTransformerTestCase
         }
         $this->transformerRegistry->expects($this->any())
             ->method('getErrors')
-            ->with($this->equalTo('Pim\Bundle\CatalogBundle\Entity\AttributeOption'))
+            ->with($this->equalTo('Pim\Bundle\CatalogBundle\Model\AttributeOption'))
             ->will($this->returnValue($errors));
 
         $object = $this->transformer->transform(
-            'Pim\Bundle\CatalogBundle\Entity\Attribute',
+            'Pim\Bundle\CatalogBundle\Model\Attribute',
             array(
                 'code' => 'code',
                 'type' => 'type',
@@ -146,7 +146,7 @@ class AttributeTransformerTest extends EntityTransformerTestCase
             )
         );
 
-        $this->assertInstanceOf('Pim\Bundle\CatalogBundle\Entity\Attribute', $object);
+        $this->assertInstanceOf('Pim\Bundle\CatalogBundle\Model\Attribute', $object);
         if ($nestedErrors) {
             $this->assertEquals(
                 array(
@@ -155,10 +155,10 @@ class AttributeTransformerTest extends EntityTransformerTestCase
                         array('error')
                     )
                 ),
-                $this->transformer->getErrors('Pim\Bundle\CatalogBundle\Entity\Attribute')
+                $this->transformer->getErrors('Pim\Bundle\CatalogBundle\Model\Attribute')
             );
         } else {
-            $this->assertEmpty($this->transformer->getErrors('Pim\Bundle\CatalogBundle\Entity\Attribute'));
+            $this->assertEmpty($this->transformer->getErrors('Pim\Bundle\CatalogBundle\Model\Attribute'));
         }
         $this->assertEquals('code_path-code', $object->code_path);
         $this->assertEquals('col1_path-val1', $object->col1_path);

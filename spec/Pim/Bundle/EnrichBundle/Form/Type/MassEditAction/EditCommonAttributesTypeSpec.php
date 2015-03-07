@@ -15,8 +15,8 @@ class EditCommonAttributesTypeSpec extends ObjectBehavior
         $this->beConstructedWith(
             $productFormView,
             $localeHelper,
-            'Pim\Bundle\CatalogBundle\Entity\Attribute',
-            'Pim\Bundle\CatalogBundle\Entity\Locale',
+            'Pim\Bundle\CatalogBundle\Model\Attribute',
+            'Pim\Bundle\CatalogBundle\Model\Locale',
             'Pim\Bundle\EnrichBundle\MassEditAction\Operation\EditCommonAttributes'
         );
     }

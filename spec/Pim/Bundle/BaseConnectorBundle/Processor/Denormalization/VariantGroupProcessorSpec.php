@@ -7,8 +7,8 @@ use Akeneo\Bundle\BatchBundle\Item\InvalidItemException;
 use Akeneo\Component\StorageUtils\Detacher\ObjectDetacherInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
-use Pim\Bundle\CatalogBundle\Entity\Group;
-use Pim\Bundle\CatalogBundle\Entity\GroupType;
+use Pim\Bundle\CatalogBundle\Model\Group;
+use Pim\Bundle\CatalogBundle\Model\GroupType;
 use Pim\Bundle\CatalogBundle\Manager\ProductTemplateMediaManager;
 use Pim\Bundle\CatalogBundle\Model\AttributeInterface;
 use Pim\Bundle\CatalogBundle\Model\ProductTemplateInterface;
@@ -33,8 +33,8 @@ class VariantGroupProcessorSpec extends ObjectBehavior
         ProductTemplateMediaManager $templateMediaManager,
         StepExecution $stepExecution
     ) {
-        $templateClass = 'Pim\Bundle\CatalogBundle\Entity\ProductTemplate';
-        $groupClass = 'Pim\Bundle\CatalogBundle\Entity\Group';
+        $templateClass = 'Pim\Bundle\CatalogBundle\Model\ProductTemplate';
+        $groupClass = 'Pim\Bundle\CatalogBundle\Model\Group';
         $this->beConstructedWith(
             $groupRepository,
             $denormalizer,
@@ -107,7 +107,7 @@ class VariantGroupProcessorSpec extends ObjectBehavior
                 'label-en_US' => 'Tshirt',
                 'type' => 'VARIANT'
             ],
-            'Pim\Bundle\CatalogBundle\Entity\Group',
+            'Pim\Bundle\CatalogBundle\Model\Group',
             'csv',
             ['entity' => $variantGroup]
         )->shouldBeCalled()->willReturn($variantGroup);
@@ -150,7 +150,7 @@ class VariantGroupProcessorSpec extends ObjectBehavior
                 'label-en_US' => 'Tshirt',
                 'type' => 'VARIANT'
             ],
-            'Pim\Bundle\CatalogBundle\Entity\Group',
+            'Pim\Bundle\CatalogBundle\Model\Group',
             'csv',
             ['entity' => $variantGroup]
         )->willReturn($variantGroup);
@@ -239,7 +239,7 @@ class VariantGroupProcessorSpec extends ObjectBehavior
                 'label-en_US' => 'Tshirt',
                 'type' => 'VARIANT'
             ],
-            'Pim\Bundle\CatalogBundle\Entity\Group',
+            'Pim\Bundle\CatalogBundle\Model\Group',
             'csv',
             ['entity' => $variantGroup]
         )->shouldBeCalled()->willReturn($variantGroup);

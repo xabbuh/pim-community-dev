@@ -2,7 +2,7 @@
 
 namespace Pim\Bundle\EnrichBundle\Tests\Unit\Form\Subscriber;
 
-use Pim\Bundle\CatalogBundle\Entity\Family;
+use Pim\Bundle\CatalogBundle\Model\Family;
 use Pim\Bundle\CatalogBundle\Model\AttributeRequirementInterface;
 use Pim\Bundle\EnrichBundle\Form\Subscriber\AddAttributeRequirementsSubscriber;
 
@@ -119,7 +119,7 @@ class AddAttributeRequirementsSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function getAttributeRequirementMock($attribute, $channel = null)
     {
-        $requirement = $this->getMock('Pim\Bundle\CatalogBundle\Entity\AttributeRequirement');
+        $requirement = $this->getMock('Pim\Bundle\CatalogBundle\Model\AttributeRequirement');
 
         $requirement->expects($this->any())
             ->method('getAttribute')
@@ -159,11 +159,11 @@ class AddAttributeRequirementsSubscriberTest extends \PHPUnit_Framework_TestCase
     /**
      * @param string $code
      *
-     * @return \Pim\Bundle\CatalogBundle\Entity\Channel
+     * @return \Pim\Bundle\CatalogBundle\Model\Channel
      */
     private function getChannelMock($code)
     {
-        $channel = $this->getMock('Pim\Bundle\CatalogBundle\Entity\Channel');
+        $channel = $this->getMock('Pim\Bundle\CatalogBundle\Model\Channel');
 
         $channel->expects($this->any())
             ->method('getCode')
@@ -180,7 +180,7 @@ class AddAttributeRequirementsSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function getAttributeMock($code, $type = null)
     {
-        $attribute = $this->getMock('Pim\Bundle\CatalogBundle\Entity\Attribute');
+        $attribute = $this->getMock('Pim\Bundle\CatalogBundle\Model\Attribute');
 
         $attribute->expects($this->any())
             ->method('getCode')
@@ -224,7 +224,7 @@ class AddAttributeRequirementsSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     protected function getFamilyMock(array $requirements)
     {
-        $family = $this->getMock('Pim\Bundle\CatalogBundle\Entity\Family');
+        $family = $this->getMock('Pim\Bundle\CatalogBundle\Model\Family');
 
         $family->expects($this->any())
             ->method('getAttributeRequirements')

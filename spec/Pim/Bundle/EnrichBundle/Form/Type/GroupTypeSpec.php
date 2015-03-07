@@ -18,8 +18,8 @@ class GroupTypeSpec extends ObjectBehavior
     {
         $this->beConstructedWith(
             $productRepository,
-            'Pim\Bundle\CatalogBundle\Entity\Attribute',
-            'Pim\Bundle\CatalogBundle\Entity\Group'
+            'Pim\Bundle\CatalogBundle\Model\Attribute',
+            'Pim\Bundle\CatalogBundle\Model\Group'
         );
     }
 
@@ -39,7 +39,7 @@ class GroupTypeSpec extends ObjectBehavior
 
         $resolver->setDefaults(
             [
-                'data_class' => 'Pim\Bundle\CatalogBundle\Entity\Group',
+                'data_class' => 'Pim\Bundle\CatalogBundle\Model\Group',
             ]
         )->shouldHaveBeenCalled();
     }

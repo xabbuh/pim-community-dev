@@ -18,7 +18,7 @@ class ProductBuilderSpec extends ObjectBehavior
 {
     const PRODUCT_CLASS = 'Pim\Bundle\CatalogBundle\Model\Product';
     const VALUE_CLASS   = 'Pim\Bundle\CatalogBundle\Model\ProductValue';
-    const PRICE_CLASS   = 'Pim\Bundle\CatalogBundle\Entity\ProductPrice';
+    const PRICE_CLASS   = 'Pim\Bundle\CatalogBundle\Model\ProductPrice';
 
     function let(
         ChannelRepositoryInterface $channelRepository,

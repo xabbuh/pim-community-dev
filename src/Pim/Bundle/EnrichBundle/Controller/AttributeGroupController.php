@@ -7,7 +7,7 @@ use Akeneo\Component\StorageUtils\Saver\BulkSaverInterface;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
 use Oro\Bundle\SecurityBundle\SecurityFacade;
-use Pim\Bundle\CatalogBundle\Entity\AttributeGroup;
+use Pim\Bundle\CatalogBundle\Model\AttributeGroup;
 use Pim\Bundle\CatalogBundle\Manager\AttributeGroupManager;
 use Pim\Bundle\CatalogBundle\Model\AvailableAttributes;
 use Pim\Bundle\EnrichBundle\AbstractController\AbstractDoctrineController;
@@ -126,7 +126,8 @@ class AttributeGroupController extends AbstractDoctrineController
      */
     public function indexAction()
     {
-        $groups = $this->getRepository('PimCatalogBundle:AttributeGroup')->getIdToLabelOrderedBySortOrder();
+        // TODO: inject FQCN
+        $groups = $this->getRepository('Pim\Bundle\CatalogBundle\Model\AttributeGroup')->getIdToLabelOrderedBySortOrder();
 
         return [
             'groups' => $groups
@@ -161,7 +162,7 @@ class AttributeGroupController extends AbstractDoctrineController
             $attributesForm = null;
         }
 
-        $groups = $this->getRepository('PimCatalogBundle:AttributeGroup')->getIdToLabelOrderedBySortOrder();
+        $groups = $this->getRepository('Pim\Bundle\CatalogBundle\Model\AttributeGroup')->getIdToLabelOrderedBySortOrder();
 
         return [
             'groups'         => $groups,
@@ -182,7 +183,7 @@ class AttributeGroupController extends AbstractDoctrineController
      */
     public function editAction(AttributeGroup $group)
     {
-        $groups = $this->getRepository('PimCatalogBundle:AttributeGroup')->getIdToLabelOrderedBySortOrder();
+        $groups = $this->getRepository('Pim\Bundle\CatalogBundle\Model\AttributeGroup')->getIdToLabelOrderedBySortOrder();
 
         if ($this->formHandler->process($group)) {
             $this->addFlash('success', 'flash.attribute group.updated');
@@ -217,7 +218,7 @@ class AttributeGroupController extends AbstractDoctrineController
         if (!empty($data)) {
             $groups = [];
             foreach ($data as $id => $sort) {
-                $group = $this->getRepository('PimCatalogBundle:AttributeGroup')->find((int) $id);
+                $group = $this->getRepository('Pim\Bundle\CatalogBundle\Model\AttributeGroup')->find((int) $id);
                 if ($group) {
                     $group->setSortOrder((int) $sort);
                     $groups[] = $group;
@@ -299,7 +300,7 @@ class AttributeGroupController extends AbstractDoctrineController
      */
     public function addAttributesAction(Request $request, $id)
     {
-        $group               = $this->findOr404('PimCatalogBundle:AttributeGroup', $id);
+        $group               = $this->findOr404('Pim\Bundle\CatalogBundle\Model\AttributeGroup', $id);
         $availableAttributes = new AvailableAttributes();
 
         $attributesForm      = $this->getAvailableAttributesForm(
@@ -325,7 +326,7 @@ class AttributeGroupController extends AbstractDoctrineController
      */
     public function removeAttributeAction($groupId, $attributeId)
     {
-        $group     = $this->findOr404('PimCatalogBundle:AttributeGroup', $groupId);
+        $group     = $this->findOr404('Pim\Bundle\CatalogBundle\Model\AttributeGroup', $groupId);
         $attribute = $this->findOr404($this->attributeClass, $attributeId);
 
         if (false === $group->hasAttribute($attribute)) {
@@ -362,6 +363,6 @@ class AttributeGroupController extends AbstractDoctrineController
      */
     protected function getDefaultGroup()
     {
-        return $this->getRepository('PimCatalogBundle:AttributeGroup')->findDefaultAttributeGroup();
+        return $this->getRepository('Pim\Bundle\CatalogBundle\Model\AttributeGroup')->findDefaultAttributeGroup();
     }
 }

@@ -30,9 +30,9 @@ class FamilyNormalizerTest extends Structured\FamilyNormalizerTest
     public static function getSupportNormalizationData()
     {
         return array(
-            array('Pim\Bundle\CatalogBundle\Entity\Family', 'csv', true),
-            array('Pim\Bundle\CatalogBundle\Entity\Family', 'xml', false),
-            array('Pim\Bundle\CatalogBundle\Entity\Family', 'json', false),
+            array('Pim\Bundle\CatalogBundle\Model\Family', 'csv', true),
+            array('Pim\Bundle\CatalogBundle\Model\Family', 'xml', false),
+            array('Pim\Bundle\CatalogBundle\Model\Family', 'json', false),
             array('stdClass', 'csv', false),
             array('stdClass', 'xml', false),
             array('stdClass', 'json', false),

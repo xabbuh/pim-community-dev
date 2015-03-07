@@ -22,8 +22,8 @@ class AttributeTypeSpec extends ObjectBehavior
             $manager,
             $subscriber,
             'Pim\\Bundle\\CatalogBundle\\Entity\\AttributeTranslation',
-            'Pim\Bundle\CatalogBundle\Entity\Attribute',
-            'Pim\Bundle\CatalogBundle\Entity\AttributeGroup'
+            'Pim\Bundle\CatalogBundle\Model\Attribute',
+            'Pim\Bundle\CatalogBundle\Model\AttributeGroup'
         );
     }
 
@@ -95,7 +95,7 @@ class AttributeTypeSpec extends ObjectBehavior
                 [
                     'field'             => 'label',
                     'translation_class' => 'Pim\\Bundle\\CatalogBundle\\Entity\\AttributeTranslation',
-                    'entity_class'      => 'Pim\Bundle\CatalogBundle\Entity\Attribute',
+                    'entity_class'      => 'Pim\Bundle\CatalogBundle\Model\Attribute',
                     'property_path'     => 'translations'
                 ]
             )->shouldHaveBeenCalled();
@@ -109,7 +109,7 @@ class AttributeTypeSpec extends ObjectBehavior
                 'group',
                 'entity',
                 [
-                    'class'       => 'Pim\Bundle\CatalogBundle\Entity\AttributeGroup',
+                    'class'       => 'Pim\Bundle\CatalogBundle\Model\AttributeGroup',
                     'required'    => true,
                     'multiple'    => false,
                     'empty_value' => 'Choose the attribute group',
@@ -128,7 +128,7 @@ class AttributeTypeSpec extends ObjectBehavior
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Pim\Bundle\CatalogBundle\Entity\Attribute',
+                'data_class' => 'Pim\Bundle\CatalogBundle\Model\Attribute',
                 'cascade_validation' => true,
             ]
         )->shouldBeCalled();

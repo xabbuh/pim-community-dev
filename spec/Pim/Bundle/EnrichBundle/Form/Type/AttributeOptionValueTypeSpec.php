@@ -15,7 +15,7 @@ class AttributeOptionValueTypeSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->beConstructedWith('Pim\Bundle\CatalogBundle\Entity\AttributeOptionValue');
+        $this->beConstructedWith('Pim\Bundle\CatalogBundle\Model\AttributeOptionValue');
     }
 
     function it_is_a_form_type()
@@ -45,7 +45,7 @@ class AttributeOptionValueTypeSpec extends ObjectBehavior
 
         $resolver->setDefaults(
             [
-                'data_class' => 'Pim\Bundle\CatalogBundle\Entity\AttributeOptionValue',
+                'data_class' => 'Pim\Bundle\CatalogBundle\Model\AttributeOptionValue',
             ]
         )->shouldHaveBeenCalled();
     }

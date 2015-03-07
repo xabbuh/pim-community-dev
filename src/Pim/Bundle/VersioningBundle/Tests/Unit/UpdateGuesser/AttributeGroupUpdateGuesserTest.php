@@ -2,8 +2,8 @@
 
 namespace Pim\Bundle\VersioningBundle\Tests\Unit\UpdateGuesser;
 
-use Pim\Bundle\CatalogBundle\Entity\Attribute;
-use Pim\Bundle\CatalogBundle\Entity\AttributeGroup;
+use Pim\Bundle\CatalogBundle\Model\Attribute;
+use Pim\Bundle\CatalogBundle\Model\AttributeGroup;
 use Pim\Bundle\CatalogBundle\Model\AttributeGroupInterface;
 use Pim\Bundle\VersioningBundle\UpdateGuesser\AttributeGroupUpdateGuesser;
 use Pim\Bundle\VersioningBundle\UpdateGuesser\UpdateGuesserInterface;

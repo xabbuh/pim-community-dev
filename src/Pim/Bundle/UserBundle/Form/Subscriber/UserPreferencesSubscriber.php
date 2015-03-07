@@ -71,7 +71,7 @@ class UserPreferencesSubscriber implements EventSubscriberInterface
             'catalogLocale',
             'entity',
             array(
-                'class'         => 'PimCatalogBundle:Locale',
+                'class'         => 'Pim\Bundle\CatalogBundle\Model\Locale',
                 'property'      => 'code',
                 'select2'       => true,
                 'query_builder' => function (EntityRepository $repository) {
@@ -88,11 +88,12 @@ class UserPreferencesSubscriber implements EventSubscriberInterface
      */
     protected function updateCatalogScope(Form $form)
     {
+        // TODO: inject FQCN
         $form->add(
             'catalogScope',
             'entity',
             array(
-                'class'    => 'PimCatalogBundle:Channel',
+                'class'    => 'Pim\Bundle\CatalogBundle\Model\Channel',
                 'property' => 'label',
                 'select2'  => true
             )

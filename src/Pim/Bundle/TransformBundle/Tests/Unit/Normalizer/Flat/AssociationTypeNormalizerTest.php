@@ -30,9 +30,9 @@ class AssociationTypeNormalizerTest extends Structured\AssociationTypeNormalizer
     public static function getSupportNormalizationData()
     {
         return array(
-            array('Pim\Bundle\CatalogBundle\Entity\AssociationType', 'csv', true),
-            array('Pim\Bundle\CatalogBundle\Entity\AssociationType', 'xml', false),
-            array('Pim\Bundle\CatalogBundle\Entity\AssociationType', 'json', false),
+            array('Pim\Bundle\CatalogBundle\Model\AssociationType', 'csv', true),
+            array('Pim\Bundle\CatalogBundle\Model\AssociationType', 'xml', false),
+            array('Pim\Bundle\CatalogBundle\Model\AssociationType', 'json', false),
             array('stdClass', 'csv', false),
             array('stdClass', 'xml', false),
             array('stdClass', 'json', false),

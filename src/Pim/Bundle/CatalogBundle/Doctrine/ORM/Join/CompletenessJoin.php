@@ -46,15 +46,16 @@ class CompletenessJoin
             ->getAssociationMapping('completenesses');
         $completenessClass = $completenessMapping['targetEntity'];
 
+        // TODO: inject FQCN
         $this->qb
             ->leftJoin(
-                'PimCatalogBundle:Locale',
+                'Pim\Bundle\CatalogBundle\Model\Locale',
                 $localeAlias,
                 'WITH',
                 $localeAlias.'.code = :cLocaleCode'
             )
             ->leftJoin(
-                'PimCatalogBundle:Channel',
+                'Pim\Bundle\CatalogBundle\Model\Channel',
                 $channelAlias,
                 'WITH',
                 $channelAlias.'.code = :cScopeCode'

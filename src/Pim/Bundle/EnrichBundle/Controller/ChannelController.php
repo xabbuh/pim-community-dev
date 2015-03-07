@@ -5,7 +5,7 @@ namespace Pim\Bundle\EnrichBundle\Controller;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
 use Akeneo\Component\StorageUtils\Remover\RemoverInterface;
-use Pim\Bundle\CatalogBundle\Entity\Channel;
+use Pim\Bundle\CatalogBundle\Model\Channel;
 use Pim\Bundle\EnrichBundle\AbstractController\AbstractDoctrineController;
 use Pim\Bundle\EnrichBundle\Exception\DeleteException;
 use Pim\Bundle\EnrichBundle\Form\Handler\HandlerInterface;
@@ -149,7 +149,7 @@ class ChannelController extends AbstractDoctrineController
      */
     public function removeAction(Request $request, Channel $channel)
     {
-        $channelCount = $this->getRepository('PimCatalogBundle:Channel')->countAll();
+        $channelCount = $this->getRepository('Pim\Bundle\CatalogBundle\Model\Channel')->countAll();
         if ($channelCount <= 1) {
             throw new DeleteException($this->getTranslator()->trans('flash.channel.not removable'));
         }

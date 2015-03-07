@@ -22,7 +22,7 @@ class AvailableAttributesTypeSpec extends ObjectBehavior
             $attributeRepository,
             $userContext,
             $translator,
-            'Pim\Bundle\CatalogBundle\Entity\Attribute',
+            'Pim\Bundle\CatalogBundle\Model\Attribute',
             'Pim\Bundle\CatalogBundle\Model\AvailableAttributes'
         );
     }

@@ -18,8 +18,8 @@ class AssociationTypeSpec extends ObjectBehavior
             $productRepository,
             $entityManager,
             'Pim\Bundle\CatalogBundle\Model\Product',
-            'Pim\Bundle\CatalogBundle\Entity\AssociationType',
-            'Pim\Bundle\CatalogBundle\Entity\Group',
+            'Pim\Bundle\CatalogBundle\Model\AssociationType',
+            'Pim\Bundle\CatalogBundle\Model\Group',
             'Pim\Bundle\CatalogBundle\Model\AssociationInterface'
         );
     }
@@ -41,8 +41,8 @@ class AssociationTypeSpec extends ObjectBehavior
         GroupRepositoryInterface $groupRepository,
         AssociationRepositoryInterface $associationRepository
     ) {
-        $entityManager->getRepository('Pim\Bundle\CatalogBundle\Entity\Group')->willReturn($groupRepository);
-        $entityManager->getRepository('Pim\Bundle\CatalogBundle\Entity\AssociationType')->willReturn(
+        $entityManager->getRepository('Pim\Bundle\CatalogBundle\Model\Group')->willReturn($groupRepository);
+        $entityManager->getRepository('Pim\Bundle\CatalogBundle\Model\AssociationType')->willReturn(
             $associationRepository
         );
 

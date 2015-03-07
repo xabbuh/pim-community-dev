@@ -5,7 +5,7 @@ namespace Pim\Bundle\EnrichBundle\Controller;
 use Akeneo\Component\StorageUtils\Remover\RemoverInterface;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
-use Pim\Bundle\CatalogBundle\Entity\AssociationType;
+use Pim\Bundle\CatalogBundle\Model\AssociationType;
 use Pim\Bundle\CatalogBundle\Manager\AssociationManager;
 use Pim\Bundle\CatalogBundle\Manager\AssociationTypeManager;
 use Pim\Bundle\EnrichBundle\AbstractController\AbstractDoctrineController;
@@ -158,7 +158,8 @@ class AssociationTypeController extends AbstractDoctrineController
      */
     public function editAction(Request $request, $id)
     {
-        $associationType = $this->findOr404('PimCatalogBundle:AssociationType', $id);
+        // TODO: inject FQCN
+        $associationType = $this->findOr404('Pim\Bundle\CatalogBundle\Model\AssociationType', $id);
 
         if ($this->assocTypeHandler->process($associationType)) {
             $this->addFlash('success', 'flash.association type.updated');

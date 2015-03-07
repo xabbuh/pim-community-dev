@@ -31,7 +31,7 @@ class CreateAttributeRequirementSubscriberSpec extends ObjectBehavior
         $eventArgs->getEntityManager()
             ->willReturn($entityManager);
 
-        $entityManager->getRepository(Argument::exact('PimCatalogBundle:Family'))
+        $entityManager->getRepository(Argument::exact('Pim\Bundle\CatalogBundle\Model\Family'))
             ->willReturn($repository);
 
         $repository->findAll()
@@ -79,7 +79,7 @@ class CreateAttributeRequirementSubscriberSpec extends ObjectBehavior
         $eventArgs->getEntityManager()
             ->shouldBeCalled();
 
-        $entityManager->getRepository(Argument::exact('PimCatalogBundle:Family'))
+        $entityManager->getRepository(Argument::exact('Pim\Bundle\CatalogBundle\Model\Family'))
             ->shouldBeCalled();
 
         $repository->findAll()

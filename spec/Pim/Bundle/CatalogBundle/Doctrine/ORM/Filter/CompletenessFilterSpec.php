@@ -50,13 +50,13 @@ class CompletenessFilterSpec extends ObjectBehavior
             ->willReturn($comparison);
         $this->setQueryBuilder($qb);
         $qb->leftJoin(
-            'PimCatalogBundle:Locale',
+            'Pim\Bundle\CatalogBundle\Model\Locale',
             Argument::any(),
             'WITH',
             Argument::any()
         )->willReturn($qb);
         $qb->leftJoin(
-            'PimCatalogBundle:Channel',
+            'Pim\Bundle\CatalogBundle\Model\Channel',
             Argument::any(),
             'WITH',
             Argument::any()
@@ -95,13 +95,13 @@ class CompletenessFilterSpec extends ObjectBehavior
             ->willReturn($comparison);
         $this->setQueryBuilder($qb);
         $qb->leftJoin(
-            'PimCatalogBundle:Locale',
+            'Pim\Bundle\CatalogBundle\Model\Locale',
             Argument::any(),
             'WITH',
             Argument::any()
         )->willReturn($qb);
         $qb->leftJoin(
-            'PimCatalogBundle:Channel',
+            'Pim\Bundle\CatalogBundle\Model\Channel',
             Argument::any(),
             'WITH',
             Argument::any()

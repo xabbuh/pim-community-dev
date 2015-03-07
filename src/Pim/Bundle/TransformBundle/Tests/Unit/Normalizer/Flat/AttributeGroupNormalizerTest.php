@@ -30,9 +30,9 @@ class AttributeGroupNormalizerTest extends Structured\AttributeGroupNormalizerTe
     public static function getSupportNormalizationData()
     {
         return array(
-            array('Pim\Bundle\CatalogBundle\Entity\AttributeGroup', 'csv', true),
-            array('Pim\Bundle\CatalogBundle\Entity\AttributeGroup', 'xml', false),
-            array('Pim\Bundle\CatalogBundle\Entity\AttributeGroup', 'json', false),
+            array('Pim\Bundle\CatalogBundle\Model\AttributeGroup', 'csv', true),
+            array('Pim\Bundle\CatalogBundle\Model\AttributeGroup', 'xml', false),
+            array('Pim\Bundle\CatalogBundle\Model\AttributeGroup', 'json', false),
             array('stdClass', 'csv', false),
             array('stdClass', 'xml', false),
             array('stdClass', 'json', false),

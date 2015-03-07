@@ -1,4 +1,4 @@
-Pim\Bundle\CatalogBundle\Entity\GroupType:
+Pim\Bundle\CatalogBundle\Model\GroupType:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: code
         - Pim\Bundle\CatalogBundle\Validator\Constraints\Immutable:
@@ -15,7 +15,7 @@ Pim\Bundle\CatalogBundle\Entity\GroupType:
         translations:
             - Valid: ~
 
-Pim\Bundle\CatalogBundle\Entity\GroupTypeTranslation:
+Pim\Bundle\CatalogBundle\Model\GroupTypeTranslation:
     properties:
         label:
             - Length:

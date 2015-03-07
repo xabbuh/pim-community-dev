@@ -52,7 +52,8 @@ class CreateAttributeRequirementSubscriber implements EventSubscriber
         }
 
         $entityManager = $event->getEntityManager();
-        $families = $entityManager->getRepository('PimCatalogBundle:Family')->findAll();
+        // TODO: inject FQCN
+        $families = $entityManager->getRepository('Pim\Bundle\CatalogBundle\Model\Family')->findAll();
 
         foreach ($families as $family) {
             foreach ($family->getAttributes() as $attribute) {

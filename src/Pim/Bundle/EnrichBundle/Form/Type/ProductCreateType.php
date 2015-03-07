@@ -35,7 +35,7 @@ class ProductCreateType extends AbstractType
                 'family',
                 'entity',
                 array(
-                    'class'       => 'Pim\Bundle\CatalogBundle\Entity\Family',
+                    'class'       => 'Pim\Bundle\CatalogBundle\Model\Family',
                     'required'    => false,
                     'empty_value' => "",
                     'select2'     => true,

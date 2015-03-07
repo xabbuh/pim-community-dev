@@ -18,9 +18,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class GroupManagerSpec extends ObjectBehavior
 {
-    const ATTRIBUTE_CLASS  = 'Pim\Bundle\CatalogBundle\Entity\Attribute';
-    const GROUP_CLASS      = 'Pim\Bundle\CatalogBundle\Entity\Group';
-    const GROUP_TYPE_CLASS = 'Pim\Bundle\CatalogBundle\Entity\GroupType';
+    const ATTRIBUTE_CLASS  = 'Pim\Bundle\CatalogBundle\Model\Attribute';
+    const GROUP_CLASS      = 'Pim\Bundle\CatalogBundle\Model\Group';
+    const GROUP_TYPE_CLASS = 'Pim\Bundle\CatalogBundle\Model\GroupType';
     const PRODUCT_CLASS    = 'Pim\Bundle\CatalogBundle\Model\Product';
 
     function let(

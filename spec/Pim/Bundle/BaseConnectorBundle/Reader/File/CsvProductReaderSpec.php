@@ -21,20 +21,20 @@ class CsvProductReaderSpec extends ObjectBehavior
         LocaleRepositoryInterface $localeRepository,
         CurrencyRepositoryInterface $currencyRepository
     ) {
-        $em->getRepository('Pim\Bundle\CatalogBundle\Entity\Attribute')->willReturn($attributeRepository);
-        $em->getRepository('Pim\Bundle\CatalogBundle\Entity\Channel')->willReturn($channelRepository);
-        $em->getRepository('Pim\Bundle\CatalogBundle\Entity\Locale')->willReturn($localeRepository);
-        $em->getRepository('Pim\Bundle\CatalogBundle\Entity\Currency')->willReturn($currencyRepository);
+        $em->getRepository('Pim\Bundle\CatalogBundle\Model\Attribute')->willReturn($attributeRepository);
+        $em->getRepository('Pim\Bundle\CatalogBundle\Model\Channel')->willReturn($channelRepository);
+        $em->getRepository('Pim\Bundle\CatalogBundle\Model\Locale')->willReturn($localeRepository);
+        $em->getRepository('Pim\Bundle\CatalogBundle\Model\Currency')->willReturn($currencyRepository);
 
         $attributeRepository->findMediaAttributeCodes()->willReturn(['view', 'manual']);
 
         $this->beConstructedWith(
             $em,
             $fieldNameBuilder,
-            'Pim\Bundle\CatalogBundle\Entity\Attribute',
-            'Pim\Bundle\CatalogBundle\Entity\Channel',
-            'Pim\Bundle\CatalogBundle\Entity\Locale',
-            'Pim\Bundle\CatalogBundle\Entity\Currency'
+            'Pim\Bundle\CatalogBundle\Model\Attribute',
+            'Pim\Bundle\CatalogBundle\Model\Channel',
+            'Pim\Bundle\CatalogBundle\Model\Locale',
+            'Pim\Bundle\CatalogBundle\Model\Currency'
         );
     }
 

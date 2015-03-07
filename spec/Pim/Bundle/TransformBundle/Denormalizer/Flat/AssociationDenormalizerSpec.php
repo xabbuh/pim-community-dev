@@ -4,7 +4,7 @@ namespace spec\Pim\Bundle\TransformBundle\Denormalizer\Flat;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use PhpSpec\ObjectBehavior;
-use Pim\Bundle\CatalogBundle\Entity\Group;
+use Pim\Bundle\CatalogBundle\Model\Group;
 use Pim\Bundle\CatalogBundle\Model\Association;
 use Pim\Bundle\CatalogBundle\Model\ProductInterface;
 use Prophecy\Argument;
@@ -13,8 +13,8 @@ use Symfony\Component\Serializer\Serializer;
 class AssociationDenormalizerSpec extends ObjectBehavior
 {
     const ENTITY_CLASS     = 'Pim\Bundle\CatalogBundle\Model\Association';
-    const ASSOC_TYPE_CLASS = 'Pim\Bundle\CatalogBundle\Entity\AssociationType';
-    const GROUP_CLASS      = 'Pim\Bundle\CatalogBundle\Entity\Group';
+    const ASSOC_TYPE_CLASS = 'Pim\Bundle\CatalogBundle\Model\AssociationType';
+    const GROUP_CLASS      = 'Pim\Bundle\CatalogBundle\Model\Group';
     const PRODUCT_CLASS    = 'Pim\Bundle\CatalogBundle\Model\ProductInterface';
 
     const FORMAT_CSV    = 'csv';

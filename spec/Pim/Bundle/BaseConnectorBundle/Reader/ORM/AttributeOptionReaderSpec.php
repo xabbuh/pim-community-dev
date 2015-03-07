@@ -14,7 +14,7 @@ class AttributeOptionReaderSpec extends ObjectBehavior
     function let(
         EntityManager $entityManager
     ) {
-        $this->beConstructedWith($entityManager, 'Pim\Bundle\CatalogBundle\Entity\AttributeOption');
+        $this->beConstructedWith($entityManager, 'Pim\Bundle\CatalogBundle\Model\AttributeOption');
     }
 
     function it_should_be_a_reader()

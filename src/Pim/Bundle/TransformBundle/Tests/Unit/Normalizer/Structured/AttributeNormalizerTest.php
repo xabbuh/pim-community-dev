@@ -2,11 +2,11 @@
 
 namespace Pim\Bundle\TransformBundle\Tests\Unit\Normalizer\Structured;
 
-use Pim\Bundle\CatalogBundle\Entity\Attribute;
-use Pim\Bundle\CatalogBundle\Entity\AttributeGroup;
-use Pim\Bundle\CatalogBundle\Entity\AttributeOption;
-use Pim\Bundle\CatalogBundle\Entity\AttributeOptionValue;
-use Pim\Bundle\CatalogBundle\Entity\Locale;
+use Pim\Bundle\CatalogBundle\Model\Attribute;
+use Pim\Bundle\CatalogBundle\Model\AttributeGroup;
+use Pim\Bundle\CatalogBundle\Model\AttributeOption;
+use Pim\Bundle\CatalogBundle\Model\AttributeOptionValue;
+use Pim\Bundle\CatalogBundle\Model\Locale;
 use Pim\Bundle\CatalogBundle\Model\AttributeInterface;
 use Pim\Bundle\TransformBundle\Normalizer\Structured\AttributeNormalizer;
 use Pim\Bundle\TransformBundle\Normalizer\Structured\TranslationNormalizer;
@@ -35,9 +35,9 @@ class AttributeNormalizerTest extends NormalizerTestCase
     public static function getSupportNormalizationData()
     {
         return array(
-            array('Pim\Bundle\CatalogBundle\Entity\Attribute', 'json', true),
-            array('Pim\Bundle\CatalogBundle\Entity\Attribute', 'xml', true),
-            array('Pim\Bundle\CatalogBundle\Entity\Attribute', 'csv', false),
+            array('Pim\Bundle\CatalogBundle\Model\Attribute', 'json', true),
+            array('Pim\Bundle\CatalogBundle\Model\Attribute', 'xml', true),
+            array('Pim\Bundle\CatalogBundle\Model\Attribute', 'csv', false),
             array('stdClass', 'json', false),
             array('stdClass', 'xml', false),
             array('stdClass', 'csv', false),

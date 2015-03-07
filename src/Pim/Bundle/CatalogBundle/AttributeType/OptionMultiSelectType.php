@@ -22,7 +22,8 @@ class OptionMultiSelectType extends AbstractAttributeType
     {
         $options = parent::prepareValueFormOptions($value);
         $attribute = $value->getAttribute();
-        $options['class']                = 'PimCatalogBundle:AttributeOption';
+        // TODO: inject FQCN
+        $options['class']                = 'Pim\Bundle\CatalogBundle\Model\AttributeOption';
         $options['collection_id']        = $attribute->getId();
         $options['multiple']             = true;
         $options['minimum_input_length'] = $attribute->getMinimumInputLength();

@@ -52,7 +52,7 @@ class OptionSimpleSelectTypeSpec extends ObjectBehavior
             'required'             => false,
             'auto_initialize'      => false,
             'label_attr'           => ['truncate' => true],
-            'class'                => 'PimCatalogBundle:AttributeOption',
+            'class'                => 'Pim\Bundle\CatalogBundle\Model\AttributeOption',
             'collection_id'        => 42,
             'minimum_input_length' => 10
         ]);

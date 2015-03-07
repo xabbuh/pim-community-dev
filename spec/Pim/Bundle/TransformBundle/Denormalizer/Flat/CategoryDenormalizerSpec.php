@@ -10,7 +10,7 @@ use Prophecy\Argument;
 
 class CategoryDenormalizerSpec extends ObjectBehavior
 {
-    const ENTITY_CLASS = 'Pim\Bundle\CatalogBundle\Entity\CategoryInterface';
+    const ENTITY_CLASS = 'Pim\Bundle\CatalogBundle\Model\CategoryInterface';
     const FORMAT_CSV   = 'csv';
 
     function let(ManagerRegistry $registry, CategoryRepositoryInterface $repository)

@@ -1,4 +1,4 @@
-Pim\Bundle\CatalogBundle\Entity\AssociationType:
+Pim\Bundle\CatalogBundle\Model\AssociationType:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: code
         - Pim\Bundle\CatalogBundle\Validator\Constraints\Immutable:
@@ -15,7 +15,7 @@ Pim\Bundle\CatalogBundle\Entity\AssociationType:
         translations:
             - Valid: ~
 
-Pim\Bundle\CatalogBundle\Entity\AssociationTypeTranslation:
+Pim\Bundle\CatalogBundle\Model\AssociationTypeTranslation:
     properties:
         label:
             - Length:

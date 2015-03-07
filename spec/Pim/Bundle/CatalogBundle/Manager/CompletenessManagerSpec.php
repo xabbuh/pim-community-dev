@@ -24,7 +24,7 @@ class CompletenessManagerSpec extends ObjectBehavior
             $localeRepository,
             $generator,
             $validator,
-            'Pim\Bundle\CatalogBundle\Entity\Channel'
+            'Pim\Bundle\CatalogBundle\Model\Channel'
         );
     }
 }

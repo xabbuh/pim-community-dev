@@ -22,8 +22,8 @@ class ChannelTypeSpec extends ObjectBehavior
             $localeManager,
             $localeHelper,
             $provider,
-            'Pim\Bundle\CatalogBundle\Entity\Category',
-            'Pim\Bundle\CatalogBundle\Entity\Channel'
+            'Pim\Bundle\CatalogBundle\Model\Category',
+            'Pim\Bundle\CatalogBundle\Model\Channel'
         );
     }
 
@@ -43,7 +43,7 @@ class ChannelTypeSpec extends ObjectBehavior
 
         $resolver->setDefaults(
             [
-                'data_class' => 'Pim\Bundle\CatalogBundle\Entity\Channel',
+                'data_class' => 'Pim\Bundle\CatalogBundle\Model\Channel',
             ]
         )->shouldHaveBeenCalled();
     }

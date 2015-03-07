@@ -6,8 +6,8 @@ use Akeneo\Bundle\BatchBundle\Entity\StepExecution;
 use Akeneo\Bundle\BatchBundle\Item\InvalidItemException;
 use Akeneo\Component\StorageUtils\Detacher\ObjectDetacherInterface;
 use PhpSpec\ObjectBehavior;
-use Pim\Bundle\CatalogBundle\Entity\Group;
-use Pim\Bundle\CatalogBundle\Entity\GroupType;
+use Pim\Bundle\CatalogBundle\Model\Group;
+use Pim\Bundle\CatalogBundle\Model\GroupType;
 use Pim\Bundle\CatalogBundle\Repository\GroupRepositoryInterface;
 use Prophecy\Argument;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -25,7 +25,7 @@ class GroupProcessorSpec extends ObjectBehavior
         ObjectDetacherInterface $detacher,
         StepExecution $stepExecution
     ) {
-        $groupClass = 'Pim\Bundle\CatalogBundle\Entity\Group';
+        $groupClass = 'Pim\Bundle\CatalogBundle\Model\Group';
         $this->beConstructedWith(
             $groupRepository,
             $denormalizer,
@@ -94,7 +94,7 @@ class GroupProcessorSpec extends ObjectBehavior
                 'label-en_US' => 'Akeneo XSELL',
                 'type' => 'XSELL'
             ],
-            'Pim\Bundle\CatalogBundle\Entity\Group',
+            'Pim\Bundle\CatalogBundle\Model\Group',
             'csv',
             ['entity' => $group]
         )->shouldBeCalled()->willReturn($group);
@@ -132,7 +132,7 @@ class GroupProcessorSpec extends ObjectBehavior
                 'label-en_US' => 'Akeneo XSELL',
                 'type' => 'XSELL'
             ],
-            'Pim\Bundle\CatalogBundle\Entity\Group',
+            'Pim\Bundle\CatalogBundle\Model\Group',
             'csv',
             ['entity' => $group]
         )->shouldBeCalled()->willReturn($group);
@@ -172,7 +172,7 @@ class GroupProcessorSpec extends ObjectBehavior
                 'label-en_US' => 'Akeneo XSELL',
                 'type' => 'XSELL'
             ],
-            'Pim\Bundle\CatalogBundle\Entity\Group',
+            'Pim\Bundle\CatalogBundle\Model\Group',
             'csv',
             ['entity' => $group]
         )->shouldBeCalled()->willReturn($group);

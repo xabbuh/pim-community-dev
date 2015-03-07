@@ -2,7 +2,7 @@
 
 namespace Pim\Bundle\TransformBundle\Tests\Unit\Normalizer\Structured;
 
-use Pim\Bundle\CatalogBundle\Entity\Category;
+use Pim\Bundle\CatalogBundle\Model\Category;
 use Pim\Bundle\TransformBundle\Normalizer\Structured\CategoryNormalizer;
 use Pim\Bundle\TransformBundle\Normalizer\Structured\TranslationNormalizer;
 
@@ -33,9 +33,9 @@ class CategoryNormalizerTest extends NormalizerTestCase
             array('Pim\Bundle\CatalogBundle\Model\CategoryInterface', 'json', true),
             array('Pim\Bundle\CatalogBundle\Model\CategoryInterface', 'xml', true),
             array('Pim\Bundle\CatalogBundle\Model\CategoryInterface', 'csv', false),
-            array('Pim\Bundle\CatalogBundle\Entity\Category', 'json', true),
-            array('Pim\Bundle\CatalogBundle\Entity\Category', 'xml', true),
-            array('Pim\Bundle\CatalogBundle\Entity\Category', 'csv', false),
+            array('Pim\Bundle\CatalogBundle\Model\Category', 'json', true),
+            array('Pim\Bundle\CatalogBundle\Model\Category', 'xml', true),
+            array('Pim\Bundle\CatalogBundle\Model\Category', 'csv', false),
             array('stdClass', 'json', false),
             array('stdClass', 'xml', false),
             array('stdClass', 'csv', false),

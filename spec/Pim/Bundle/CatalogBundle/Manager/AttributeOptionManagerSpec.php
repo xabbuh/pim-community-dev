@@ -5,12 +5,12 @@ namespace spec\Pim\Bundle\CatalogBundle\Manager;
 use Doctrine\Common\Persistence\ObjectManager;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Pim\Bundle\CatalogBundle\Entity\AttributeOption;
+use Pim\Bundle\CatalogBundle\Model\AttributeOption;
 
 class AttributeOptionManagerSpec extends ObjectBehavior
 {
-    const OPTION_CLASS    = 'Pim\Bundle\CatalogBundle\Entity\AttributeOption';
-    const OPT_VALUE_CLASS = 'Pim\Bundle\CatalogBundle\Entity\AttributeOptionValue';
+    const OPTION_CLASS    = 'Pim\Bundle\CatalogBundle\Model\AttributeOption';
+    const OPT_VALUE_CLASS = 'Pim\Bundle\CatalogBundle\Model\AttributeOptionValue';
 
     function let(
         ObjectManager $objectManager,

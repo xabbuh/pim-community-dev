@@ -122,7 +122,7 @@ class ColumnInfoTest extends \PHPUnit_Framework_TestCase
 
     protected function getAttributeMock($localizable = false, $scopable = false)
     {
-        $attribute = $this->getMock('Pim\Bundle\CatalogBundle\Entity\Attribute');
+        $attribute = $this->getMock('Pim\Bundle\CatalogBundle\Model\Attribute');
         $attribute->expects($this->any())
             ->method('isLocalizable')
             ->will($this->returnValue($localizable));

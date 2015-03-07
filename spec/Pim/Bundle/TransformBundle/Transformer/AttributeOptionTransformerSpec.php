@@ -44,7 +44,7 @@ class AttributeOptionTransformerSpec extends ObjectBehavior
         DefaultTransformer $defaultTransformer,
         AttributeInterface $attribute
     ) {
-        $class = 'Pim\Bundle\CatalogBundle\Entity\AttributeOption';
+        $class = 'Pim\Bundle\CatalogBundle\Model\AttributeOption';
         $data = ['code' => 'blue', 'attribute' => 'color'];
 
         $doctrine->getManagerForClass($class)->willReturn($em);
@@ -74,7 +74,7 @@ class AttributeOptionTransformerSpec extends ObjectBehavior
         GuesserInterface $guesser,
         DefaultTransformer $defaultTransformer
     ) {
-        $class = 'Pim\Bundle\CatalogBundle\Entity\AttributeOption';
+        $class = 'Pim\Bundle\CatalogBundle\Model\AttributeOption';
         $data = ['code' => 'blue', 'attribute' => 'color'];
 
         $doctrine->getManagerForClass($class)->willReturn($em);

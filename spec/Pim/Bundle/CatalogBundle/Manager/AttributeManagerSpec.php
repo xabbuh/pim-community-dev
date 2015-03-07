@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AttributeManagerSpec extends ObjectBehavior
 {
-    const ATTRIBUTE_CLASS = 'Pim\Bundle\CatalogBundle\Entity\Attribute';
+    const ATTRIBUTE_CLASS = 'Pim\Bundle\CatalogBundle\Model\Attribute';
     const PRODUCT_CLASS   = 'Pim\Bundle\CatalogBundle\Model\Product';
 
     function let(

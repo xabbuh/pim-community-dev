@@ -4,7 +4,7 @@ namespace Pim\Bundle\CatalogBundle\Doctrine\ORM\Repository;
 
 use Doctrine\ORM\AbstractQuery;
 use Pim\Bundle\CatalogBundle\Doctrine\ReferableEntityRepository;
-use Pim\Bundle\CatalogBundle\Entity\AttributeGroup;
+use Pim\Bundle\CatalogBundle\Model\AttributeGroup;
 use Pim\Bundle\CatalogBundle\Repository\AttributeGroupRepositoryInterface;
 
 /**

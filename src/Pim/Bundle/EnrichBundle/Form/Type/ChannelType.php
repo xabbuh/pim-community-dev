@@ -143,7 +143,7 @@ class ChannelType extends AbstractType
                 'required'      => true,
                 'multiple'      => true,
                 'select2'       => true,
-                'class'         => 'Pim\Bundle\CatalogBundle\Entity\Currency',
+                'class'         => 'Pim\Bundle\CatalogBundle\Model\Currency',
                 'query_builder' => function (CurrencyRepositoryInterface $repository) {
                     return $repository->getActivatedCurrenciesQB();
                 }
@@ -183,7 +183,7 @@ class ChannelType extends AbstractType
                 'multiple'          => true,
                 'select2'           => true,
                 'by_reference'      => false,
-                'class'             => 'Pim\Bundle\CatalogBundle\Entity\Locale',
+                'class'             => 'Pim\Bundle\CatalogBundle\Model\Locale',
                 'query_builder'     => function (LocaleRepositoryInterface $repository) {
                     return $repository->getLocalesQB();
                 },

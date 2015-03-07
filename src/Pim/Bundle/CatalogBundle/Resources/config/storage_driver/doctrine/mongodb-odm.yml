@@ -299,7 +299,7 @@ services:
         class: %pim_catalog.mongodb_odm_query_generator.family_label_updated.class%
         parent: pim_catalog.mongodb_odm_query_generator.abstract_normalized_data
         arguments:
-            - 'Pim\Bundle\CatalogBundle\Entity\FamilyTranslation'
+            - 'Pim\Bundle\CatalogBundle\Model\FamilyTranslation'
             - 'label'
         tags:
             - { name: pim_catalog.mongodb_odm_query_generator }

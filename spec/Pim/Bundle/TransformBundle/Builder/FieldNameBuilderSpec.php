@@ -14,10 +14,10 @@ use Pim\Bundle\CatalogBundle\Repository\AttributeRepositoryInterface;
 
 class FieldNameBuilderSpec extends ObjectBehavior
 {
-    const ASSOC_TYPE_CLASS = 'Pim\Bundle\CatalogBundle\Entity\AssociationType';
-    const ATTRIBUTE_CLASS  = 'Pim\Bundle\CatalogBundle\Entity\Attribute';
-    const CHANNEL_CLASS  = 'Pim\Bundle\CatalogBundle\Entity\Channel';
-    const LOCALE_CLASS  = 'Pim\Bundle\CatalogBundle\Entity\Locale';
+    const ASSOC_TYPE_CLASS = 'Pim\Bundle\CatalogBundle\Model\AssociationType';
+    const ATTRIBUTE_CLASS  = 'Pim\Bundle\CatalogBundle\Model\Attribute';
+    const CHANNEL_CLASS  = 'Pim\Bundle\CatalogBundle\Model\Channel';
+    const LOCALE_CLASS  = 'Pim\Bundle\CatalogBundle\Model\Locale';
 
     function let(SmartManagerRegistry $managerRegistry)
     {

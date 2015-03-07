@@ -23,9 +23,9 @@ class ProductManagerSpec extends ObjectBehavior
 {
     const PRODUCT_CLASS   = 'Pim\Bundle\CatalogBundle\Model\Product';
     const VALUE_CLASS     = 'Pim\Bundle\CatalogBundle\Model\ProductValue';
-    const ATTRIBUTE_CLASS = 'Pim\Bundle\CatalogBundle\Entity\Attribute';
-    const OPTION_CLASS    = 'Pim\Bundle\CatalogBundle\Entity\AttributeOption';
-    const OPT_VALUE_CLASS = 'Pim\Bundle\CatalogBundle\Entity\AttributeOptionValue';
+    const ATTRIBUTE_CLASS = 'Pim\Bundle\CatalogBundle\Model\Attribute';
+    const OPTION_CLASS    = 'Pim\Bundle\CatalogBundle\Model\AttributeOption';
+    const OPT_VALUE_CLASS = 'Pim\Bundle\CatalogBundle\Model\AttributeOptionValue';
 
     function let(
         ObjectManager $objectManager,

@@ -153,8 +153,8 @@ class CompletenessManager
      * Returns an array containing all completeness info and missing attributes for a product
      *
      * @param ProductInterface                           $product
-     * @param \Pim\Bundle\CatalogBundle\Entity\Channel[] $channels
-     * @param \Pim\Bundle\CatalogBundle\Entity\Locale[]  $locales
+     * @param \Pim\Bundle\CatalogBundle\Model\Channel[] $channels
+     * @param \Pim\Bundle\CatalogBundle\Model\Locale[]  $locales
      * @param string                                     $localeCode
      *
      * @return array

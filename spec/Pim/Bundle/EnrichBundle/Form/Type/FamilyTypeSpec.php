@@ -25,8 +25,8 @@ class FamilyTypeSpec extends ObjectBehavior
             $requireSubscriber,
             $disableSubscriber,
             $attributeAsLabelSubscriber,
-            'Pim\Bundle\CatalogBundle\Entity\Attribute',
-            'Pim\Bundle\CatalogBundle\Entity\Family'
+            'Pim\Bundle\CatalogBundle\Model\Attribute',
+            'Pim\Bundle\CatalogBundle\Model\Family'
         );
     }
 
@@ -67,7 +67,7 @@ class FamilyTypeSpec extends ObjectBehavior
 
     function it_sets_the_default_form_data_class(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'Pim\Bundle\CatalogBundle\Entity\Family'])->shouldBeCalled();
+        $resolver->setDefaults(['data_class' => 'Pim\Bundle\CatalogBundle\Model\Family'])->shouldBeCalled();
         $this->setDefaultOptions($resolver);
     }
 }

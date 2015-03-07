@@ -141,7 +141,7 @@ class LoadUserData extends AbstractInstallerFixture
      *
      * @param string $localeCode
      *
-     * @return \Pim\Bundle\CatalogBundle\Entity\Locale
+     * @return \Pim\Bundle\CatalogBundle\Model\Locale
      */
     protected function getLocale($localeCode)
     {
@@ -156,7 +156,7 @@ class LoadUserData extends AbstractInstallerFixture
      *
      * @param string $channelCode
      *
-     * @return \Pim\Bundle\CatalogBundle\Entity\Channel
+     * @return \Pim\Bundle\CatalogBundle\Model\Channel
      */
     protected function getChannel($channelCode)
     {
@@ -171,7 +171,7 @@ class LoadUserData extends AbstractInstallerFixture
      *
      * @param string $categoryCode
      *
-     * @return \Pim\Bundle\CatalogBundle\Entity\Category
+     * @return \Pim\Bundle\CatalogBundle\Model\Category
      */
     protected function getTree($categoryCode)
     {

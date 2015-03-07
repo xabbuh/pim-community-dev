@@ -20,7 +20,7 @@ class FamilyTransformerSpec extends ObjectBehavior
         EntityTransformerInterface $transformerRegistry,
         FamilyFactory $factory
     ) {
-        $requirementClass = 'Pim\Bundle\CatalogBundle\Entity\AttributeRequirement';
+        $requirementClass = 'Pim\Bundle\CatalogBundle\Model\AttributeRequirement';
         $this->beConstructedWith(
             $doctrine,
             $propertyAccessor,

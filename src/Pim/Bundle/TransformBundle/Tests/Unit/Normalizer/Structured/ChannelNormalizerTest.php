@@ -2,10 +2,10 @@
 
 namespace Pim\Bundle\TransformBundle\Tests\Unit\Normalizer\Structured;
 
-use Pim\Bundle\CatalogBundle\Entity\Category;
-use Pim\Bundle\CatalogBundle\Entity\Channel;
-use Pim\Bundle\CatalogBundle\Entity\Currency;
-use Pim\Bundle\CatalogBundle\Entity\Locale;
+use Pim\Bundle\CatalogBundle\Model\Category;
+use Pim\Bundle\CatalogBundle\Model\Channel;
+use Pim\Bundle\CatalogBundle\Model\Currency;
+use Pim\Bundle\CatalogBundle\Model\Locale;
 use Pim\Bundle\TransformBundle\Normalizer\Structured\ChannelNormalizer;
 
 /**
@@ -32,9 +32,9 @@ class ChannelNormalizerTest extends NormalizerTestCase
     public static function getSupportNormalizationData()
     {
         return array(
-            array('Pim\Bundle\CatalogBundle\Entity\Channel', 'json', true),
-            array('Pim\Bundle\CatalogBundle\Entity\Channel', 'xml', true),
-            array('Pim\Bundle\CatalogBundle\Entity\Channel', 'csv', false),
+            array('Pim\Bundle\CatalogBundle\Model\Channel', 'json', true),
+            array('Pim\Bundle\CatalogBundle\Model\Channel', 'xml', true),
+            array('Pim\Bundle\CatalogBundle\Model\Channel', 'csv', false),
             array('stdClass', 'json', false),
             array('stdClass', 'xml', false),
             array('stdClass', 'csv', false)

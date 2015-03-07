@@ -11,7 +11,7 @@ class ClassifyTypeSpec extends ObjectBehavior
     function let()
     {
         $this->beConstructedWith(
-            'Pim\Bundle\CatalogBundle\Entity\Category',
+            'Pim\Bundle\CatalogBundle\Model\Category',
             'Pim\Bundle\EnrichBundle\MassEditAction\Operation\Classify'
         );
     }

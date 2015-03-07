@@ -3,7 +3,7 @@
 namespace Pim\Bundle\InstallerBundle\DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Pim\Bundle\CatalogBundle\Entity\Currency;
+use Pim\Bundle\CatalogBundle\Model\Currency;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -45,7 +45,7 @@ class LoadCurrencyData extends AbstractInstallerFixture
      * @param string  $code      Currency code
      * @param boolean $activated Define if currency is activated or not
      *
-     * @return \Pim\Bundle\CatalogBundle\Entity\Currency
+     * @return \Pim\Bundle\CatalogBundle\Model\Currency
      */
     protected function createCurrency($code, $activated = false)
     {

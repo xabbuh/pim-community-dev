@@ -2,7 +2,7 @@
 
 namespace Pim\Bundle\CatalogBundle\Factory;
 
-use Pim\Bundle\CatalogBundle\Entity\Family;
+use Pim\Bundle\CatalogBundle\Model\Family;
 use Pim\Bundle\CatalogBundle\Manager\ChannelManager;
 use Pim\Bundle\CatalogBundle\Manager\ProductManager;
 use Pim\Bundle\CatalogBundle\Model\FamilyInterface;
@@ -66,7 +66,7 @@ class FamilyFactory
     }
 
     /**
-     * @return \Pim\Bundle\CatalogBundle\Entity\Channel[]
+     * @return \Pim\Bundle\CatalogBundle\Model\Channel[]
      */
     protected function getChannels()
     {

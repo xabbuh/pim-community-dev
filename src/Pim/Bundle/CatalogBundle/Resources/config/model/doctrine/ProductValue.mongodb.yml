@@ -23,7 +23,7 @@ Pim\Bundle\CatalogBundle\Model\ProductValue:
             type: string
         attribute:
             type: entity
-            targetEntity: Pim\Bundle\CatalogBundle\Entity\Attribute
+            targetEntity: Pim\Bundle\CatalogBundle\Model\Attribute
         entity:
             reference: true
             type: one
@@ -31,11 +31,11 @@ Pim\Bundle\CatalogBundle\Model\ProductValue:
             inversedBy: values
         option:
             type: entity
-            targetEntity: Pim\Bundle\CatalogBundle\Entity\AttributeOption
+            targetEntity: Pim\Bundle\CatalogBundle\Model\AttributeOption
         options:
             notSaved: true
             type: entities
-            targetEntity: Pim\Bundle\CatalogBundle\Entity\AttributeOption
+            targetEntity: Pim\Bundle\CatalogBundle\Model\AttributeOption
             idsField: optionIds
         optionIds:
             type: collection

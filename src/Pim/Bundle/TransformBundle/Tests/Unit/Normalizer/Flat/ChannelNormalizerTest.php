@@ -29,9 +29,9 @@ class ChannelNormalizerTest extends Structured\ChannelNormalizerTest
     public static function getSupportNormalizationData()
     {
         return array(
-            array('Pim\Bundle\CatalogBundle\Entity\Channel', 'json', false),
-            array('Pim\Bundle\CatalogBundle\Entity\Channel', 'xml', false),
-            array('Pim\Bundle\CatalogBundle\Entity\Channel', 'csv', true),
+            array('Pim\Bundle\CatalogBundle\Model\Channel', 'json', false),
+            array('Pim\Bundle\CatalogBundle\Model\Channel', 'xml', false),
+            array('Pim\Bundle\CatalogBundle\Model\Channel', 'csv', true),
             array('stdClass', 'json', false),
             array('stdClass', 'xml', false),
             array('stdClass', 'csv', false)

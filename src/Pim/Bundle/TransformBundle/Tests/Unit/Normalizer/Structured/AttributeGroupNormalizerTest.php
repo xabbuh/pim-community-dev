@@ -2,8 +2,8 @@
 
 namespace Pim\Bundle\TransformBundle\Tests\Unit\Normalizer\Structured;
 
-use Pim\Bundle\CatalogBundle\Entity\Attribute;
-use Pim\Bundle\CatalogBundle\Entity\AttributeGroup;
+use Pim\Bundle\CatalogBundle\Model\Attribute;
+use Pim\Bundle\CatalogBundle\Model\AttributeGroup;
 use Pim\Bundle\CatalogBundle\Model\AttributeGroupInterface;
 use Pim\Bundle\TransformBundle\Normalizer\Structured\AttributeGroupNormalizer;
 use Pim\Bundle\TransformBundle\Normalizer\TranslationNormalizer;
@@ -32,9 +32,9 @@ class AttributeGroupNormalizerTest extends NormalizerTestCase
     public static function getSupportNormalizationData()
     {
         return array(
-            array('Pim\Bundle\CatalogBundle\Entity\AttributeGroup', 'json', true),
-            array('Pim\Bundle\CatalogBundle\Entity\AttributeGroup', 'xml', true),
-            array('Pim\Bundle\CatalogBundle\Entity\AttributeGroup', 'csv', false),
+            array('Pim\Bundle\CatalogBundle\Model\AttributeGroup', 'json', true),
+            array('Pim\Bundle\CatalogBundle\Model\AttributeGroup', 'xml', true),
+            array('Pim\Bundle\CatalogBundle\Model\AttributeGroup', 'csv', false),
             array('stdClass', 'json', false),
             array('stdClass', 'xml', false),
             array('stdClass', 'csv', false),

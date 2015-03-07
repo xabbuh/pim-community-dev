@@ -69,7 +69,7 @@ class FamilyRepository extends ReferableEntityRepository implements FamilyReposi
         $qb = $this->_em->createQueryBuilder()
             ->select('f.id')
             ->addSelect('COALESCE(ft.label, CONCAT(\'[\', f.code, \']\')) as label')
-            ->from('Pim\Bundle\CatalogBundle\Entity\Family', 'f')
+            ->from('Pim\Bundle\CatalogBundle\Model\Family', 'f')
             ->leftJoin('f.translations', 'ft', 'WITH', 'ft.locale = :localeCode')
             ->orderBy('label')
             ->setParameter('localeCode', $options['localeCode']);
@@ -108,7 +108,7 @@ class FamilyRepository extends ReferableEntityRepository implements FamilyReposi
     public function getFullRequirementsQB(FamilyInterface $family, $localeCode)
     {
         return $this->getEntityManager()
-            ->getRepository('Pim\Bundle\CatalogBundle\Entity\AttributeRequirement')
+            ->getRepository('Pim\Bundle\CatalogBundle\Model\AttributeRequirement')
             ->createQueryBuilder('r')
             ->select('r, a, t')
             ->leftJoin('r.attribute', 'a')

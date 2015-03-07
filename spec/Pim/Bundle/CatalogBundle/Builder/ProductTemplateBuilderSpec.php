@@ -23,7 +23,7 @@ class ProductTemplateBuilderSpec extends ObjectBehavior
             $normalizer,
             $denormalizer,
             $productBuilder,
-            'Pim\Bundle\CatalogBundle\Entity\ProductTemplate',
+            'Pim\Bundle\CatalogBundle\Model\ProductTemplate',
             'Pim\Bundle\CatalogBundle\Model\Product'
         );
     }
@@ -35,7 +35,7 @@ class ProductTemplateBuilderSpec extends ObjectBehavior
 
     function it_creates_product_templates()
     {
-        $this->createProductTemplate()->shouldReturnAnInstanceOf('Pim\Bundle\CatalogBundle\Entity\ProductTemplate');
+        $this->createProductTemplate()->shouldReturnAnInstanceOf('Pim\Bundle\CatalogBundle\Model\ProductTemplate');
     }
 
     function it_adds_attributes_to_a_product_template(

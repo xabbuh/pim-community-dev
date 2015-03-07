@@ -45,7 +45,7 @@ class ChannelManager
      *
      * @param array $criterias
      *
-     * @return \Pim\Bundle\CatalogBundle\Entity\Channel[]
+     * @return \Pim\Bundle\CatalogBundle\Model\Channel[]
      */
     public function getChannels($criterias = [])
     {
@@ -67,7 +67,7 @@ class ChannelManager
      *
      * @param string $code
      *
-     * @return \Pim\Bundle\CatalogBundle\Entity\Channel
+     * @return \Pim\Bundle\CatalogBundle\Model\Channel
      */
     public function getChannelByCode($code)
     {

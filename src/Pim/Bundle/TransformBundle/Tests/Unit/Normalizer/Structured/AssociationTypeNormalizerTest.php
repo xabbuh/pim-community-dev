@@ -2,7 +2,7 @@
 
 namespace Pim\Bundle\TransformBundle\Tests\Unit\Normalizer\Structured;
 
-use Pim\Bundle\CatalogBundle\Entity\AssociationType;
+use Pim\Bundle\CatalogBundle\Model\AssociationType;
 use Pim\Bundle\CatalogBundle\Model\AssociationTypeInterface;
 use Pim\Bundle\TransformBundle\Normalizer\Structured\AssociationTypeNormalizer;
 use Pim\Bundle\TransformBundle\Normalizer\TranslationNormalizer;
@@ -31,9 +31,9 @@ class AssociationTypeNormalizerTest extends NormalizerTestCase
     public static function getSupportNormalizationData()
     {
         return array(
-            array('Pim\Bundle\CatalogBundle\Entity\AssociationType', 'json',  true),
-            array('Pim\Bundle\CatalogBundle\Entity\AssociationType', 'xml', true),
-            array('Pim\Bundle\CatalogBundle\Entity\AssociationType', 'csv', false),
+            array('Pim\Bundle\CatalogBundle\Model\AssociationType', 'json',  true),
+            array('Pim\Bundle\CatalogBundle\Model\AssociationType', 'xml', true),
+            array('Pim\Bundle\CatalogBundle\Model\AssociationType', 'csv', false),
             array('stdClass', 'json',  false),
             array('stdClass', 'xml', false),
             array('stdClass', 'csv', false),

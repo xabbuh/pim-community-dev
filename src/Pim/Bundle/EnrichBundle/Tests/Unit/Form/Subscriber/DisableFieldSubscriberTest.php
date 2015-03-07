@@ -62,7 +62,7 @@ class DisableFieldSubscriberTest extends \PHPUnit_Framework_TestCase
             $event->expects($this->never())
                 ->method('getForm');
         } else {
-            $channel = $this->getMock('Pim\Bundle\CatalogBundle\Entity\Channel');
+            $channel = $this->getMock('Pim\Bundle\CatalogBundle\Model\Channel');
             $event->expects($this->once())
                 ->method('getData')
                 ->will($this->returnValue($channel));

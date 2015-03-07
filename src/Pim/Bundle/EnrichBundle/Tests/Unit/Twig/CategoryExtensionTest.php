@@ -179,7 +179,7 @@ class CategoryExtensionTest extends \PHPUnit_Framework_TestCase
      */
     protected function getCategoryMock(array $properties = array())
     {
-        $category = $this->getMock('Pim\Bundle\CatalogBundle\Entity\Category');
+        $category = $this->getMock('Pim\Bundle\CatalogBundle\Model\Category');
 
         if (isset($properties['id'])) {
             $category

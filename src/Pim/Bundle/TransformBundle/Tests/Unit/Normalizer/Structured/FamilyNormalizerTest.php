@@ -2,10 +2,10 @@
 
 namespace Pim\Bundle\TransformBundle\Tests\Unit\Normalizer\Structured;
 
-use Pim\Bundle\CatalogBundle\Entity\Attribute;
-use Pim\Bundle\CatalogBundle\Entity\AttributeRequirement;
-use Pim\Bundle\CatalogBundle\Entity\Channel;
-use Pim\Bundle\CatalogBundle\Entity\Family;
+use Pim\Bundle\CatalogBundle\Model\Attribute;
+use Pim\Bundle\CatalogBundle\Model\AttributeRequirement;
+use Pim\Bundle\CatalogBundle\Model\Channel;
+use Pim\Bundle\CatalogBundle\Model\Family;
 use Pim\Bundle\TransformBundle\Normalizer\Structured\FamilyNormalizer;
 use Pim\Bundle\TransformBundle\Normalizer\Structured\TranslationNormalizer;
 
@@ -33,9 +33,9 @@ class FamilyNormalizerTest extends NormalizerTestCase
     public static function getSupportNormalizationData()
     {
         return array(
-            array('Pim\Bundle\CatalogBundle\Entity\Family', 'json', true),
-            array('Pim\Bundle\CatalogBundle\Entity\Family', 'xml', true),
-            array('Pim\Bundle\CatalogBundle\Entity\Family', 'csv', false),
+            array('Pim\Bundle\CatalogBundle\Model\Family', 'json', true),
+            array('Pim\Bundle\CatalogBundle\Model\Family', 'xml', true),
+            array('Pim\Bundle\CatalogBundle\Model\Family', 'csv', false),
             array('stdClass', 'json', false),
             array('stdClass', 'xml', false),
             array('stdClass', 'csv', false),

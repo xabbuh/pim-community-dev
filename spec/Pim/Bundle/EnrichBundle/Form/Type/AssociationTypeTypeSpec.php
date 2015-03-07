@@ -12,7 +12,7 @@ class AssociationTypeTypeSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->beConstructedWith('Pim\Bundle\CatalogBundle\Entity\AssociationType');
+        $this->beConstructedWith('Pim\Bundle\CatalogBundle\Model\AssociationType');
     }
 
     function it_is_a_form_type()
@@ -51,7 +51,7 @@ class AssociationTypeTypeSpec extends ObjectBehavior
 
         $resolver->setDefaults(
             [
-                'data_class' => 'Pim\Bundle\CatalogBundle\Entity\AssociationType',
+                'data_class' => 'Pim\Bundle\CatalogBundle\Model\AssociationType',
             ]
         )->shouldHaveBeenCalled();
     }
