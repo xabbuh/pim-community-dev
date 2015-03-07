@@ -10,11 +10,11 @@ use Behat\MinkExtension\Context\RawMinkContext;
 use Behat\Gherkin\Node\PyStringNode;
 use Akeneo\Bundle\BatchBundle\Entity\JobInstance;
 use Oro\Bundle\UserBundle\Entity\Role;
-use Pim\Bundle\CatalogBundle\Entity\AssociationType;
-use Pim\Bundle\CatalogBundle\Entity\AttributeOption;
-use Pim\Bundle\CatalogBundle\Entity\GroupType;
-use Pim\Bundle\CatalogBundle\Entity\Channel;
-use Pim\Bundle\CatalogBundle\Entity\Group;
+use Pim\Bundle\CatalogBundle\Model\AssociationType;
+use Pim\Bundle\CatalogBundle\Model\AttributeOption;
+use Pim\Bundle\CatalogBundle\Model\GroupType;
+use Pim\Bundle\CatalogBundle\Model\Channel;
+use Pim\Bundle\CatalogBundle\Model\Group;
 use Pim\Bundle\DataGridBundle\Entity\DatagridView;
 
 /**
@@ -63,7 +63,7 @@ class FixturesContext extends RawMinkContext
         'Locale'          => 'PimCatalogBundle:Locale',
         'GroupType'       => 'PimCatalogBundle:GroupType',
         'Product'         => 'Pim\Bundle\CatalogBundle\Model\Product',
-        'ProductGroup'    => 'Pim\Bundle\CatalogBundle\Entity\Group',
+        'ProductGroup'    => 'Pim\Bundle\CatalogBundle\Model\Group',
     ];
 
     protected $placeholderValues = [];
@@ -285,7 +285,7 @@ class FixturesContext extends RawMinkContext
     /**
      * @param array|string $data
      *
-     * @return \Pim\Bundle\CatalogBundle\Entity\Group
+     * @return \Pim\Bundle\CatalogBundle\Model\Group
      *
      * @Given /^a "([^"]*)" variant group$/
      */
@@ -1877,7 +1877,7 @@ class FixturesContext extends RawMinkContext
      *
      * @param array|string $data
      *
-     * @return \Pim\Bundle\CatalogBundle\Entity\Family
+     * @return \Pim\Bundle\CatalogBundle\Model\Family
      */
     protected function createFamily($data)
     {
