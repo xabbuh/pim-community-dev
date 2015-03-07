@@ -26,7 +26,51 @@
 - Move Pim/Bundle/CatalogBundle/Doctrine/ORM/{ → Repository}/ProductCategoryRepository.php
 - Move Pim/Bundle/CatalogBundle/Doctrine/ORM/{ → Repository}/ProductMassActionRepository.php
 - Move Pim/Bundle/CatalogBundle/Doctrine/ORM/{ → Repository}/ProductRepository.php
-
+- Move Pim/Bundle/CatalogBundle/{Entity → Model}/AssociationType.php
+- Move Pim/Bundle/CatalogBundle/{Entity → Model}/AssociationTypeTranslation.php
+- Move Pim/Bundle/CatalogBundle/{Entity → Model}/Attribute.php
+- Move Pim/Bundle/CatalogBundle/{Entity → Model}/AttributeGroup.php
+- Move Pim/Bundle/CatalogBundle/{Entity → Model}/AttributeGroupTranslation.php
+- Move Pim/Bundle/CatalogBundle/{Entity → Model}/AttributeOption.php
+- Move Pim/Bundle/CatalogBundle/{Entity → Model}/AttributeOptionValue.php
+- Move Pim/Bundle/CatalogBundle/{Entity → Model}/AttributeRequirement.php
+- Move Pim/Bundle/CatalogBundle/{Entity → Model}/AttributeTranslation.php
+- Move Pim/Bundle/CatalogBundle/{Entity → Model}/Category.php
+- Move Pim/Bundle/CatalogBundle/{Entity → Model}/CategoryTranslation.php
+- Move Pim/Bundle/CatalogBundle/{Entity → Model}/Channel.php
+- Move Pim/Bundle/CatalogBundle/{Entity → Model}/Currency.php
+- Move Pim/Bundle/CatalogBundle/{Entity → Model}/Family.php
+- Move Pim/Bundle/CatalogBundle/{Entity → Model}/FamilyTranslation.php
+- Move Pim/Bundle/CatalogBundle/{Entity → Model}/Group.php
+- Move Pim/Bundle/CatalogBundle/{Entity → Model}/GroupTranslation.php
+- Move Pim/Bundle/CatalogBundle/{Entity → Model}/GroupType.php
+- Move Pim/Bundle/CatalogBundle/{Entity → Model}/GroupTypeTranslation.php
+- Move Pim/Bundle/CatalogBundle/{Entity → Model}/Locale.php
+- Move Pim/Bundle/CatalogBundle/{Entity → Model}/ProductTemplate.php
+- Move Pim/Bundle/CatalogBundle/Resources/config/{ → model}/doctrine/AssociationType.orm.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/{ → model}/doctrine/AssociationTypeTranslation.orm.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/{ → model}/doctrine/Attribute.orm.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/{ → model}/doctrine/AttributeGroup.orm.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/{ → model}/doctrine/AttributeGroupTranslation.orm.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/{ → model}/doctrine/AttributeOption.orm.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/{ → model}/doctrine/AttributeOptionValue.orm.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/{ → model}/doctrine/AttributeRequirement.orm.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/{ → model}/doctrine/AttributeTranslation.orm.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/{ → model}/doctrine/Category.orm.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/{ → model}/doctrine/CategoryTranslation.orm.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/{ → model}/doctrine/Channel.orm.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/model/doctrine/Completeness.mongodb.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/{ → model}/doctrine/Currency.orm.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/{ → model}/doctrine/Family.orm.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/{ → model}/doctrine/FamilyTranslation.orm.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/{ → model}/doctrine/Group.orm.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/{ → model}/doctrine/GroupTranslation.orm.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/{ → model}/doctrine/GroupType.orm.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/{ → model}/doctrine/GroupTypeTranslation.orm.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/{ → model}/doctrine/Locale.orm.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/model/doctrine/Product.mongodb.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/model/doctrine/Product.orm.yml
+- Move Pim/Bundle/CatalogBundle/Resources/config/{ → model}/doctrine/ProductTemplate.orm.yml
 
 # 1.3.3 (2015-03-02)
 
