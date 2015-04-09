@@ -81,8 +81,11 @@ class MassEditFormResolver
             ));
         }
 
-        $form = $this->formFactory->create($this->chooseActionFormType);
+        $operation->initialize();
+
+        $form = $this->formFactory->create($this->chooseActionFormType, $operation);
         $form->add('operation', $operation->getFormType(), $operation->getFormOptions());
+        $operation->initialize();
 
         return $form;
     }

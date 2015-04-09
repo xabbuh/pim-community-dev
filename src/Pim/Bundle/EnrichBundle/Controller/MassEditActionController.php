@@ -167,6 +167,7 @@ class MassEditActionController extends AbstractDoctrineController
         if ($this->request->isMethod('POST')) {
             $form->submit($this->request);
         }
+        $form = $this->massEditFormResolver->getConfigurationForm($operationAlias);
 
         return $this->render(
             sprintf('PimEnrichBundle:MassEditAction:configure/%s.html.twig', $operationAlias),

@@ -323,6 +323,7 @@ services:
         arguments:
             - '@pim_enrich.form.type.product.view'
             - '@pim_catalog.helper.locale'
+            - '@pim_catalog.repository.attribute'
             - %pim_catalog.entity.attribute.class%
             - %pim_catalog.entity.locale.class%
             - %pim_enrich.mass_edit_action.edit_common_attributes.class%

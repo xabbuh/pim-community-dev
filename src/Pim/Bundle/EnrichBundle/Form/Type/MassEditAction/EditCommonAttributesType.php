@@ -3,6 +3,7 @@
 namespace Pim\Bundle\EnrichBundle\Form\Type\MassEditAction;
 
 use Pim\Bundle\CatalogBundle\Helper\LocaleHelper;
+use Pim\Bundle\CatalogBundle\Repository\AttributeRepositoryInterface;
 use Pim\Bundle\EnrichBundle\Form\View\ProductFormViewInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -34,25 +35,31 @@ class EditCommonAttributesType extends AbstractType
     /** @var string */
     protected $dataClass;
 
+    /** @var AttributeRepositoryInterface  */
+    protected $attributeRepository;
+
     /**
-     * @param ProductFormViewInterface $productFormView
-     * @param LocaleHelper             $localeHelper
-     * @param string                   $attributeClass
-     * @param string                   $localeClassName
-     * @param string                   $dataClass
+     * @param ProductFormViewInterface     $productFormView
+     * @param LocaleHelper                 $localeHelper
+     * @param AttributeRepositoryInterface $attributeRepository
+     * @param string                       $attributeClass
+     * @param string                       $localeClassName
+     * @param string                       $dataClass
      */
     public function __construct(
         ProductFormViewInterface $productFormView,
         LocaleHelper $localeHelper,
+        AttributeRepositoryInterface $attributeRepository,
         $attributeClass,
         $localeClassName,
         $dataClass
     ) {
-        $this->productFormView = $productFormView;
-        $this->localeHelper    = $localeHelper;
-        $this->attributeClass  = $attributeClass;
-        $this->localeClassName = $localeClassName;
-        $this->dataClass       = $dataClass;
+        $this->productFormView     = $productFormView;
+        $this->localeHelper        = $localeHelper;
+        $this->attributeRepository = $attributeRepository;
+        $this->attributeClass      = $attributeClass;
+        $this->localeClassName     = $localeClassName;
+        $this->dataClass           = $dataClass;
     }
 
     /**
@@ -120,7 +127,7 @@ class EditCommonAttributesType extends AbstractType
             [
                 'data_class' => $this->dataClass,
                 'locales' => [],
-                'common_attributes' => [],
+                'common_attributes' => $this->attributeRepository->findAll(),
                 'current_locale'    => null
             ]
         );

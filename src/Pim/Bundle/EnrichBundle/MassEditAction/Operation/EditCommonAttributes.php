@@ -11,6 +11,7 @@ use Pim\Bundle\CatalogBundle\Model\AttributeInterface;
 use Pim\Bundle\CatalogBundle\Model\LocaleInterface;
 use Pim\Bundle\CatalogBundle\Model\ProductInterface;
 use Pim\Bundle\CatalogBundle\Model\ProductValueInterface;
+use Pim\Bundle\CatalogBundle\Repository\AttributeRepositoryInterface;
 use Pim\Bundle\CatalogBundle\Updater\ProductUpdaterInterface;
 use Pim\Bundle\UserBundle\Context\UserContext;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -22,7 +23,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class EditCommonAttributes extends AbstractMassEditOperation
+class EditCommonAttributes extends AbstractMassEditOperation implements ConfigurableOperationInterface
 {
     /** @var ArrayCollection|ProductValueInterface[] */
     protected $values;
@@ -57,15 +58,22 @@ class EditCommonAttributes extends AbstractMassEditOperation
     /** @var NormalizerInterface */
     protected $normalizer;
 
+    /** @var array */
+    protected $objects;
+
+    /** @var AttributeRepositoryInterface */
+    protected $attributeRepository;
+
     /**
      * Constructor
      *
-     * @param ProductBuilder           $productBuilder
-     * @param ProductUpdaterInterface  $productUpdater
-     * @param UserContext              $userContext
-     * @param CatalogContext           $catalogContext
-     * @param ProductMassActionManager $massActionManager
-     * @param NormalizerInterface      $normalizer
+     * @param ProductBuilder               $productBuilder
+     * @param ProductUpdaterInterface      $productUpdater
+     * @param UserContext                  $userContext
+     * @param CatalogContext               $catalogContext
+     * @param ProductMassActionManager     $massActionManager
+     * @param AttributeRepositoryInterface $attributeRepository
+     * @param NormalizerInterface          $normalizer
      */
     public function __construct(
         ProductBuilder $productBuilder,
@@ -73,6 +81,7 @@ class EditCommonAttributes extends AbstractMassEditOperation
         UserContext $userContext,
         CatalogContext $catalogContext,
         ProductMassActionManager $massActionManager,
+        AttributeRepositoryInterface $attributeRepository,
         NormalizerInterface $normalizer
     ) {
         $this->productBuilder      = $productBuilder;
@@ -83,6 +92,7 @@ class EditCommonAttributes extends AbstractMassEditOperation
         $this->displayedAttributes = new ArrayCollection();
         $this->values              = new ArrayCollection();
         $this->normalizer          = $normalizer;
+        $this->attributeRepository = $attributeRepository;
     }
 
     /**
@@ -191,9 +201,6 @@ class EditCommonAttributes extends AbstractMassEditOperation
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function initialize()
     {
         $locale = $this->getLocale()->getCode();
@@ -202,7 +209,17 @@ class EditCommonAttributes extends AbstractMassEditOperation
         $this->warningMessages  = null;
         $this->commonAttributes = null;
 
-        $commonAttributes = $this->getCommonAttributes();
+        $commonAttributes = $this->attributeRepository->findAll();
+
+        $commonAttributes = $this->massActionManager->filterLocaleSpecificAttributes(
+            $commonAttributes,
+            $locale
+        );
+
+        foreach ($commonAttributes as $attribute) {
+            $attribute->setLocale($locale);
+            $attribute->getGroup()->setLocale($locale);
+        }
 
         $this->values = new ArrayCollection();
         foreach ($commonAttributes as $attribute) {
@@ -211,7 +228,7 @@ class EditCommonAttributes extends AbstractMassEditOperation
     }
 
     /**
-     * Initializes self::commonAtributes with values from the repository
+     * Initializes self::commonAttributes with values from the repository
      * Attribute is not available for mass editing if:
      *   - it is an identifier
      *   - it is unique
@@ -234,29 +251,21 @@ class EditCommonAttributes extends AbstractMassEditOperation
 
     /**
      * Generate common attributes
-     * @param array  $products
+     *
      * @param string $locale
      *
-     * @return AttributeInterface[]
+     * @return \Pim\Bundle\CatalogBundle\Model\AttributeInterface[]
      */
-    protected function generateCommonAttributes(array $products, $locale)
+    protected function generateCommonAttributes($locale)
     {
-        $commonAttributes = $this->massActionManager->findCommonAttributes($products);
+        $commonAttributes = $this->attributeRepository->findAll();
 
         foreach ($commonAttributes as $attribute) {
             $attribute->setLocale($locale);
             $attribute->getGroup()->setLocale($locale);
         }
 
-        $commonAttributes = $this->massActionManager->filterLocaleSpecificAttributes(
-            $commonAttributes,
-            $locale
-        );
 
-        $commonAttributes = $this->massActionManager->filterAttributesComingFromVariant(
-            $commonAttributes,
-            $products
-        );
 
         return $commonAttributes;
     }
@@ -369,5 +378,41 @@ class EditCommonAttributes extends AbstractMassEditOperation
     public function getAlias()
     {
         return 'edit-common-attributes';
+    }
+
+    /**
+     * @return string
+     */
+    public function getOperationAlias()
+    {
+        return 'edit-common-attributes';
+    }
+
+    /**
+     * @param $operationAlias
+     *
+     * @return $this
+     */
+    public function setOperationAlias($operationAlias)
+    {
+        $this->operationAlias = $operationAlias;
+
+        return $this;
+    }
+
+    /**
+     * @return EditCommonAttributes
+     */
+    public function getOperation()
+    {
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getItemsName()
+    {
+        return 'product';
     }
 }
