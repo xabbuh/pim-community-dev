@@ -102,9 +102,16 @@ interface FamilyInterface extends TranslatableInterface, ReferableInterface, Ver
     /**
      * Get attribute requirements
      *
-     * @return array
+     * @return AttributeRequirementInterface[]
      */
     public function getAttributeRequirements();
+
+    /**
+     * Get indexed attribute requirements
+     *
+     * @return AttributeRequirementInterface[]
+     */
+    public function getIndexedAttributeRequirements();
 
     /**
      * Get grouped attributes
