@@ -49,8 +49,6 @@ class JobExecutionController extends AbstractDoctrineController
     protected $jobExecutionManager;
 
     /**
-     * Constructor
-     *
      * @param Request                  $request
      * @param EngineInterface          $templating
      * @param RouterInterface          $router
@@ -114,7 +112,7 @@ class JobExecutionController extends AbstractDoctrineController
     }
 
     /**
-     * Show a report
+     * Show a job execution report
      *
      * @param Request $request
      * @param int     $id
@@ -128,12 +126,12 @@ class JobExecutionController extends AbstractDoctrineController
 
         if ('json' === $request->getRequestFormat()) {
             $archives = [];
-            foreach ($this->archivist->getArchives($jobExecution) as $key => $files) {
+            foreach ($this->archivist->getArchives($jobExecution) as $archiveName => $files) {
                 $label = $this->translator->transchoice(
-                    sprintf('pim_mass_edit.download_archive.%s', $key),
+                    sprintf('pim_mass_edit.download_archive.%s', $archiveName),
                     count($files)
                 );
-                $archives[$key] = [
+                $archives[$archiveName] = [
                     'label' => ucfirst($label),
                     'files' => $files,
                 ];

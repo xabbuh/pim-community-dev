@@ -89,7 +89,7 @@ class JobTrackerController extends Controller
     }
 
     /**
-     * Show a report
+     * Show a job executions report
      *
      * @param Request $request
      * @param int     $id
@@ -103,12 +103,12 @@ class JobTrackerController extends Controller
 
         if ('json' === $request->getRequestFormat()) {
             $archives = [];
-            foreach ($this->archivist->getArchives($jobExecution) as $key => $files) {
+            foreach ($this->archivist->getArchives($jobExecution) as $archiveName => $files) {
                 $label = $this->translator->transchoice(
-                    sprintf('pim_import_export.download_archive.%s', $key),
+                    sprintf('pim_import_export.download_archive.%s', $archiveName),
                     count($files)
                 );
-                $archives[$key] = [
+                $archives[$archiveName] = [
                     'label' => ucfirst($label),
                     'files' => $files,
                 ];
