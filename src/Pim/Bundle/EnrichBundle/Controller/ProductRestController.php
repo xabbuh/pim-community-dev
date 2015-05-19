@@ -4,6 +4,7 @@ namespace Pim\Bundle\EnrichBundle\Controller;
 
 use Akeneo\Component\StorageUtils\Saver\SaverInterface;
 use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
+use Pim\Bundle\CatalogBundle\Manager\AttributeManager;
 use Pim\Bundle\CatalogBundle\Manager\ProductManager;
 use Pim\Bundle\CatalogBundle\Model\ProductInterface;
 use Pim\Bundle\CatalogBundle\Updater\ProductUpdaterInterface;
@@ -28,6 +29,9 @@ class ProductRestController
     /** @var ProductManager */
     protected $productManager;
 
+    /** @var AttributeManager */
+    protected $attributeManager;
+
     /** @var ProductUpdater */
     protected $productUpdater;
 
@@ -45,6 +49,7 @@ class ProductRestController
 
     /**
      * @param ProductManager          $productManager
+     * @param AttributeManager        $attributeManager
      * @param ProductUpdaterInterface $productUpdater
      * @param SaverInterface          $productSaver
      * @param NormalizerInterface     $normalizer
@@ -53,18 +58,20 @@ class ProductRestController
      */
     public function __construct(
         ProductManager $productManager,
+        AttributeManager $attributeManager,
         ProductUpdaterInterface $productUpdater,
         SaverInterface $productSaver,
         NormalizerInterface $normalizer,
         ValidatorInterface $validator,
         UserContext $userContext
     ) {
-        $this->productManager = $productManager;
-        $this->productUpdater = $productUpdater;
-        $this->productSaver   = $productSaver;
-        $this->normalizer     = $normalizer;
-        $this->validator      = $validator;
-        $this->userContext    = $userContext;
+        $this->productManager   = $productManager;
+        $this->attributeManager = $attributeManager;
+        $this->productUpdater   = $productUpdater;
+        $this->productSaver     = $productSaver;
+        $this->normalizer       = $normalizer;
+        $this->validator        = $validator;
+        $this->userContext      = $userContext;
     }
 
     /**
@@ -209,6 +216,32 @@ class ProductRestController
     }
 
     /**
+     * Remove an optional attribute form a product
+     *
+     * @param int $productId   The product id
+     * @param int $attributeId The attribute id
+     *
+     * @AclAncestor("pim_enrich_product_remove_attribute")
+     *
+     * @throws NotFoundHttpException
+     *
+     * @return JsonResponse
+     */
+    public function removeAttributeAction($productId, $attributeId)
+    {
+        $product   = $this->findProductOr404($productId);
+        $attribute = $this->findAttributeOr404($attributeId);
+
+        if (!$product->isAttributeRemovable($attribute)) {
+            return new JsonResponse([], 400);
+        }
+
+        $this->productManager->removeAttributeFromProduct($product, $attribute);
+
+        return new JsonResponse();
+    }
+
+    /**
      * Transforms product violations into an array
      *
      * @param ConstraintViolationListInterface $violations
@@ -243,5 +276,27 @@ class ProductRestController
             }
         }
         return $errors;
+    }
+
+    /**
+     * Find an attribute by its id or return a 404 response
+     *
+     * @param int $id the attribute id
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return AttributeInterface
+     */
+    protected function findAttributeOr404($id)
+    {
+        $attribute = $this->attributeManager->getAttribute($id);
+
+        if (!$attribute) {
+            throw new NotFoundHttpException(
+                sprintf('Attribute with id %s could not be found.', (string) $id)
+            );
+        }
+
+        return $attribute;
     }
 }
