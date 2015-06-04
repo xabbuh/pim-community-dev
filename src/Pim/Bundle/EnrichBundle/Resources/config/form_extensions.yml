@@ -165,13 +165,6 @@ extensions:
             panel-content: .panel-content
         position: 100
 
-    attribute-group-selector:
-        module: pim/product-edit-form/attributes/attribute-group-selector
-        parent: attributes
-        targetZone: attributes
-        insertAction: prepend
-        position: 100
-
     add-attribute:
         module: pim/product-edit-form/attributes/add-attribute
         parent: attributes

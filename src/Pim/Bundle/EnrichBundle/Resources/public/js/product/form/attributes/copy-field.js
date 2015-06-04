@@ -9,7 +9,6 @@ define([
     function (Backbone, _, template, i18n) {
         return Backbone.View.extend({
             tagName: 'div',
-            field: null,
             locale: null,
             scope: null,
             data: '',
@@ -21,7 +20,6 @@ define([
             },
             initialize: function () {
                 this.selected = false;
-                this.field    = null;
 
                 return this;
             },
@@ -29,12 +27,12 @@ define([
                 this.$el.empty();
 
                 var templateContext = {
-                    type: this.field.fieldType,
-                    label: this.field.attribute.label[this.field.context.locale],
+                    type: this.fieldType,
+                    label: this.attribute.label[this.context.locale],
                     data: this.data,
-                    config: this.field.config,
-                    context: this.field.context,
-                    attribute: this.field.attribute,
+                    config: this.config,
+                    context: this.context,
+                    attribute: this.attribute,
                     selected: this.selected,
                     locale: this.locale,
                     scope: this.scope,
@@ -43,9 +41,9 @@ define([
 
                 this.$el.html(this.template(templateContext));
 
-                this.field.getTemplateContext().done(_.bind(function (templateContext) {
-                    this.$('.field-input').html(this.field.renderCopyInput(templateContext, this.locale, this.scope));
-                }, this));
+                // this.field.getTemplateContext().done(_.bind(function (templateContext) {
+                //     this.$('.field-input').html(this.field.renderCopyInput(templateContext, this.locale, this.scope));
+                // }, this));
 
                 this.delegateEvents();
 
@@ -59,9 +57,6 @@ define([
             },
             setScope: function (scope) {
                 this.scope = scope;
-            },
-            setField: function (field) {
-                this.field = field;
             },
             selectionChanged: function (event) {
                 this.selected = event.currentTarget.checked;

@@ -41,6 +41,7 @@ define([
                 return this;
             },
             render: function () {
+                debugger;
                 this.setEditable(true);
                 mediator.trigger('field:extension:add', {'field': this});
 

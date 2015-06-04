@@ -15,6 +15,7 @@ define(
         'pim/attribute-group-manager',
         'pim/user-context',
         'pim/security-context',
+        'pim/product-edit-form/attributes/attribute-group-selector',
         'text!pim/template/product/tab/attributes',
         'pim/dialog',
         'oro/messenger'
@@ -33,6 +34,7 @@ define(
         AttributeGroupManager,
         UserContext,
         SecurityContext,
+        AttributeGroupSelector,
         formTemplate,
         Dialog,
         messenger
@@ -45,20 +47,27 @@ define(
             },
             visibleFields: {},
             rendering: false,
+            initialize: function () {
+                this.model = new Backbone.Model({ badges: {} });
+
+                this.groupSelector = new AttributeGroupSelector({model: this.model});
+
+                this.listenTo(this.model, 'change', this.render);
+
+                return BaseForm.prototype.initialize.apply(this, arguments);
+            },
             configure: function () {
                 this.getRoot().addTab('attributes', 'Attributes');
 
                 this.listenTo(this.getRoot().model, 'change', this.render);
                 this.listenTo(UserContext, 'change:catalogLocale change:catalogScope', this.render);
-                mediator.on('product:action:post_update', _.bind(this.postSave, this));
-                mediator.on('product:action:post_validation_error', _.bind(this.postValidationError, this));
-                mediator.on('show_attribute', _.bind(this.showAttribute, this));
+                this.listenTo(mediator, 'product:action:post_update', this.postSave);
+                this.listenTo(mediator, 'product:action:post_validation_error', this.postValidationError);
+                this.listenTo(mediator, 'show_attribute', this.showAttribute);
                 window.addEventListener('resize', _.bind(this.resize, this));
                 FieldManager.clear();
 
-                return $.when(
-                    BaseForm.prototype.configure.apply(this, arguments)
-                );
+                return BaseForm.prototype.configure.apply(this, arguments);
             },
             render: function () {
                 if (!this.configured || this.rendering) {
@@ -68,7 +77,10 @@ define(
                 this.rendering = true;
 
                 this.getConfig().done(_.bind(function () {
-                    this.$el.html(this.template({}));
+                    this.$el.html(this.template());
+
+                    this.groupSelector.setElement(this.$('.attribute-group-selector')).render();
+
                     this.resize();
                     var product = this.getData();
                     $.when(
@@ -77,12 +89,12 @@ define(
                     ).done(_.bind(function (families, values) {
                         var productValues = AttributeGroupManager.getAttributeGroupValues(
                             values,
-                            this.extensions['attribute-group-selector'].getCurrentAttributeGroup()
+                            this.model.get('attributeGroups')[this.model.get('currentAttributeGroup')]
                         );
 
                         var fieldPromisses = [];
                         _.each(productValues, _.bind(function (productValue, attributeCode) {
-                            fieldPromisses.push(this.renderField(product, attributeCode, productValue, families));
+                            fieldPromisses.push(this.getField(product, attributeCode, productValue, families));
                         }, this));
 
                         $.when.apply($, fieldPromisses).done(_.bind(function () {
@@ -113,8 +125,10 @@ define(
                     );
                 }
             },
-            renderField: function (product, attributeCode, values, families) {
-                return FieldManager.getField(attributeCode).then(function (field) {
+            getField: function (product, attributeCode, values, families) {
+                return FieldManager.getField(attributeCode).then(function (Field) {
+                    // todo: pass the attribute to the field?
+                    var field = new Field();
                     field.setContext({
                         locale: UserContext.get('catalogLocale'),
                         scope: UserContext.get('catalogScope'),
@@ -131,12 +145,25 @@ define(
                 var promises = [];
                 var product = this.getData();
 
-                promises.push(this.extensions['attribute-group-selector'].updateAttributeGroups(product));
+                promises.push(this.updateModel(product));
                 if (this.extensions['add-attribute']) {
                     promises.push(this.extensions['add-attribute'].updateOptionalAttributes(product));
                 }
 
                 return $.when.apply($, promises).promise();
+            },
+            updateModel: function (product) {
+                return AttributeGroupManager.getAttributeGroupsForProduct(product)
+                    .then(_.bind(function (attributeGroups) {
+                        this.model.set('attributeGroups', attributeGroups);
+
+                        if (undefined === this.model.get('currentAttributeGroup') ||
+                            !attributeGroups[this.model.get('currentAttributeGroup')]) {
+                            this.model.set('currentAttributeGroup', _.first(_.keys(attributeGroups)));
+                        }
+
+                        return attributeGroups;
+                    }, this));
             },
             addAttributes: function (attributeCodes) {
                 EntityManager.getRepository('attribute').findAll().done(_.bind(function (attributes) {
@@ -156,7 +183,8 @@ define(
                         }
                     });
 
-                    this.extensions['attribute-group-selector'].setCurrent(
+                    this.model.set(
+                        'currentAttributeGroup',
                         _.findWhere(attributes, {code: _.first(attributeCodes)}).group
                     );
 
@@ -165,12 +193,7 @@ define(
                         return;
                     }
 
-                    /* jshint sub:true */
-                    /* jscs:disable requireDotNotation */
-                    this.extensions['copy'].generateCopyFields();
-
                     this.setData(product);
-                    this.getRoot().model.trigger('change');
                 }, this));
 
             },
@@ -192,7 +215,7 @@ define(
                                 url: Routing.generate(
                                     'pim_enrich_product_remove_attribute_rest',
                                     {
-                                        productId: this.getData().meta.id,
+                                        productId: product.meta.id,
                                         attributeId: attribute.id
                                     }
                                 ),
@@ -204,11 +227,8 @@ define(
 
                                 delete product.values[attributeCode];
                                 delete fields[attributeCode];
-                                /* jshint sub:true */
-                                this.extensions['copy'].generateCopyFields();
-                                /* jscs:enable requireDotNotation */
 
-                                this.setData(product);
+                                this.setData(product, {silent: true});
 
                                 this.getRoot().model.trigger('change');
                             }, this)).fail(function () {
@@ -234,38 +254,34 @@ define(
                 return UserContext.get('catalogLocale');
             },
             postValidationError: function () {
-                this.render();
-                this.extensions['attribute-group-selector'].removeBadges();
+                this.updateAttributeGroupBadges();
                 _.each(FieldManager.getFields(), function (field) {
                     if (!field.getValid()) {
                         mediator.trigger('show_attribute', {attribute: field.attribute.code});
                         return;
                     }
                 });
-                this.updateAttributeGroupBadges();
             },
             postSave: function () {
                 FieldManager.fields = {};
-                this.extensions['attribute-group-selector'].removeBadges();
+                this.model.set('badges', {});
 
                 this.render();
             },
             updateAttributeGroupBadges: function () {
                 var fields = FieldManager.getFields();
 
-                AttributeGroupManager.getAttributeGroupsForProduct(this.getData())
-                    .done(_.bind(function (attributeGroups) {
-                        _.each(fields, _.bind(function (field) {
-                            var attributeGroup = AttributeGroupManager.getAttributeGroupForAttribute(
-                                attributeGroups,
-                                field.attribute.code
-                            );
+                var badges = {};
 
-                            if (!field.getValid()) {
-                                this.extensions['attribute-group-selector'].addToBadge(attributeGroup, 'invalid');
-                            }
-                        }, this));
-                    }, this));
+                _.each(fields, _.bind(function (field) {
+                    if (!field.getValid()) {
+                        var group = field.attribute.group;
+                        badges[group] = badges[group] || {};
+                        badges[group].invalid = (badges[group].invalid || 0) + 1;
+                    }
+                }, this));
+
+                this.model.set('badges', badges);
             },
             showAttribute: function (event) {
                 AttributeGroupManager.getAttributeGroupsForProduct(this.getData())
@@ -274,29 +290,19 @@ define(
                             attributeGroups,
                             event.attribute
                         );
-                        var needRendering = false;
 
                         if (!attributeGroup) {
                             return;
                         }
 
                         if (event.scope) {
-                            this.setScope(event.scope, {silent: true});
-                            needRendering = true;
+                            this.setScope(event.scope);
                         }
                         if (event.locale) {
-                            this.setLocale(event.locale, {silent: true});
-                            needRendering = true;
+                            this.setLocale(event.locale);
                         }
 
-                        if (attributeGroup !== this.extensions['attribute-group-selector'].getCurrent()) {
-                            this.extensions['attribute-group-selector'].setCurrent(attributeGroup);
-                            needRendering = true;
-                        }
-
-                        if (needRendering) {
-                            this.render();
-                        }
+                        this.model.set('currentAttributeGroup', attributeGroup.code);
 
                         FieldManager.getFields()[event.attribute].setFocus();
                     }, this));
