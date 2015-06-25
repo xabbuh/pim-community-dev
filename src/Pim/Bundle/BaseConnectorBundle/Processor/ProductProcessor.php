@@ -159,6 +159,7 @@ class ProductProcessor extends TransformerProcessor
      */
     protected function transform($item)
     {
+        die();
         return $this->transformer->transform($this->class, $item, array('enabled' => $this->enabled));
     }
 
