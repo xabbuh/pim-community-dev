@@ -32,32 +32,6 @@ class CommandLauncher
     }
 
     /**
-     * @return false|string
-     */
-    protected function getPhp()
-    {
-        $pathFinder = new PhpExecutableFinder();
-
-        return $pathFinder->find();
-    }
-
-    /**
-     * @param string $command
-     *
-     * @return string
-     */
-    protected function buildCommandString($command)
-    {
-        return sprintf(
-            '%s %s/console --env=%s %s',
-            $this->getPhp(),
-            $this->rootDir,
-            $this->environment,
-            $command
-        );
-    }
-
-    /**
      * Launch command in background and return
      *
      * @param string $command
@@ -67,6 +41,7 @@ class CommandLauncher
     public function executeBackground($command)
     {
         $cmd  = $this->buildCommandString($command);
+        // TODO avoid this and log this somewhere
         $cmd .= ' > /dev/null &';
         exec($cmd);
 
@@ -91,5 +66,31 @@ class CommandLauncher
         $result = new CommandResult($output, $status);
 
         return $result;
+    }
+
+    /**
+     * @return false|string
+     */
+    protected function getPhp()
+    {
+        $pathFinder = new PhpExecutableFinder();
+
+        return $pathFinder->find();
+    }
+
+    /**
+     * @param string $command
+     *
+     * @return string
+     */
+    protected function buildCommandString($command)
+    {
+        return sprintf(
+            '%s %s/console --env=%s %s',
+            $this->getPhp(),
+            $this->rootDir,
+            $this->environment,
+            $command
+        );
     }
 }
