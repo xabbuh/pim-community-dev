@@ -106,13 +106,18 @@ class FeatureContext extends MinkContext implements KernelAwareInterface
         if ($event->getResult() === StepEvent::FAILED) {
             $driver = $this->getSession()->getDriver();
             $stepStats = [
-                'scenario_file'  => strstr($event->getLogicalParent()->getFile(), 'features/'),
-                'scenario_line'  => $event->getLogicalParent()->getLine(),
-                'scenario_label' => $event->getLogicalParent()->getTitle(),
-                'exception'      => $event->getException()->getMessage(),
-                'step_line'      => $event->getStep()->getLine(),
-                'step_label'     => $event->getStep()->getText(),
-                'status'         => 'failed'
+                'scenario_file'      => strstr($event->getLogicalParent()->getFile(), 'features/'),
+                'scenario_full_file' => str_replace(
+                    dirname($this->getContainer()->getParameter('kernel.root_dir')) . DIRECTORY_SEPARATOR,
+                    '',
+                    $event->getLogicalParent()->getFile())
+                ,
+                'scenario_line'      => $event->getLogicalParent()->getLine(),
+                'scenario_label'     => $event->getLogicalParent()->getTitle(),
+                'exception'          => $event->getException()->getMessage(),
+                'step_line'          => $event->getStep()->getLine(),
+                'step_label'         => $event->getStep()->getText(),
+                'status'             => 'failed'
             ];
 
             if ($driver instanceof Selenium2Driver) {
