@@ -72,6 +72,17 @@ class ProductAssociationProcessor extends AbstractProcessor
         }
 
         $convertedItem = $this->convertItemData($item);
+
+        $associationCount = 0;
+        foreach ($convertedItem['associations'] as $association) {
+            $associationCount += !empty($association['products']) ? 1 : 0;
+            $associationCount += !empty($association['groups']) ? 1 : 0;
+        }
+
+        if (0 === $associationCount && 0 === $product->getAssociations()->count()) {
+            return null;
+        }
+
         if ($this->getConfiguration()['enabledComparison']) {
             $convertedItem = $this->filterIdenticalData($product, $convertedItem);
             if (empty($convertedItem)) {
