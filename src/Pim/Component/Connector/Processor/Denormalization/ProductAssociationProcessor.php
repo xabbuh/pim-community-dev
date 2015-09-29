@@ -65,6 +65,7 @@ class ProductAssociationProcessor extends AbstractProcessor
      */
     public function process($item)
     {
+        die;
         $identifier = $this->getIdentifier($item);
         $product = $this->findProduct($identifier);
         if (!$product) {
@@ -214,10 +215,8 @@ class ProductAssociationProcessor extends AbstractProcessor
      */
     protected function productNeedUpdate(ProductInterface $product, array $updates = [])
     {
-
+        var_dump($this->getConfiguration()); die;
         if ($this->getConfiguration()['enabledComparison']) {
-
-
             $updates = $this->filterIdenticalData($product, $updates);
             if (empty($updates)) {
                 $this->stepExecution->incrementSummaryInfo('product_skipped_no_diff');
