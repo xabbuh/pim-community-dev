@@ -39,6 +39,16 @@ class ProductAssociationFilter implements ProductFilterInterface
      */
     public function filter(ProductInterface $product, array $newValues)
     {
+        $associationCount = 0;
+        foreach ($newValues['associations'] as $association) {
+            $associationCount += !empty($association['products']) ? 1 : 0;
+            $associationCount += !empty($association['groups']) ? 1 : 0;
+        }
+
+        if (0 === $associationCount && 0 === $product->getAssociations()->count()) {
+            return false;
+        }
+
         $originalValues = $this->getOriginalProduct($product);
 
         $result = [];

@@ -214,17 +214,10 @@ class ProductAssociationProcessor extends AbstractProcessor
      */
     protected function productNeedUpdate(ProductInterface $product, array $updates = [])
     {
-        $associationCount = 0;
-        foreach ($updates['associations'] as $association) {
-            $associationCount += !empty($association['products']) ? 1 : 0;
-            $associationCount += !empty($association['groups']) ? 1 : 0;
-        }
-
-        if (0 === $associationCount && 0 === $product->getAssociations()->count()) {
-            return false;
-        }
 
         if ($this->getConfiguration()['enabledComparison']) {
+
+
             $updates = $this->filterIdenticalData($product, $updates);
             if (empty($updates)) {
                 $this->stepExecution->incrementSummaryInfo('product_skipped_no_diff');
