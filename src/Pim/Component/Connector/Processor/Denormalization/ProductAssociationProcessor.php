@@ -73,23 +73,8 @@ class ProductAssociationProcessor extends AbstractProcessor
 
         $convertedItem = $this->convertItemData($item);
 
-        $associationCount = 0;
-        foreach ($convertedItem['associations'] as $association) {
-            $associationCount += !empty($association['products']) ? 1 : 0;
-            $associationCount += !empty($association['groups']) ? 1 : 0;
-        }
-
-        if (0 === $associationCount && 0 === $product->getAssociations()->count()) {
+        if (!$this->productNeedUpdate($product, $convertedItem)) {
             return null;
-        }
-
-        if ($this->getConfiguration()['enabledComparison']) {
-            $convertedItem = $this->filterIdenticalData($product, $convertedItem);
-            if (empty($convertedItem)) {
-                $this->stepExecution->incrementSummaryInfo('product_skipped_no_diff');
-
-                return null;
-            }
         }
 
         try {
@@ -217,5 +202,37 @@ class ProductAssociationProcessor extends AbstractProcessor
         }
 
         return null;
+    }
+
+    /**
+     * Does the product need to be updated
+     *
+     * - Test if there is no association in csv column and no association on the product
+     * -
+     *
+     * @return [type] [description]
+     */
+    protected function productNeedUpdate(ProductInterface $product, array $updates = [])
+    {
+        $associationCount = 0;
+        foreach ($updates['associations'] as $association) {
+            $associationCount += !empty($association['products']) ? 1 : 0;
+            $associationCount += !empty($association['groups']) ? 1 : 0;
+        }
+
+        if (0 === $associationCount && 0 === $product->getAssociations()->count()) {
+            return false;
+        }
+
+        if ($this->getConfiguration()['enabledComparison']) {
+            $updates = $this->filterIdenticalData($product, $updates);
+            if (empty($updates)) {
+                $this->stepExecution->incrementSummaryInfo('product_skipped_no_diff');
+
+                return false;
+            }
+        }
+
+        return true;
     }
 }
