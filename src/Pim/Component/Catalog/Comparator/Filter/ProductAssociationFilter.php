@@ -46,7 +46,7 @@ class ProductAssociationFilter implements ProductFilterInterface
         }
 
         if (0 === $associationCount && 0 === $product->getAssociations()->count()) {
-            return false;
+            return [];
         }
 
         $originalValues = $this->getOriginalProduct($product);
