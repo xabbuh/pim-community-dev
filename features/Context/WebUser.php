@@ -2570,7 +2570,7 @@ class WebUser extends RawMinkContext
      */
     public function iShouldSeeLocaleOption($not, $locale)
     {
-        $selectNames = ['system-locale', 'pim_user_user_form[uiLocale]'];
+        $selectNames = ['system-locale', 'pim_user_user[uiLocale]'];
         $field = null;
         foreach ($selectNames as $selectName) {
             $field = (null !== $field) ? $field : $this->getCurrentPage()->findField($selectName);

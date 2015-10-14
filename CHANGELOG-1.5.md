@@ -28,6 +28,7 @@
 - Column 'comment' has been added on the `pim_notification_notification` table.
 - Remove OroEntityBundle
 - Remove OroEntityConfigBundle
+- Remove OroUserBundle
 - Remove PimEntityBundle
 - Move DoctrineOrmMappingsPass from Oro/EntityBundle to Akeneo/StorageUtilsBundle
 - Remove OroDistributionBundle (explicitely define oro bundles routing, means oro/rounting.yml are not automaticaly loaded anymore, and remove useless twig config)
@@ -83,3 +84,4 @@
 - Change constructor of `Pim\Bundle\EnrichBundle\MassEditAction\Operation\OperationRegistry` to inject `Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface` and `Oro\Bundle\SecurityBundle\SecurityFacade`
 - Update schema of `Pim\Component\Catalog\Model\Metric`. Increase precision of data and baseData.
 - Change constructor of `Pim\Component\Connector\Processor\Denormalization\ProductAssociationProcessor` to add `Akeneo\Component\StorageUtils\Detacher\ObjectDetacherInterface`
+- Every forms / controllers / event subscribers / menu / templates from OroUserBundle are now located inside PimUserBundle
