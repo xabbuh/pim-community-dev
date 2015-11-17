@@ -13,6 +13,10 @@
         <strong>{{ fieldKey }}:</strong>
         {% if fieldValue.old.timestamp is defined %}
             {{ fieldValue.old|oro_format_datetime }}
+        {% elseif fieldValue.old is iterable %}
+            {% for oldValue in fieldValue.old %}
+                {{ oldValue|localize_attribute_option(fieldKey) }}
+            {% endfor %}
         {% else %}
             {{ fieldValue.old|localize_attribute_option(fieldKey) }}
         {% endif %}
