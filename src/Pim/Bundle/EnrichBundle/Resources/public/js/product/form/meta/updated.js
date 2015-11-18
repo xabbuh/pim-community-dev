@@ -17,6 +17,7 @@ define(
     function (_, BaseForm, mediator, formTemplate) {
         var FormView = BaseForm.extend({
             tagName: 'span',
+            className: 'updated',
             template: _.template(formTemplate),
             configure: function () {
                 this.listenTo(this.getRoot(), 'pim_enrich:form:entity:post_update', this.render);

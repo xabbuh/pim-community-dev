@@ -16,6 +16,7 @@ define(
     function (_, BaseForm, formTemplate) {
         var FormView = BaseForm.extend({
             tagName: 'span',
+            className: 'created',
             template: _.template(formTemplate),
             render: function () {
                 var product = this.getFormData();

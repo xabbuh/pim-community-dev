@@ -53,7 +53,9 @@ class Edit extends Form
                 'Meta zone'               => ['css' => '.baseline > .meta'],
                 'Modal'                   => ['css' => '.modal'],
                 'Progress bar'            => ['css' => '.progress-bar'],
-                'Save'                    => ['css' => 'button.save-product']
+                'Save'                    => ['css' => 'button.save-product'],
+                'Product creation'        => ['css' => '.baseline span.created'],
+                'Product update'          => ['css' => '.baseline span.updated'],
             ]
         );
     }

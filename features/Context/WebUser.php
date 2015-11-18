@@ -2984,4 +2984,31 @@ class WebUser extends RawMinkContext
             }
         }
     }
+
+    /**
+     * @param $locale   string The expected date format locale (i.e. french, english)
+     * @param $selector string The element selector
+     *
+     * @throws ExpectationException
+     *
+     * @Then /^I should see an? (.*) datetime in the (.*)$/
+     */
+    public function iShouldSeeLocalizedDatetime($locale, $selector)
+    {
+        $patterns = [
+            'system'  => '/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/',
+            'english' => '/\d{4}\/\d{1-2}\/\d{1-2} \d{2}:\d{2}/',
+            'french'  => '/\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}/',
+        ];
+
+        $element = $this->getCurrentPage()->getElement($selector);
+        $pattern = $patterns[$locale];
+
+        $text = $element->getText();
+        if (1 !== preg_match($pattern, $text)) {
+            throw $this->createExpectationException(
+                sprintf('Expected "%s" to match pattern %s.', $text, $pattern)
+            );
+        }
+    }
 }
