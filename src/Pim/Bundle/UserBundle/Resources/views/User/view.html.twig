@@ -64,7 +64,7 @@
 
 {% block stats %}
     {{ parent() }}
-    <li>{{ 'Last logged in'|trans }}: {{ entity.lastLogin ? entity.lastLogin|oro_format_datetime : 'N/A' }}</li>
+    <li class="last-login">{{ 'Last logged in'|trans }}: {{ entity.lastLogin ? entity.lastLogin|oro_format_datetime : 'N/A' }}</li>
     <li>{{ 'Login count'|trans }}: {{ entity.loginCount|default(0) }}</li>
 {% endblock stats %}
 

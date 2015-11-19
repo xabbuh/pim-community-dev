@@ -15,4 +15,21 @@ class Show extends Form
 {
     /** @var string */
     protected $path = '/user/view/{id}';
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct($session, $pageFactory, $parameters = [])
+    {
+        parent::__construct($session, $pageFactory, $parameters);
+
+        $this->elements = array_merge(
+            [
+                'User creation'   => ['css' => '.customer-info .created'],
+                'User update'     => ['css' => '.customer-info .updated'],
+                'User last login' => ['css' => '.customer-info .last-login'],
+            ],
+            $this->elements
+        );
+    }
 }
