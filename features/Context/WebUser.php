@@ -16,6 +16,9 @@ use Context\Spin\SpinCapableTrait;
 use Pim\Bundle\CatalogBundle\Model\Product;
 use Pim\Bundle\EnrichBundle\Mailer\MailRecorder;
 use Pim\Bundle\EnrichBundle\MassEditAction\Operation\BatchableOperationInterface;
+use Pim\Bundle\LocalizationBundle\Provider\UiLocaleProvider;
+use Pim\Component\Localization\DateFormatConverter;
+use Pim\Component\Localization\Provider\Format\DateFormatProvider;
 use SensioLabs\Behat\PageObjectExtension\PageObject\Page;
 
 /**
@@ -2989,22 +2992,65 @@ class WebUser extends RawMinkContext
      * @param $locale   string The expected date format locale (i.e. french, english)
      * @param $selector string The element selector
      *
-     * @throws ExpectationException
-     *
      * @Then /^I should see an? (.*) datetime in the (.*)$/
      */
     public function iShouldSeeLocalizedDatetime($locale, $selector)
     {
+        $element = $this->getCurrentPage()->getElement($selector);
+        $this->checkLocalizedDate($locale, $element->getText());
+    }
+
+    /**
+     * @param $locale string The expected date format locale (i.e. french, english)
+     * @param $column string The column name
+     *
+     * @Then /^I should see (.*) datetimes in the column (.*)$/
+     *
+     * @throws ExpectationException
+     */
+    public function iShouldSeeLocalizedDatetimeInDatagrid($locale, $column)
+    {
+        $table = $this->getCurrentPage()->find('css', '.grid-container table');
+        $columns = $table->findAll('css', 'th');
+        $columnLabels = array_map(function($th) {
+            return mb_strtolower($th->getText());
+        }, $columns);
+        $columnIndex = array_search(mb_strtolower($column), $columnLabels);
+        if (false === $columnIndex) {
+            throw $this->createExpectationException(
+                sprintf(
+                    'Expected to have column header "%s". Available headers: %s',
+                    $column,
+                    implode(', ', $columnLabels)
+                )
+            );
+        }
+
+        $lines = $table->findAll('xpath', '/tbody/tr');
+        foreach($lines as $line) {
+            $cell = $line->find('xpath', sprintf('/td[%s]', $columnIndex+1));
+            if (null !== $cell) {
+                $text = $cell->getText();
+                $this->checkLocalizedDate($locale, $text);
+            }
+        }
+    }
+
+    /**
+     * @param $locale string
+     * @param $text   string
+     *
+     * @throws ExpectationException
+     */
+    protected function checkLocalizedDate($locale, $text) {
         $patterns = [
             'system'  => '/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/',
-            'english' => '/\d{4}\/\d{1-2}\/\d{1-2} \d{2}:\d{2}/',
+            'english' => '/\d{4}\/\d{1,2}\/\d{1,2} \d{2}:\d{2}/',
             'french'  => '/\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}/',
         ];
 
-        $element = $this->getCurrentPage()->getElement($selector);
         $pattern = $patterns[$locale];
 
-        $text = $element->getText();
         if (1 !== preg_match($pattern, $text)) {
             throw $this->createExpectationException(
                 sprintf('Expected "%s" to match pattern %s.', $text, $pattern)

@@ -13,16 +13,29 @@ use Context\Page\Job\Show as JobShow;
  */
 class Show extends JobShow
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $path = '/collect/import/{id}';
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct($session, $pageFactory, $parameters = [])
+    {
+        parent::__construct($session, $pageFactory, $parameters);
+
+        $this->elements = array_merge(
+            $this->elements,
+            [
+                'Import now' => ['css' => '.navbar-buttons .import-btn']
+            ]
+        );
+    }
 
     /**
      * Click the job execution link
      */
     public function execute()
     {
-        $this->clickLink('Import now');
+        $this->getElement('Import now')->click();
     }
 }
