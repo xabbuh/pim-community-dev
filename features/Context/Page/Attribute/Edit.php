@@ -11,5 +11,22 @@ namespace Context\Page\Attribute;
  */
 class Edit extends Creation
 {
+    /** @var string */
     protected $path = '/configuration/attribute/{id}/edit';
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct($session, $pageFactory, $parameters = [])
+    {
+        parent::__construct($session, $pageFactory, $parameters);
+
+        $this->elements = array_merge(
+            $this->elements,
+            [
+                'Attribute creation' => ['css' => '.navbar-content .created'],
+                'Attribute update'   => ['css' => '.navbar-content .updated'],
+            ]
+        );
+    }
 }
