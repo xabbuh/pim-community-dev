@@ -20,29 +20,6 @@ Feature: Add attribute options
     And I wait for options to load
     And I check the "Automatic option sorting" switch
 
-  Scenario: Successfully create some attribute options
-    Given I create the following attribute options:
-      | Code  |
-      | red   |
-      | blue  |
-      | green |
-    Then I should see "green"
-    And I save the attribute
-    And I wait for options to load
-    Then I should see flash message "Attribute successfully updated"
-    Then I should see "green"
-
-  Scenario: Successfully edit some attribute options
-    Given I create the following attribute options:
-      | Code  |
-      | red   |
-      | blue  |
-      | green |
-    And I wait for options to load
-    And I edit the "green" option and turn it to "yellow"
-    Then I should see "yellow"
-    Then I should not see "green"
-
   Scenario: Successfully cancel while editing some attribute options
     Given I create the following attribute options:
       | Code  |
@@ -70,14 +47,3 @@ Feature: Add attribute options
     And I confirm the deletion
     And I wait for options to load
     Then I should not see "small_size"
-
-  Scenario: Auto sorting disable reorder
-    Given I create the following attribute options:
-      | Code        |
-      | small_size  |
-      | medium_size |
-      | large_size  |
-    Then I should not see reorder handles
-    Given I uncheck the "Automatic option sorting" switch
-    And I wait for options to load
-    Then I should see reorder handles

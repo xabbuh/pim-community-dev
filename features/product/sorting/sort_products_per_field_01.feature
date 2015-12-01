@@ -37,27 +37,3 @@ Feature: Sort products per fields
     Given I am on the products page
     And the grid should contain 7 elements
     And I should be able to sort the rows by Status
-
-  Scenario: Successfully sort products by created at
-    Given I am on the products page
-    And the grid should contain 7 elements
-    And I should be able to sort the rows by Created at
-
-  Scenario: Successfully sort products by updated at
-    Given I am on the products page
-    And the grid should contain 7 elements
-    And I should be able to sort the rows by Updated at
-
-  Scenario: Successfully sort products by status
-    Given the following products:
-      | sku        | enabled |
-      | PC         | yes     |
-      | Laptop     | no      |
-      | Amplifier  | no      |
-      | CD changer | yes     |
-      | Whirlpool  | yes     |
-      | Electrolux | no      |
-      | Mug        | yes     |
-    When I am on the products page
-    And the grid should contain 7 elements
-    And I should be able to sort the rows by Status
