@@ -21,29 +21,26 @@ Feature: Filter products by reference data with locale and scope
     And I am logged in as "Mary"
     And I am on the products page
 
-  Scenario: Successfully filter products by reference data
-    Given I should not see the filter cap_color
-    And the grid should contain 2 elements
+  Scenario: Successfully filter product with multi reference data filters
+    Given I show the filter "Cap color"
+    And I filter by "Cap color" with value "Black"
     And I should be able to use the following filters:
       | filter      | value        | result |
-      | Cap color   | black        | postit |
-      | Cap color   | black,orange | postit |
-      | Cap color   | is empty     | mug    |
-      | Cap color   | orange       |        |
-      | Lace fabric | cotton       | postit |
-      | Lace fabric | cotton,straw | postit |
-      | Lace fabric | flax         | postit |
-      | Lace fabric | straw        |        |
-      | Lace fabric | is empty     | mug    |
+      | Lace fabric | Cotton       | postit |
+      | Lace fabric | Flax         | postit |
+      | Lace fabric | Cotton,Straw | postit |
+      | Lace fabric | Cotton,Flax  | postit |
+      | Lace fabric | Straw        |        |
+      | Lace fabric | is empty     |        |
     When I filter by "Channel" with value "Mobile"
+    And I hide the filter "Cap color"
+    And I show the filter "Cap color"
+    And I filter by "Cap color" with value "Purple"
     Then I should be able to use the following filters:
-      | filter      | value         | result |
-      | Cap color   | purple        | postit |
-      | Cap color   | purple,orange | postit |
-      | Cap color   | is empty      | mug    |
-      | Cap color   | orange        |        |
-      | Lace fabric | straw         | postit |
-      | Lace fabric | cotton,straw  | postit |
-      | Lace fabric | flax          |        |
-      | Lace fabric | cotton        |        |
-      | Lace fabric | is empty      | mug    |
+      | filter      | value        | result |
+      | Lace fabric | Straw        | postit |
+      | Lace fabric | Flax         |        |
+      | Lace fabric | Cotton,Straw | postit |
+      | Lace fabric | Cotton,Flax  |        |
+      | Lace fabric | Cotton       |        |
+      | Lace fabric | is empty     |        |
