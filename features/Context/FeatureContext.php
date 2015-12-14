@@ -9,8 +9,10 @@ use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Exception\ExpectationException;
 use Behat\MinkExtension\Context\MinkContext;
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
+use Context\Purger\Purger;
 use Context\Spin\SpinCapableTrait;
 use Doctrine\Common\DataFixtures\Purger\MongoDBPurger;
+use Doctrine\Common\DataFixtures\Purger\PurgerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Yaml\Parser;
 
@@ -57,6 +59,12 @@ class FeatureContext extends MinkContext implements KernelAwareInterface
         $this->useContext('technical', new TechnicalContext());
     }
 
+    /** @var PurgerInterface */
+    private static $ormPurger;
+
+    /** @var PurgerInterface */
+    private static $odmPurger;
+
     /**
      * @BeforeScenario
      */
@@ -72,18 +80,27 @@ class FeatureContext extends MinkContext implements KernelAwareInterface
         }
 
         if ('doctrine/mongodb-odm' === $this->getStorageDriver()) {
-            $purgers[]        = new MongoDBPurger($this->getDocumentManager());
-            $excludedTables[] = 'pim_catalog_product';
-            $excludedTables[] = 'pim_catalog_product_value';
-            $excludedTables[] = 'pim_catalog_media';
+//            if (null === self::$odmPurger) {
+//                $mongo = new MongoDBPurger($this->getDocumentManager());
+//                self::$odmPurger = new Purger($mongo, $this->getEntityManager2());
+//            }
+//
+//            $excludedTables[] = 'pim_catalog_product';
+//            $excludedTables[] = 'pim_catalog_product_value';
+//            $excludedTables[] = 'pim_catalog_media';
+//
+//            self::$odmPurger->purge();
         }
 
-        $purgers[] = new SelectiveORMPurger($this->getEntityManager(), $excludedTables);
-
-        foreach ($purgers as $purger) {
-            $purger->purge();
+        if (null === self::$ormPurger) {
+            $orm = new SelectiveORMPurger($this->getEntityManager2(), $excludedTables);
+            self::$ormPurger = new Purger($orm, $this->getEntityManager2());
         }
+
+        self::$ormPurger->purge();
     }
+
+
 
     /**
      * @AfterScenario
@@ -238,6 +255,14 @@ class FeatureContext extends MinkContext implements KernelAwareInterface
     public function getEntityManager()
     {
         return $this->getContainer()->get('doctrine')->getManager();
+    }
+
+    /**
+     * Return doctrine manager instance
+     */
+    public function getEntityManager2()
+    {
+        return $this->getContainer()->get('doctrine.orm.entity_manager');
     }
 
     /**
