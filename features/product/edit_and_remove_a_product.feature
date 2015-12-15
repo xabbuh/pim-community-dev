@@ -21,6 +21,7 @@ Feature: Edit and remove a product
       | Length | 5.0000 CENTIMETER |
     And I press the "Save" button
 
+  @unstable
   Scenario: Successfully edit and then delete a product from the grid
     Given I am on the products page
     Then I should see product boots
@@ -30,6 +31,7 @@ Feature: Edit and remove a product
     Then I should be on the products page
     And I should not see product boots
 
+  @unstable
   Scenario: Successfully delete a product from the edit form
     Given I press the "Delete" button
     Then I should see "Confirm deletion"

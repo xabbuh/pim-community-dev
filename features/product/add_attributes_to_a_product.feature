@@ -36,6 +36,7 @@ Feature: Add attributes to a product
     And I save the product
     Then the product Length should be "29 CENTIMETER"
 
+  @unstable
   Scenario: Successfully display unclassified attributes in group "Other"
     Given I am on the "sandals" product page
     Then I should see available attribute Comment in group "Other"

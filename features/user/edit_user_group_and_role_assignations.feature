@@ -8,6 +8,7 @@ Feature: Edit a user groups and roles
     Given the "apparel" catalog configuration
     And I am logged in as "Peter"
 
+  @unstable
   Scenario: Successfully change a user group
     Given I edit the "admin" user
     And I visit the "Groups and Roles" tab
@@ -24,6 +25,7 @@ Feature: Edit a user groups and roles
     Then I should see "User saved"
     And the user "admin" should be in 1 group
 
+  @unstable
   Scenario: Successfully change a user role
     Given I edit the "admin" user
     And I visit the "Groups and Roles" tab
