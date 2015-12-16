@@ -33,6 +33,7 @@ Feature: Filter products
     And I filter by "Supply" with value "between 08/01/2014 and 08/01/2014"
     And I show the filter "Delivery"
     And I filter by "Delivery" with value "between 05/01/2014 and 05/01/2014"
+    And I wait 60 seconds
     Then the grid should contain 3 elements
     And I should see entities "MUG-2" and "MUG-3" and "MUG-4"
     And I hide the filter "Supply"
@@ -54,6 +55,7 @@ Feature: Filter products
     And I filter by "Supply" with value "less than 02/01/2014"
     And I show the filter "Delivery"
     And I filter by "Delivery" with value "between 01/01/2014 and 06/01/2014"
+    And I wait 60 seconds
     Then the grid should contain 1 elements
     And I should see entities "MUG-1"
     And I hide the filter "Supply"

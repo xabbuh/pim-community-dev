@@ -20,6 +20,7 @@ Feature: Filter products by text field
       | 13572541 | Canon 5D + EF 24-105 F5L IS    |
     When I am on the products page
     And I display the columns sku, name, family, complete, created and updated
+    And I wait 60 seconds
     Then the grid should contain 4 elements
     And I should see products "HP LA2206xc + WF722A", "Canon 5D + EF 24-105 F4L IS", "Canon 5D + EF 24-105mm f/4L IS" and "Canon 5D + EF 24-105 F5L IS"
     And I should be able to use the following filters:
