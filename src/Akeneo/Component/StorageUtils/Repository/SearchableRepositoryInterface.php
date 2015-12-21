@@ -2,8 +2,6 @@
 
 namespace Akeneo\Component\StorageUtils\Repository;
 
-use Doctrine\Common\Persistence\ObjectRepository;
-
 /**
  * Searchable repository interface
  *
@@ -14,14 +12,9 @@ use Doctrine\Common\Persistence\ObjectRepository;
 interface SearchableRepositoryInterface
 {
     /**
-     * Returns an array of option ids and values
-     *
-     * The returned format must be the one expected by select2 :
-     *
-     *  return [
-     *      ['id' => 1, 'text' => 'Choice 1'],
-     *      ['id' => 2, 'text' => 'Choice 2'],
-     *  ];
+     * Returns an array of objects which code or label has been filtered by a search.
+     * Typically, this can be used with a paginated select2 to avoid to hydrate all
+     * the objects of a repository.
      *
      * @param string $search
      * @param array  $options

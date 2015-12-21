@@ -12,6 +12,9 @@ use Pim\Bundle\CatalogBundle\Model\FamilyInterface;
  * @author    Olivier Soulet <olivier.soulet@akeneo.com>
  * @copyright 2015 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ *
+ * @deprecated will be removed in 1.5. Please use instead
+ * Akeneo\Bundle\StorageUtilsBundle\Doctrine\ORM\Repository\SearchableRepository
  */
 class FamilySearchableRepository implements SearchableRepositoryInterface
 {
