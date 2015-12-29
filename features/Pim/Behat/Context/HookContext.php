@@ -8,10 +8,9 @@ use Behat\Behat\Event\StepEvent;
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Exception\UnsupportedDriverActionException;
 use Context\SelectiveORMPurger;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\DataFixtures\Purger\MongoDBPurger;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Parser;
-use Doctrine\Common\DataFixtures\Purger\MongoDBPurger;
 
 class HookContext extends PimContext
 {
@@ -226,7 +225,7 @@ class HookContext extends PimContext
     /**
      * @BeforeScenario
      */
-    public function resetPlaceholderValues()
+    public static function resetPlaceholderValues()
     {
         parent::resetPlaceholderValues();
     }
@@ -237,7 +236,7 @@ class HookContext extends PimContext
     public function removeTmpDir()
     {
         $fs = new \Symfony\Component\Filesystem\Filesystem();
-        $fs->remove($this->placeholderValues['%tmp%']);
+        $fs->remove(self::$placeholderValues['%tmp%']);
     }
 
     /**
