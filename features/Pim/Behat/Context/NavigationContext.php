@@ -17,12 +17,6 @@ class NavigationContext extends PimContext implements PageObjectAwareInterface
     /** @var string|null */
     public $currentPage;
 
-    /** @var string */
-    protected $username;
-
-    /** @var string */
-    protected $password;
-
     /** @var PageFactory */
     protected $pageFactory;
 
@@ -373,25 +367,6 @@ class NavigationContext extends PimContext implements PageObjectAwareInterface
         }
 
         return $filteredUrl;
-    }
-
-    /**
-     * A method that logs the user in with the previously provided credentials if required by the page
-     *
-     * @return bool true if login was required, false if not
-     */
-    protected function loginIfRequired()
-    {
-        $loginForm = $this->getCurrentPage()->find('css', '.form-signin');
-        if ($loginForm) {
-            $loginForm->fillField('_username', $this->username);
-            $loginForm->fillField('_password', $this->password);
-            $loginForm->pressButton('Log in');
-
-            return true;
-        }
-
-        return false;
     }
 
     /**
