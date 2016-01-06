@@ -1165,7 +1165,7 @@ class WebUser extends RawMinkContext
 
     /**
      * @param string $attributes
-     *
+     * TODO: use something more generic
      * @Then /^eligible attributes as label should be (.*)$/
      *
      * @throws ExpectationException
@@ -1222,27 +1222,6 @@ class WebUser extends RawMinkContext
 
         foreach ($table->getRowsHash() as $field => $value) {
             $this->getCurrentPage()->fillField($field, $value, $element);
-        }
-    }
-
-    /**
-     * @param TableNode $table
-     *
-     * @Given /^I should not see the following option:$/
-     */
-    public function iShouldNotSeeTheFollowingOptions(TableNode $table)
-    {
-        foreach ($table->getRowsHash() as $field => $value) {
-            try {
-                $this->getCurrentPage()->fillField($field, $value);
-            } catch (\InvalidArgumentException $e) {
-                $needle = sprintf('Could not find option "%s"', $value);
-                if (false === strpos($e->getMessage(), $needle)) {
-                    throw $e;
-                }
-                continue;
-            }
-            throw new \InvalidArgumentException(sprintf('Option "%s" has been found and should not.', $value));
         }
     }
 
@@ -1916,6 +1895,7 @@ class WebUser extends RawMinkContext
     }
 
     /**
+     * TODO: should be removed and add spin on next method
      * @Given /^I wait for (the )?widgets to load$/
      */
     public function iWaitForTheWidgetsToLoad()
@@ -1925,6 +1905,7 @@ class WebUser extends RawMinkContext
     }
 
     /**
+     * TODO: should be removed and add spin on next method
      * @Given /^I wait for (the )?options to load$/
      */
     public function iWaitForTheOptionsToLoad()
@@ -2026,23 +2007,6 @@ class WebUser extends RawMinkContext
         }
 
         throw $this->createExpectationException('Image preview is not displayed.');
-    }
-
-    /**
-     * @param string $path
-     *
-     * @Then /^I should see the "([^"]*)" content$/
-     */
-    public function iShouldSeeTheContent($path)
-    {
-        if ($filesPath = $this->getMinkParameter('files_path')) {
-            $fullPath = rtrim(realpath($filesPath), DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.$path;
-            if (is_file($fullPath)) {
-                $path = $fullPath;
-            }
-        }
-
-        $this->assertSession()->responseContains(file_get_contents($path));
     }
 
     /**
