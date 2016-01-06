@@ -4,8 +4,7 @@ namespace Pim\Behat\Context;
 
 use Behat\Behat\Context\Step;
 use Behat\Behat\Context\Step\Then;
-use Behat\Behat\Event\BaseScenarioEvent;
-use Behat\Behat\Event\StepEvent;
+use Behat\Mink\Exception\DriverException;
 use Context\Page\Base\Base;
 use Context\Spin\SpinCapableTrait;
 use SensioLabs\Behat\PageObjectExtension\Context\PageFactory;
@@ -67,8 +66,6 @@ class NavigationContext extends PimContext implements PageObjectAwareInterface
      */
     public function __construct($baseUrl)
     {
-        parent::__construct();
-
         $this->baseUrl = $baseUrl;
     }
 
@@ -89,21 +86,6 @@ class NavigationContext extends PimContext implements PageObjectAwareInterface
     }
 
     /**
-     * @param BaseScenarioEvent $event
-     *
-     * @AfterScenario
-     */
-    public function resetCurrentPage(BaseScenarioEvent $event)
-    {
-        if ($event->getResult() !== StepEvent::UNDEFINED) {
-            $script = 'sessionStorage.clear(); typeof $ !== "undefined" && $(window).off("beforeunload");';
-            $this->getMainContext()->executeScript($script);
-        }
-
-        $this->currentPage = null;
-    }
-
-    /**
      * @param string $username
      *
      * @Given /^I am logged in as "([^"]*)"$/
@@ -112,7 +94,14 @@ class NavigationContext extends PimContext implements PageObjectAwareInterface
     {
         $this->getMainContext()->getSubcontext('fixtures')->setUsername($username);
 
-        $this->getSession()->setCookie('BAPID', null);
+        try {
+            $this->getSession()->setCookie('BAPID', null);
+        } catch (DriverException $de) {
+            //In non JS mode, setting the cookie to null, without having already a request
+            //will fail with an exception. As there's no way to check if a request is already
+            //there without triggering the exception, we have to resort to this dirty empty
+            //catch hack
+        }
         $this->getSession()->visit($this->locatePath('/user/login'));
 
         $this->spin(function () {
@@ -147,6 +136,7 @@ class NavigationContext extends PimContext implements PageObjectAwareInterface
     {
         $page = isset($this->getPageMapping()[$page]) ? $this->getPageMapping()[$page] : $page;
         $this->openPage($page);
+        $this->wait();
     }
 
     /**
