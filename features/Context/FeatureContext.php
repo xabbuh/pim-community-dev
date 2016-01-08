@@ -4,9 +4,9 @@ namespace Context;
 
 use Behat\Behat\Exception\BehaviorException;
 use Behat\Gherkin\Node\PyStringNode;
-use Behat\MinkExtension\Context\MinkContext;
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Exception\ExpectationException;
+use Behat\MinkExtension\Context\MinkContext;
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Context\Spin\SpinCapableTrait;
 use Pim\Behat\Context\Domain\Enrich\VariantGroupContext;
@@ -158,6 +158,16 @@ class FeatureContext extends MinkContext implements KernelAwareInterface
     public function addErrorMessage($message)
     {
         self::$errorMessages[] = $message;
+    }
+
+   /**
+    * Get error messages
+    *
+    * @return array $messages
+    */
+    public static function getErrorMessages()
+    {
+        return self::$errorMessages;
     }
 
     /**
